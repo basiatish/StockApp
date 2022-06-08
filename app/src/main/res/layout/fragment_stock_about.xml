@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/custom_holder_background"
+    android:paddingStart="16dp"
+    android:paddingTop="8dp"
+    android:paddingEnd="16dp"
+    android:paddingBottom="8dp">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/about"
+        style="@style/TextApp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="About"
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/symbol"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/custom_textview"
+        android:minHeight="35dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/about">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TextApp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:text="Symbol"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/symbol"
+            app:layout_constraintLeft_toLeftOf="@id/symbol"
+            app:layout_constraintTop_toTopOf="@id/symbol" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/comp_symbol"
+            style="@style/TextApp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:textAllCaps="true"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/symbol"
+            app:layout_constraintEnd_toEndOf="@id/symbol"
+            app:layout_constraintTop_toTopOf="@id/symbol"
+            tools:text="APPL" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/exchange"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/custom_textview"
+        android:minHeight="35dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/symbol">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TextApp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:text="Exchange"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/exchange"
+            app:layout_constraintLeft_toLeftOf="@id/exchange"
+            app:layout_constraintTop_toTopOf="@id/exchange" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/exchange_name"
+            style="@style/TextApp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:textAllCaps="true"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/exchange"
+            app:layout_constraintEnd_toEndOf="@id/exchange"
+            app:layout_constraintTop_toTopOf="@id/exchange"
+            tools:text="NASDAQ" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/industry"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/custom_textview"
+        android:minHeight="35dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/exchange">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TextApp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:text="Industry"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/industry"
+            app:layout_constraintLeft_toLeftOf="@id/industry"
+            app:layout_constraintTop_toTopOf="@id/industry" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/industry_name"
+            style="@style/TextApp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/industry"
+            app:layout_constraintEnd_toEndOf="@id/industry"
+            app:layout_constraintTop_toTopOf="@id/industry"
+            tools:text="Consumer Electronics" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/sector"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/custom_textview"
+        android:minHeight="35dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/industry">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TextApp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:text="Sector"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/sector"
+            app:layout_constraintLeft_toLeftOf="@id/sector"
+            app:layout_constraintTop_toTopOf="@id/sector" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/sector_name"
+            style="@style/TextApp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/sector"
+            app:layout_constraintEnd_toEndOf="@id/sector"
+            app:layout_constraintTop_toTopOf="@id/sector"
+            tools:text="Technology" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/country"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/custom_textview"
+        android:minHeight="35dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sector">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TextApp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:text="Country"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/country"
+            app:layout_constraintLeft_toLeftOf="@id/country"
+            app:layout_constraintTop_toTopOf="@id/country" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/country_name"
+            style="@style/TextApp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/country"
+            app:layout_constraintEnd_toEndOf="@id/country"
+            app:layout_constraintTop_toTopOf="@id/country"
+            tools:text="US" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ceo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/custom_textview"
+        android:minHeight="35dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/country">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TextApp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:text="CEO"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/ceo"
+            app:layout_constraintLeft_toLeftOf="@id/ceo"
+            app:layout_constraintTop_toTopOf="@id/ceo" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/ceo_name"
+            style="@style/TextApp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/ceo"
+            app:layout_constraintEnd_toEndOf="@id/ceo"
+            app:layout_constraintTop_toTopOf="@id/ceo"
+            tools:text="Mr. Timothy Cook" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/profile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/custom_textview"
+        android:minHeight="35dp"
+        app:layout_goneMarginBottom="16dp"
+        android:weightSum="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ceo">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/profile_text"
+            style="@style/TextApp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:text="Profile:"
+            android:textSize="16sp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/profile_info"
+            style="@style/TextApp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="8dp"
+            android:textAlignment="textEnd"
+            android:textSize="16sp"
+            tools:text="Apple Inc. designs, manufactures, and markets smartphones, personal computers, tablets, wearables, and accessories worldwide. It also sells various related services. The company offers iPhone, a line of smartphones; Mac, a line of personal computers; iPad, a line of multi-purpose tablets; and wearables, home, and accessories comprising AirPods, Apple TV, Apple Watch, Beats products, HomePod, iPod touch, and other Apple-branded and third-party accessories. It also provides AppleCare support services; cloud services store services; and operates various platforms, including the App Store, that allow customers to discover and download applications and digital content, such as books, music, video, games, and podcasts. In addition, the company offers various services, such as Apple Arcade, a game subscription service; Apple Music, which offers users a curated listening experience with on-demand radio stations; Apple News+, a subscription news and magazine service; Apple TV+, which offers exclusive original content; Apple Card, a co-branded credit card; and Apple Pay, a cashless payment service, as well as licenses its intellectual property. The company serves consumers, and small and mid-sized businesses; and the education, enterprise, and government markets. It sells and delivers third-party applications for its products through the App Store. The company also sells its products through its retail and online stores, and direct sales force; and third-party cellular network carriers, wholesalers, retailers, and resellers. Apple Inc. was founded in 1977 and is headquartered in Cupertino, California." />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

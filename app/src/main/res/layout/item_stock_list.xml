@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item"
+    android:padding="8dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/comp_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_apple_logo"
+        app:layout_constraintTop_toTopOf="@id/item"
+        app:layout_constraintBottom_toBottomOf="@id/item"
+        app:layout_constraintLeft_toLeftOf="@id/item"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/comp_name"
+        android:textAppearance="?attr/textAppearanceListItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Apple"
+        android:layout_marginStart="8dp"
+        app:layout_constraintLeft_toRightOf="@id/comp_logo"
+        app:layout_constraintTop_toTopOf="@id/item"
+        android:gravity="start" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/short_comp_name"
+        android:textAppearance="?attr/textAppearanceButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="8sp"
+        tools:text="appl"
+        android:textAllCaps="true"
+        app:layout_constraintTop_toBottomOf="@id/comp_name"
+        app:layout_constraintStart_toStartOf="@id/comp_name"
+        tools:ignore="SmallSp" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:textAppearance="?attr/textAppearanceBody1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        app:layout_constraintRight_toRightOf="@id/item"
+        app:layout_constraintTop_toTopOf="@id/item"
+        app:layout_constraintBottom_toBottomOf="@id/item"
+        tools:text="150.48"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/stockListFragment">
+
+    <fragment
+        android:id="@+id/stockListFragment"
+        android:name="com.example.stocks.StockListFragment"
+        android:label="StockListFragment"
+        tools:layout="@layout/fragment_stock_list">
+        <action
+            android:id="@+id/action_stockListFragment_to_stockSearchFragment"
+            app:destination="@id/stockSearchFragment"
+            app:popUpToInclusive="true"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/stockSearchFragment"
+        android:name="com.example.stocks.StockSearchFragment"
+        android:label="StockSearchFragment"
+        tools:layout="@layout/fragment_stock_search">
+        <action
+            android:id="@+id/action_stockSearchFragment_to_stockListFragment"
+            app:destination="@id/stockListFragment"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/stockListFragment"/>
+        <action
+            android:id="@+id/action_stockSearchFragment_to_stockOverViewFragment"
+            app:destination="@id/stockOverViewFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/stockOverViewFragment"
+        android:name="com.example.stocks.StockOverViewFragment"
+        android:label="StockOverViewFragment"
+        tools:layout="@layout/fragment_stock_overview">
+        <argument
+            android:name="name"
+            app:argType="string" />
+        <argument
+            android:name="shortName"
+            app:argType="string" />
+    </fragment>
+</navigation>

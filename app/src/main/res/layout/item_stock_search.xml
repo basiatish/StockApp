@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:navGraph="@navigation/nav_graph">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/company"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="8dp"
+        android:layout_margin="2dp"
+        android:background="@drawable/custom_item_search">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/comp_name"
+            android:textAppearance="?attr/textAppearanceListItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Apple"
+            android:maxEms="15"
+            android:layout_marginStart="8dp"
+            app:layout_constraintLeft_toLeftOf="@id/company"
+            app:layout_constraintTop_toTopOf="@id/company" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/short_comp_name"
+            android:textAppearance="?attr/textAllCaps"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textSize="12sp"
+            tools:text="appl"
+            android:textAllCaps="true"
+            app:layout_constraintTop_toBottomOf="@id/comp_name"
+            app:layout_constraintStart_toStartOf="@id/comp_name"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/exchange"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?attr/textAllCaps"
+            android:textSize="12sp"
+            tools:text="NASDAQ"
+            android:layout_marginStart="8dp"
+            app:layout_constraintLeft_toRightOf="@id/short_comp_name"
+            app:layout_constraintBottom_toBottomOf="@id/company"/>
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/add_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/custom_add_button"
+            android:layout_marginEnd="15dp"
+            android:background="@null"
+            app:layout_constraintTop_toTopOf="@+id/company"
+            app:layout_constraintRight_toRightOf="@id/company"
+            app:layout_constraintBottom_toBottomOf="@id/company"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

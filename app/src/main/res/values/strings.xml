@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">Stocks</string>
+    <string name="search_stocks">Search stocks</string>
+    <string name="cancel">Cancel</string>
+    <string name="back">Back</string>
+    <string name="chart">Chart</string>
+    <string name="_1min">1M</string>
+    <string name="_5m">5M</string>
+    <string name="_15">15M</string>
+    <string name="_1h">1H</string>
+    <string name="_4h">4H</string>
+    <string name="_1d">1D</string>
+    <string name="_1W">1W</string>
+    <string name="_1y">1Y</string>
+    <string name="all">All</string>
+    <string name="overview">Overview</string>
+    <string name="dividends">Dividends</string>
+    <string name="about">About</string>
+    <string name="price">$ %.2f</string>
+    <string name="price_change_above">+%.2f</string>
+    <string name="price_change_below">%.2f</string>
+    <string name="price_change_equals">%.2f</string>
+    <string name="price_change_percent">(%.2f%%)</string>
+    <string name="key_statistics">Key Statistics</string>
+    <string name="close">Previous Close</string>
+    <string name="avg_volume">Avg. Volume</string>
+    <string name="market_cap">Market Cap</string>
+    <string name="week_range">52 Week Range</string>
+    <string name="beta">Beta</string>
+    <string name="value_format_K">%.2fK</string>
+    <string name="value_format_M">%.2fM</string>
+    <string name="value_format_B">%.2fB</string>
+    <string name="value_format_T">%.2fT</string>
+    <string name="last_dividends">Last Dividends</string>
+    <string name="status">status</string>
+</resources>

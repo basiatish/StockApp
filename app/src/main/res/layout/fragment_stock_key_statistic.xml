@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/custom_holder_background"
+    android:paddingStart="16dp"
+    android:paddingTop="8dp"
+    android:paddingEnd="16dp"
+    android:paddingBottom="8dp">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/key_stat"
+        style="@style/TextApp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/key_statistics"
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/close"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/custom_textview"
+        android:minHeight="35dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="@id/key_stat"
+        app:layout_constraintTop_toBottomOf="@id/key_stat">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TextApp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:text="@string/close"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/close"
+            app:layout_constraintLeft_toLeftOf="@id/close"
+            app:layout_constraintTop_toTopOf="@id/close" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/close_price"
+            style="@style/TextApp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/close"
+            app:layout_constraintEnd_toEndOf="@id/close"
+            app:layout_constraintTop_toTopOf="@id/close"
+            tools:text="178.35" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/div"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/custom_textview"
+        android:minHeight="35dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="@id/key_stat"
+        app:layout_constraintTop_toBottomOf="@id/close">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TextApp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:text="@string/last_dividends"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/div"
+            app:layout_constraintLeft_toLeftOf="@id/div"
+            app:layout_constraintTop_toTopOf="@id/div" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/last_div"
+            style="@style/TextApp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/div"
+            app:layout_constraintEnd_toEndOf="@id/div"
+            app:layout_constraintTop_toTopOf="@id/div"
+            tools:text="0.22" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/volume"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/custom_textview"
+        android:minHeight="35dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="@id/key_stat"
+        app:layout_constraintTop_toBottomOf="@id/div">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TextApp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:text="@string/avg_volume"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/volume"
+            app:layout_constraintLeft_toLeftOf="@id/volume"
+            app:layout_constraintTop_toTopOf="@id/volume" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/avg_volume"
+            style="@style/TextApp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/volume"
+            app:layout_constraintEnd_toEndOf="@id/volume"
+            app:layout_constraintTop_toTopOf="@id/volume"
+            tools:text="111.8M" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cap"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/custom_textview"
+        android:minHeight="35dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="@id/key_stat"
+        app:layout_constraintTop_toBottomOf="@id/volume">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TextApp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:text="@string/market_cap"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/cap"
+            app:layout_constraintLeft_toLeftOf="@id/cap"
+            app:layout_constraintTop_toTopOf="@id/cap" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/market_cap"
+            style="@style/TextApp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/cap"
+            app:layout_constraintEnd_toEndOf="@id/cap"
+            app:layout_constraintTop_toTopOf="@id/cap"
+            tools:text="2.8T" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/pe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/custom_textview"
+        android:minHeight="35dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="@id/key_stat"
+        app:layout_constraintTop_toBottomOf="@id/cap">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TextApp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:text="@string/week_range"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/pe"
+            app:layout_constraintLeft_toLeftOf="@id/pe"
+            app:layout_constraintTop_toTopOf="@id/pe" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/week_range"
+            style="@style/TextApp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/pe"
+            app:layout_constraintEnd_toEndOf="@id/pe"
+            app:layout_constraintTop_toTopOf="@id/pe"
+            tools:text="70 - 162" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/beta"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/custom_textview"
+        android:minHeight="35dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="@id/key_stat"
+        app:layout_constraintTop_toBottomOf="@id/pe">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TextApp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:text="@string/beta"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/beta"
+            app:layout_constraintLeft_toLeftOf="@id/beta"
+            app:layout_constraintTop_toTopOf="@id/beta" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/comp_beta"
+            style="@style/TextApp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/beta"
+            app:layout_constraintEnd_toEndOf="@id/beta"
+            app:layout_constraintTop_toTopOf="@id/beta"
+            tools:text="1.20273" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

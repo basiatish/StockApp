@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/stockListFragment"
-        android:name="com.example.stocks.StockListFragment"
+        android:name="com.example.stocks.ui.fragments.StockListFragment"
         android:label="StockListFragment"
         tools:layout="@layout/fragment_stock_list">
         <action
@@ -18,7 +18,7 @@
 
     <fragment
         android:id="@+id/stockSearchFragment"
-        android:name="com.example.stocks.StockSearchFragment"
+        android:name="com.example.stocks.ui.fragments.StockSearchFragment"
         android:label="StockSearchFragment"
         tools:layout="@layout/fragment_stock_search">
         <action
@@ -32,7 +32,7 @@
     </fragment>
     <fragment
         android:id="@+id/stockOverViewFragment"
-        android:name="com.example.stocks.StockOverViewFragment"
+        android:name="com.example.stocks.ui.fragments.StockOverViewFragment"
         android:label="StockOverViewFragment"
         tools:layout="@layout/fragment_stock_overview">
         <argument

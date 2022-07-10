@@ -24,23 +24,22 @@ class MainActivity : AppCompatActivity() {
         navController = navHostFragment.navController
 
         binding.nav.background = null
-        binding.nav.menu.getItem(1).isEnabled = false
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.stockSearchFragment -> {
-                    binding.btmBar.performHide()
-                    binding.fab.hide()
+                    //binding.btmBar.performHide()
+                    //binding.fab.hide()
                 }
                 R.id.stockOverViewFragment -> {
-                    binding.btmBar.performHide()
-                    binding.fab.hide()
+                    //binding.btmBar.performHide()
+                    //binding.fab.hide()
                 }
                 else -> {
-                    binding.btmBar.performShow()
-                    if (!binding.fab.isShown) {
-                        binding.fab.show()
-                    }
+                    //binding.btmBar.performShow()
+                    //if (!binding.fab.isShown) {
+                        //binding.fab.show()
+                    //}
 
                 }
             }

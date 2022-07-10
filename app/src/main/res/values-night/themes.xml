@@ -1,9 +1,9 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Stocks" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Theme.Stocks" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/grey</item>
-        <item name="colorPrimaryVariant">#8CAF8F</item>
+        <item name="colorPrimaryVariant">#B4B4B4</item>
         <item name="colorOnPrimary">@color/light_grey</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
@@ -14,7 +14,7 @@
         <!-- Customize your theme here. -->
 
         <item name="colorPrimaryContainer">@color/orange</item>
-        <item name="colorSurface">@color/dark_blue</item>
+        <item name="colorSurface">#B4B4B4</item>
         <item name="colorOnSurface">#2E4052</item>
         <item name="colorOnSurfaceVariant">@color/green</item>
         <item name="colorOnSecondaryContainer">#2E4052</item>

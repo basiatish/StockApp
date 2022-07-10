@@ -18,34 +18,23 @@
         app:layout_constraintTop_toTopOf="parent"
         app:navGraph="@navigation/nav_graph" />
 
-        <com.google.android.material.bottomappbar.BottomAppBar
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/btm_bar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="80dp"
             android:layout_gravity="bottom"
+            android:background="@drawable/bottom_menu"
             app:hideOnScroll="true"
-            app:fabAlignmentMode="center"
-            app:fabAnimationMode="slide"
-            app:layout_scrollFlags="scroll|enterAlways"
-            app:fabCradleVerticalOffset="10dp"
-            app:fabCradleMargin="10dp"
-            app:fabCradleRoundedCornerRadius="15dp">
+            app:layout_scrollFlags="scroll|enterAlways">
 
             <com.google.android.material.bottomnavigation.BottomNavigationView
                 android:id="@+id/nav"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
+                android:layout_gravity="center"
+                app:labelVisibilityMode="unlabeled"
                 app:menu="@menu/bottom_menu"/>
 
-        </com.google.android.material.bottomappbar.BottomAppBar>
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/app_name"
-            android:src="@drawable/ic_add"
-            app:layout_anchor="@id/nav" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

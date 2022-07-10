@@ -42,8 +42,8 @@ class StockSearchFragment() : Fragment(), OnItemClick {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val navbar = requireActivity().findViewById<BottomAppBar>(R.id.btm_bar)
-        navbar.hideOnScroll = false
+//        val navbar = requireActivity().findViewById<BottomAppBar>(R.id.btm_bar)
+//        navbar.hideOnScroll = false
 
         val adapter = StockSearchAdapter(this)
         binding.recycler.adapter = adapter

@@ -1,18 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/home"
-        android:icon="@drawable/ic_home_page"
-        android:title="Home"/>
+        android:icon="@drawable/ic_home"
+        android:title=""/>
 
     <item
-        android:id="@+id/placeholder"
+        android:id="@+id/search"
+        android:icon="@drawable/ic_loupe"
         android:title="" />
 
     <item
-        android:id="@+id/lol"
-        android:icon="@drawable/ic_global_market"
-        android:title="Global"/>
+        android:id="@+id/news"
+        android:icon="@drawable/ic_newspaper"
+        android:title=""/>
 
+    <item
+        android:id="@+id/settings"
+        android:icon="@drawable/ic_settings"
+        android:title=""/>
 </menu>

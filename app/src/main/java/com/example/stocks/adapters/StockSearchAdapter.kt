@@ -14,13 +14,13 @@ class StockSearchAdapter(private val onItemClickListener: OnItemClick): ListAdap
     class ViewHolder(private var binding: ItemStockSearchBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        lateinit var addButton: AppCompatImageButton
+        //lateinit var addButton: AppCompatImageButton
 
         fun bind(stockSearch: StockSearch) {
-            addButton = binding.addBtn
+            //addButton = binding.addBtn
             binding.compName.text = stockSearch.name
             binding.shortCompName.text = stockSearch.symbol
-            binding.exchange.text = stockSearch.exchangeShortName
+            //binding.exchange.text = stockSearch.exchangeShortName
         }
     }
 
@@ -34,9 +34,9 @@ class StockSearchAdapter(private val onItemClickListener: OnItemClick): ListAdap
         holder.itemView.setOnClickListener {
             onItemClickListener.onClick(stock)
         }
-        holder.addButton.setOnClickListener {
-            holder.addButton.isSelected = !holder.addButton.isSelected
-        }
+//        holder.addButton.setOnClickListener {
+//            holder.addButton.isSelected = !holder.addButton.isSelected
+//        }
     }
 
     companion object DiffCallBack : DiffUtil.ItemCallback<StockSearch>() {

@@ -28,14 +28,14 @@ class StockListFragment() : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val navbar = requireActivity().findViewById<BottomAppBar>(R.id.btm_bar)
-        navbar.hideOnScroll = true
+//        val navbar = requireActivity().findViewById<BottomAppBar>(R.id.btm_bar)
+//        navbar.hideOnScroll = true
 
-        val fab = requireActivity().findViewById<FloatingActionButton>(R.id.fab)
+        //val fab = requireActivity().findViewById<FloatingActionButton>(R.id.fab)
 
-        fab.setOnClickListener {
-            val action = StockListFragmentDirections.actionStockListFragmentToStockSearchFragment()
-            this.findNavController().navigate(action)
-        }
+//        fab.setOnClickListener {
+//            val action = StockListFragmentDirections.actionStockListFragmentToStockSearchFragment()
+//            this.findNavController().navigate(action)
+//        }
     }
 }

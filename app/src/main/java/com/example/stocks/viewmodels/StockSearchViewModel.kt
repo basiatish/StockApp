@@ -36,12 +36,12 @@ class StockSearchViewModel: ViewModel() {
 
 }
 
-class StockSearchViewModelFactory() : ViewModelProvider.Factory {
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(StockSearchViewModel::class.java)) {
-            @Suppress("UNCHECKED_CAST")
-            return StockSearchViewModel() as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
-    }
-}
+//class StockSearchViewModelFactory() : ViewModelProvider.Factory {
+//    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+//        if (modelClass.isAssignableFrom(StockSearchViewModel::class.java)) {
+//            @Suppress("UNCHECKED_CAST")
+//            return StockSearchViewModel() as T
+//        }
+//        throw IllegalArgumentException("Unknown ViewModel class")
+//    }
+//}

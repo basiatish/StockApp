@@ -10,10 +10,11 @@
     <color name="white">#FFFFFFFF</color>
     <color name="orange">#FCA311</color>
     <color name="light_grey">#6C6C6C</color>
-    <color name="dark_blue">#B4B4B4</color>
+    <color name="dark_blue">#EFEFEF</color>
     <color name="light_grey_2">#F2F2F2</color>
     <color name="text_color">#A7A7A7</color>
     <color name="change_price_color">#00BB61</color>
+    <color name="nav_button_inactive">#B4B4B4</color>
 
     <color name="green">#00897b</color>
     <color name="grey">#D5D5D5</color>

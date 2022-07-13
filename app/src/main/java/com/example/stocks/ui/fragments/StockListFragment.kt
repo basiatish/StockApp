@@ -4,11 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.stocks.R
 import com.example.stocks.databinding.FragmentStockListBinding
 import com.google.android.material.bottomappbar.BottomAppBar
+import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class StockListFragment() : Fragment() {
@@ -34,6 +36,11 @@ class StockListFragment() : Fragment() {
         //val fab = requireActivity().findViewById<FloatingActionButton>(R.id.fab)
 
 //        fab.setOnClickListener {
+//            val action = StockListFragmentDirections.actionStockListFragmentToStockSearchFragment()
+//            this.findNavController().navigate(action)
+//        }
+//        val search = requireActivity().findViewById<BottomNavigationItemView>(R.id.search)
+//        search.setOnClickListener {
 //            val action = StockListFragmentDirections.actionStockListFragmentToStockSearchFragment()
 //            this.findNavController().navigate(action)
 //        }

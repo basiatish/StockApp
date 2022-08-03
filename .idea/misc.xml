@@ -8,7 +8,7 @@
         <entry key="..\:/Android Projects/My_projects/Stocks/app/src/main/res/drawable/ic_home.xml" value="0.2365" />
         <entry key="..\:/Android Projects/My_projects/Stocks/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Android Projects/My_projects/Stocks/app/src/main/res/layout/fragment_stock_list.xml" value="0.6143884892086331" />
-        <entry key="..\:/Android Projects/My_projects/Stocks/app/src/main/res/layout/fragment_stock_overview.xml" value="0.1933876811594203" />
+        <entry key="..\:/Android Projects/My_projects/Stocks/app/src/main/res/layout/fragment_stock_overview.xml" value="0.25" />
         <entry key="..\:/Android Projects/My_projects/Stocks/app/src/main/res/layout/fragment_stock_search.xml" value="0.5" />
         <entry key="..\:/Android Projects/My_projects/Stocks/app/src/main/res/layout/item_stock_list.xml" value="0.6143884892086331" />
         <entry key="..\:/Android Projects/My_projects/Stocks/app/src/main/res/layout/item_stock_search.xml" value="0.5317559153175592" />
@@ -16,7 +16,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="11" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

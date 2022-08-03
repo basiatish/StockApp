@@ -51,10 +51,11 @@ class MainActivity : AppCompatActivity() {
             when (destination.id) {
                 R.id.stockSearchFragment -> {
                     //binding.nav.menu.getItem(R.id.search).i
-                    binding.btmBar.visibility = View.GONE
+                    //binding.btmBar.visibility = View.GONE
                     //binding.fab.hide()
                 }
                 R.id.stockOverViewFragment -> {
+                    binding.btmBar.visibility = View.GONE
                     //binding.btmBar.performHide()
                     //binding.fab.hide()
                 }

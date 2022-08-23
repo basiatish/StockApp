@@ -41,5 +41,13 @@
         <argument
             android:name="shortName"
             app:argType="string" />
+        <action
+            android:id="@+id/action_stockOverViewFragment_to_stockChartFragment"
+            app:destination="@id/stockChartFragment"/>
     </fragment>
+    <fragment
+        android:id="@+id/stockChartFragment"
+        android:name="com.example.stocks.ui.fragments.StockChartFragment"
+        android:label="StockChartFragment"
+        tools:layout="@layout/fragment_stock_chart"/>
 </navigation>

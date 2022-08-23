@@ -3,6 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/custom_add_button.xml" value="0.1655" />
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/ic_newspaper.xml" value="0.1925" />
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/layout/activity_main.xml" value="0.264" />
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/layout/fragment_stock_chart.xml" value="0.264" />
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/layout/fragment_stock_dividends.xml" value="0.21784420289855072" />
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/menu/bottom_menu.xml" value="0.23645833333333333" />
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/menu/fragment_bottom_menu.xml" value="0.23645833333333333" />
         <entry key="..\:/Android Projects/My_projects/Stocks/app/src/main/res/drawable/bottom_menu.xml" value="0.1195" />
         <entry key="..\:/Android Projects/My_projects/Stocks/app/src/main/res/drawable/bottom_nav_item_color.xml" value="0.1195" />
         <entry key="..\:/Android Projects/My_projects/Stocks/app/src/main/res/drawable/ic_home.xml" value="0.2365" />

@@ -10,6 +10,9 @@ import com.example.stocks.models.remote.*
 import com.example.stocks.utils.network.StockApiStatus
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.data.Entry
+import com.tradingview.lightweightcharts.api.series.common.SeriesData
+import com.tradingview.lightweightcharts.api.series.models.LineData
+import com.tradingview.lightweightcharts.api.series.models.Time
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
@@ -175,5 +178,34 @@ class StockOverViewViewModel: ViewModel() {
             }
         }
         return closePrice
+    }
+
+    private val _lineSeriesData = MutableLiveData<MutableList<SeriesData>>()
+
+    val lineSeriesData: LiveData<MutableList<SeriesData>> = _lineSeriesData
+
+
+    fun setupChartData(): MutableList<SeriesData> {
+        val price = _priceChartDaily.value!!
+//        for (item in price[0].historical.reversed()) {
+//            lineSeriesData.value?.add(LineData(Time.StringTime(item.date!!), item.close!!))
+//        }
+
+        val data: MutableList<SeriesData> = mutableListOf()
+
+        for (item in price[0].historical.reversed()) {
+            data.add(LineData(Time.StringTime(item.date!!), item.close!!))
+        }
+        return data
+//        return mutableListOf(
+//            LineData(Time.StringTime("2022-08-01"), 180.24.toFloat()),
+//            LineData(Time.StringTime("2022-08-02"), 144.56.toFloat()),
+//            LineData(Time.StringTime("2022-08-03"), 133.88.toFloat()),
+//            LineData(Time.StringTime("2022-08-04"), 154.43.toFloat()),
+//            LineData(Time.StringTime("2022-08-05"), 163.04.toFloat()),
+//            LineData(Time.StringTime("2022-08-08"), 164.87.toFloat()),
+//            LineData(Time.StringTime("2022-08-09"), 164.92.toFloat()),
+//            LineData(Time.StringTime("2022-08-10"), 169.24.toFloat())
+//        )
     }
 }

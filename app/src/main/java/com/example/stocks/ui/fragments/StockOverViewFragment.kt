@@ -49,12 +49,12 @@ class StockOverViewFragment: Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View? {  
         _binding = FragmentStockOverviewBinding.inflate(inflater, container, false)
-        viewModel.getChartData("1min", navArgs.shortName)
+        //viewModel.getChartData("1day", navArgs.shortName)
         viewModel.getCompanyProfile(navArgs.shortName)
         viewModel.getCompanyDividends(navArgs.shortName)
-        range = "1min"
+        range = "1day"
         lineColor = requireContext().getColor(R.color.orange)
         gridColor = requireContext().getColor(R.color.light_grey)
         return binding.root
@@ -71,18 +71,18 @@ class StockOverViewFragment: Fragment() {
         chart = binding.chart
         viewModel.priceChart.observe(this.viewLifecycleOwner) {
             if (it.isNotEmpty()) {
-                setChart(it, listOf(), listOf())
-                setPrice(it)
+                //setChart(it, listOf(), listOf())
+                //setPrice(it)
             }
         }
         viewModel.priceChartDaily.observe(this.viewLifecycleOwner) {
             if (it.isNotEmpty()) {
-                setChart(listOf(), it, listOf())
+                //setChart(listOf(), it, listOf())
             }
         }
         viewModel.priceChartYearly.observe(this.viewLifecycleOwner) {
             if (it.isNotEmpty()) {
-                setChart(listOf(), listOf(), it)
+                //setChart(listOf(), listOf(), it)
             }
         }
         viewModel.status.observe(this.viewLifecycleOwner) {

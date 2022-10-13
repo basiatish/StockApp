@@ -1,8 +1,10 @@
 package com.example.stocks.ui.activities
 
+import android.animation.LayoutTransition
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.LinearLayout
 import androidx.core.view.get
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -13,7 +15,10 @@ import com.example.stocks.ui.fragments.StockListFragmentDirections
 import com.example.stocks.ui.fragments.StockOverViewFragment
 import com.example.stocks.ui.fragments.StockOverViewFragmentDirections
 import com.example.stocks.ui.fragments.StockSearchFragmentDirections
+import com.google.android.material.bottomappbar.BottomAppBar
+import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.navigation.NavigationBarView
 
 class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
@@ -80,9 +85,10 @@ class MainActivity : AppCompatActivity() {
                 R.id.stockOverViewFragment -> {
                     binding.nav.visibility = View.GONE
                     binding.fragmentNav.visibility = View.VISIBLE
+                    binding.btmBar.visibility = View.VISIBLE
+                    binding.fragmentNav.menu.getItem(0).isChecked = true
                 }
                 R.id.stockChartFragment -> {
-                    binding.fragmentNav.menu.getItem(0).isChecked = true
                 }
                 else -> {
                 }

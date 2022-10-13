@@ -3,11 +3,38 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/chart_btn_shadow.xml" value="0.1925" />
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/custom_add_button.xml" value="0.1655" />
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/custom_chart_btn.xml" value="0.1925" />
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/custom_item_list_background.xml" value="0.1925" />
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/custom_logo_background.xml" value="0.1925" />
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/dividend_item_background.xml" value="0.1925" />
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/ic_arrow_back.xml" value="0.1925" />
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/ic_bar.xml" value="0.1925" />
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/ic_bars.xml" value="0.1925" />
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/ic_beta.xml" value="0.1925" />
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/ic_less.xml" value="0.1925" />
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/ic_more.xml" value="0.1925" />
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/ic_newspaper.xml" value="0.1925" />
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/ic_pe.xml" value="0.1925" />
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/ic_star.xml" value="0.1925" />
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/more_button_background.xml" value="0.1925" />
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/more_button_state.xml" value="0.1925" />
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/textview_background_container.xml" value="0.1925" />
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/layout-v31/fragment_stock_overview.xml" value="0.11499493414387031" />
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/layout/fragment_stock_chart.xml" value="0.264" />
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/layout/fragment_stock_dividends.xml" value="0.21784420289855072" />
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/layout/fragment_stock_key_statistic.xml" value="0.23645833333333333" />
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/layout/fragment_stock_list.xml" value="0.21784420289855072" />
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/layout/fragment_stock_overview.xml" value="0.2969543147208122" />
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/layout/fragment_stock_search.xml" value="0.23645833333333333" />
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/layout/item_dividends.xml" value="0.522342064714946" />
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/layout/item_stock_list.xml" value="0.21784420289855072" />
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/layout/item_stock_search.xml" value="0.19401709401709402" />
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/layout/shimmer_placeholder_overview_stock.xml" value="0.264" />
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/layout/test.xml" value="1.0" />
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/layout/test_overview.xml" value="0.264" />
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/menu/bottom_menu.xml" value="0.23645833333333333" />
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/menu/fragment_bottom_menu.xml" value="0.23645833333333333" />
         <entry key="..\:/Android Projects/My_projects/Stocks/app/src/main/res/drawable/bottom_menu.xml" value="0.1195" />

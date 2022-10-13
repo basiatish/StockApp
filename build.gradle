@@ -4,9 +4,9 @@ buildscript {
         kotlin_version = "1.5.21"
         material_design = "1.4.0"
         appcompat_version = '1.2.0'
-        constraintlayout_version = '2.0.4'
-        room = '2.3.0'
-        lifecycle = '2.3.1'
+        constraintlayout_version = '2.1.4'
+        room = '2.4.3'
+        lifecycle = '2.5.1'
     }
     repositories {
         google()

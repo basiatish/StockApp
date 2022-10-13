@@ -57,6 +57,12 @@ interface StocksApiService {
         @Query(value = "apikey", encoded = true) apiKey: String
     ): MutableList<CompanyProfile>
 
+    @GET("v3/quote/{name}")
+    suspend fun getCompanyQuote(
+        @Path(value = "name", encoded = true) compName: String,
+        @Query(value = "apikey", encoded = true) apiKey: String
+    ) : MutableList<CompanyQuote>
+
     @GET("v3/historical-price-full/stock_dividend/{name}")
     suspend fun getCompanyDividends(
         @Path(value = "name", encoded = true) compName: String,

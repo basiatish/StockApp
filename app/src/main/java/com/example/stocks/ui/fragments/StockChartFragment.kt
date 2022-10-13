@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.stocks.databinding.FragmentStockChartBinding
+import com.example.stocks.viewmodels.StockChartViewModel
 import com.example.stocks.viewmodels.StockOverViewViewModel
 import com.tradingview.lightweightcharts.api.chart.models.color.surface.SolidColor
 import com.tradingview.lightweightcharts.api.chart.models.color.toIntColor
@@ -30,7 +31,7 @@ class StockChartFragment : Fragment() {
 
     private lateinit var chart: ChartsView
 
-    private val viewModel: StockOverViewViewModel by activityViewModels()
+    private val viewModel: StockChartViewModel by activityViewModels()
 
     private lateinit var lineSeries: SeriesApi
 

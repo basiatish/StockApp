@@ -1,338 +1,234 @@
 package com.example.stocks.ui.fragments
 
-import android.graphics.Typeface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.NavigationUI
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.stocks.*
+import com.example.stocks.adapters.StockDividendsAdapter
 import com.example.stocks.databinding.FragmentStockOverviewBinding
 import com.example.stocks.models.remote.CompanyProfile
-import com.example.stocks.models.remote.StockChart
-import com.example.stocks.models.remote.StockDailyPriceHeader
-import com.example.stocks.models.remote.StockYearlyPriceHeader
-import com.example.stocks.ui.chart.linechart.MarkerView
-import com.example.stocks.utils.network.StockApiStatus
-import com.example.stocks.utils.chart.linechart.LineChartValueFormatter
+import com.example.stocks.models.remote.CompanyQuote
 import com.example.stocks.viewmodels.StockOverViewViewModel
-import com.github.mikephil.charting.charts.LineChart
-import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.components.YAxis
-import com.github.mikephil.charting.data.LineData
-import com.github.mikephil.charting.data.LineDataSet
-import com.google.android.material.bottomappbar.BottomAppBar
+import kotlin.math.roundToInt
 
 class StockOverViewFragment: Fragment() {
 
-    private val viewModel: StockOverViewViewModel by activityViewModels()
+    private val viewModel: StockOverViewViewModel by viewModels()
 
     private val navArgs: StockOverViewFragmentArgs by navArgs()
 
     private var _binding: FragmentStockOverviewBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var chart: LineChart
-    private lateinit var range: String
-    private var lineColor: Int = 0
-    private var gridColor: Int = 0
-    private var lastClosePrice: Float = 0F
-    private var closePrice: Boolean = false
+    private lateinit var adapter: StockDividendsAdapter
+    private lateinit var layoutManager: GridLayoutManager
+
+    private lateinit var compName: String
+    private lateinit var shortName: String
+    private var week52Low: String = ""
+    private var week52High: String = ""
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        compName = navArgs.name
+        shortName = navArgs.shortName
+        viewModel.getCompanyProfile(shortName)
+        viewModel.getCompanyQuote(shortName)
+        viewModel.getCompanyDividends(shortName)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {  
+    ): View? {
         _binding = FragmentStockOverviewBinding.inflate(inflater, container, false)
-        //viewModel.getChartData("1day", navArgs.shortName)
-        viewModel.getCompanyProfile(navArgs.shortName)
-        viewModel.getCompanyDividends(navArgs.shortName)
-        range = "1day"
-        lineColor = requireContext().getColor(R.color.orange)
-        gridColor = requireContext().getColor(R.color.light_grey)
+//        binding.keyDividendDivider.visibility = View.GONE
+//        binding.dividends.visibility = View.GONE
+//        binding.moreBtn.visibility = View.GONE
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        val navbar = requireActivity().findViewById<BottomAppBar>(R.id.btm_bar)
-//        navbar.hideOnScroll = false
+        adapter = StockDividendsAdapter()
+        binding.dividendsView.adapter = adapter
+        layoutManager = GridLayoutManager(this.context, 1)
+        binding.dividendsView.layoutManager = layoutManager
 
-        childFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, StockKeyStatisticFragment()).commit()
-        chart = binding.chart
-        viewModel.priceChart.observe(this.viewLifecycleOwner) {
-            if (it.isNotEmpty()) {
-                //setChart(it, listOf(), listOf())
-                //setPrice(it)
-            }
+        setupObservers()
+
+        binding.moreBtn.setOnClickListener {
+            if (!viewModel.companyDividends.value.isNullOrEmpty()) {
+                viewModel.getDividendsList()
+             }
         }
-        viewModel.priceChartDaily.observe(this.viewLifecycleOwner) {
-            if (it.isNotEmpty()) {
-                //setChart(listOf(), it, listOf())
-            }
-        }
-        viewModel.priceChartYearly.observe(this.viewLifecycleOwner) {
-            if (it.isNotEmpty()) {
-                //setChart(listOf(), listOf(), it)
-            }
-        }
-        viewModel.status.observe(this.viewLifecycleOwner) {
-            if (it == StockApiStatus.ERROR) {
-                setErrorMessage()
-            }
-        }
-        viewModel.companyProfile.observe(this.viewLifecycleOwner) {
-            if (it.isNotEmpty()) {
-                loadCompanyLogo(it)
-            }
-        }
+
+//        val constraint = binding.keyAboutDivider.layoutParams as ConstraintLayout.LayoutParams
+//        constraint.topToBottom = binding.volumeStat.id
+
+//        viewModel.companyProfile.observe(this.viewLifecycleOwner) {
+//            if (it.isNotEmpty()) {
+//                loadCompanyLogo(it)
+//            }
+//        }
         binding.backBtn.setOnClickListener {
             NavigationUI.navigateUp(findNavController(), null)
         }
-        binding.btn1m.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                viewModel.getChartData("1min", navArgs.shortName)
-                range = "1min"
-            }
-        }
-        binding.btn5m.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                viewModel.getChartData("5min", navArgs.shortName)
-                range = "5min"
-            }
-        }
-        binding.btn15m.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                viewModel.getChartData("15min", navArgs.shortName)
-                range = "15min"
-            }
-        }
-        binding.btn1h.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                viewModel.getChartData("1hour", navArgs.shortName)
-                range = "1hour"
-            }
-        }
-        binding.btn4h.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                viewModel.getChartData("4hour", navArgs.shortName)
-                range = "4hour"
-            }
-        }
-        binding.btn1d.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                viewModel.getChartData("1day", navArgs.shortName)
-                range = "1day"
-            }
-        }
-        binding.btn5d.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                viewModel.getChartData("1week", navArgs.shortName)
-                range = "1week"
-            }
-        }
-        binding.btnAll.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                viewModel.getChartData("all", navArgs.shortName)
-                range = "all"
-            }
-        }
-        binding.overview.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                childFragmentManager.beginTransaction().replace(
-                    R.id.fragment_container,
-                StockKeyStatisticFragment()
-                ).commit()
-            }
-        }
-        binding.dividend.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                childFragmentManager.beginTransaction().replace(
-                    R.id.fragment_container,
-                StockDividendsFragment()
-                ).commit()
-            }
-        }
-        binding.about.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                childFragmentManager.beginTransaction().replace(
-                    R.id.fragment_container,
-                StockAboutFragment()
-                ).commit()
-            }
-        }
-        binding.refresh.setOnRefreshListener {
-            viewModel.getChartData(range, navArgs.shortName)
-            viewModel.getCompanyProfile(navArgs.shortName)
-            viewModel.getCompanyDividends(navArgs.shortName)
-            binding.refresh.isRefreshing = false
-        }
 
-        binding.compName.text = formattedCompanyName(navArgs.name)
+//        viewModel.companyProfile.observe(this.viewLifecycleOwner) { profile ->
+//            if (!profile.isNullOrEmpty()) {
+//                topBarBind()
+//                loadCompanyLogo(profile)
+//            }
+//        }
+
+//        binding.refresh.setOnRefreshListener {
+//            viewModel.getChartData(range, navArgs.shortName)
+//            viewModel.getCompanyProfile(navArgs.shortName)
+//            viewModel.getCompanyDividends(navArgs.shortName)
+//            binding.refresh.isRefreshing = false
+//        }
+    }
+
+    private fun setupObservers() {
+        viewModel.companyProfile.observe(this.viewLifecycleOwner) {
+            if (!it.isNullOrEmpty()) {
+                week52High = ""
+                week52Low = ""
+                loadCompanyLogo(it)
+                rangeBetaBind(it)
+                topBarBind()
+                aboutBind(it)
+            }
+        }
+        viewModel.companyQuote.observe(this.viewLifecycleOwner) {
+            if (!it.isNullOrEmpty()) {
+                statBind(it)
+            }
+        }
+        viewModel.companyDividends.observe(this.viewLifecycleOwner) {
+            if (!it.isNullOrEmpty()) {
+                viewModel.getDividendsList()
+            }
+        }
+        viewModel.companyDividendsList.observe(this.viewLifecycleOwner) {
+            if (!it.isNullOrEmpty() && it[0].dividend != 0.0) {
+                adapter.submitList(it)
+            } else {
+                deleteDividendsView()
+            }
+        }
+    }
+
+    private fun topBarBind() {
+        if (compName.length > 22) {
+            compName = compName.substring(0, 19).trim() + "..."
+        }
+        binding.compName.text = compName
+    }
+
+    private fun statBind(quote: MutableList<CompanyQuote>) {
+        binding.apply {
+            stockPrice.text = "$ ${cutValueZeros(quote[0].price ?: 0.0)}"
+            priceChange.apply {
+                val change = quote[0].change ?: 0.0
+                text = if(change < 0) cutValueZeros(change) else "+${cutValueZeros(change)}"
+                if (change >= 0) setTextColor(resources.getColor(R.color.green))
+                else setTextColor(resources.getColor(R.color.red))
+            }
+            pricePercent.apply {
+                val changesPercentage = quote[0].changesPercentage ?: 0.0
+                text = "(${cutValueZeros(changesPercentage)}%)"
+                if (changesPercentage > 0) setTextColor(resources.getColor(R.color.green))
+                else setTextColor(resources.getColor(R.color.red))
+            }
+            highPrice.text = cutValueZeros(quote[0].dayHigh ?: 0.0)
+            lowPrice.text = cutValueZeros(quote[0].dayLow ?: 0.0)
+            volValue.text = formattedValue(quote[0].volume ?: 0.0)
+            marketCapValue.text = formattedValue(quote[0].marketCap ?: 0.0)
+            avgVolumeValue.text = formattedValue(quote[0].avgVolume ?: 0.0)
+            peValue.text = cutValueZeros(quote[0].pe ?: 0.0)
+        }
+    }
+
+    private fun rangeBetaBind(profile: MutableList<CompanyProfile>) {
+        formattedRange(profile[0].range ?: "")
+        binding.apply {
+            high52w.text = cutValueZeros(week52High.toDouble() ?: 0.0)
+            low52w.text = cutValueZeros(week52Low.toDouble() ?: 0.0)
+            betaValue.text = cutValueZeros(profile[0].beta ?: 0.0)
+        }
+    }
+
+    private fun aboutBind(value: MutableList<CompanyProfile>) {
+        val profile = value[0]
+        binding.apply {
+            symbol.text = profile.symbol
+            exchange.text = profile.exchange
+            industry.text = profile.industry
+            sector.text = profile.sector
+            country.text = profile.country
+            ceo.text = profile.ceo
+            description.text = profile.description
+        }
     }
 
     private fun loadCompanyLogo(profile: MutableList<CompanyProfile>) {
         Glide.with(requireContext()).load(profile[0].image).error(R.drawable.ic_warning)
-            .centerCrop().circleCrop().
-            into(binding.compLogo)
+            .centerCrop().into(binding.compLogo)
+    }
+    
+    private fun deleteDividendsView() {
+        binding.keyDividendDivider.visibility = View.GONE
+        binding.dividendsView.visibility = View.GONE
+        binding.moreBtn.visibility = View.GONE
+        val constraint = binding.keyAboutDivider.layoutParams as ConstraintLayout.LayoutParams
+        constraint.topToBottom = binding.volumeStat.id
     }
 
-    private fun formattedCompanyName(compName: String): String {
-        return when {
-            compName.length > 15 -> {
-                "${compName.subSequence(0, 15).trim()}..."
+    private fun formattedValue(value: Double): String {
+        return when (value) {
+            in 1000.0..999999.0 -> "${(value / 10.0).roundToInt() / 100.0}K"
+            in 1000000.0..999999999.0 -> "${(value / 10000.0).roundToInt() / 100.0}M"
+            in 1000000000.0..999999999999.0 -> "${(value / 10000000.0).roundToInt() / 100.0}B"
+            in 1000000000000.0..999999999999999.0 -> "${(value / 10000000000.0).roundToInt() / 100.0}T"
+            0.0 -> "—"
+            else -> "$value"
+        }
+    }
+
+    private fun cutValueZeros(value: Double): String {
+        return when (value) {
+            0.0 -> "—"
+            else -> "${(value * 100.0).roundToInt() / 100.0}"
+        }
+    }
+
+    private fun formattedRange(range: String) {
+        var i = 0
+        var flag = false
+        while (i <= range.length - 1) {
+            if (range[i] == '-') {
+                flag = true
+                i++
             }
-            else -> compName
+            if (!flag) week52Low += range[i] else week52High += range[i]
+            i++
         }
-
-    }
-
-    override fun onStop() {
-        super.onStop()
-        viewModel.clearData()
-    }
-
-    private fun setErrorMessage() {
-        Toast.makeText(requireContext(), "Something went wrong!", Toast.LENGTH_SHORT).show()
-    }
-
-    private fun setPrice(price: MutableList<StockChart>) {
-        val currentPrice = price[0].close
-        if (!closePrice) {
-            lastClosePrice = viewModel.getClosePrice(price)
-            if (lastClosePrice == 0f) {
-                lastClosePrice = currentPrice!!
-            }
-        }
-        closePrice = true
-        if (lastClosePrice < currentPrice!!) {
-            binding.priceChange.text = getString(
-                R.string.price_change_above,
-                currentPrice - lastClosePrice )
-            binding.priceChange.setTextColor(requireContext().getColor(R.color.green))
-            binding.pricePercent.text = getString(
-                R.string.price_change_percent,
-                    (currentPrice - lastClosePrice) / currentPrice * 100)
-            binding.pricePercent.setTextColor(requireContext().getColor(R.color.green))
-        } else if (lastClosePrice > currentPrice) {
-            binding.priceChange.text = getString(
-                R.string.price_change_below,
-                    currentPrice - lastClosePrice)
-            binding.priceChange.setTextColor(requireContext().getColor(R.color.red))
-            binding.pricePercent.text = getString(
-                R.string.price_change_percent,
-                    (currentPrice - lastClosePrice) / currentPrice * 100)
-            binding.pricePercent.setTextColor(requireContext().getColor(R.color.red))
-        } else if (lastClosePrice == currentPrice) {
-            binding.priceChange.text = getString(
-                R.string.price_change_equals,
-                currentPrice - lastClosePrice)
-            binding.pricePercent.text = getString(
-                R.string.price_change_percent,
-                (currentPrice - lastClosePrice) / currentPrice * 100)
-        }
-        binding.stockPrice.text = getString(R.string.price, currentPrice)
-    }
-
-    private fun setChart(price: List<StockChart> = listOf(),
-                         priceDaily: List<StockDailyPriceHeader> = listOf(),
-                         priceChartYearly: List<StockYearlyPriceHeader> = listOf()) {
-        chart.fitScreen()
-        chart.setTouchEnabled(true)
-        chart.isDragEnabled = true
-        chart.isDragDecelerationEnabled = false
-        chart.setScaleEnabled(true)
-        chart.setPinchZoom(true)
-        chart.setDrawGridBackground(false)
-        chart.maxHighlightDistance = 100f
-        chart.isScaleXEnabled = true
-        chart.isScaleYEnabled = false
-        chart.setDrawBorders(false)
-        chart.description.text = ""
-        chart.legend.isEnabled = false
-        chart.isDoubleTapToZoomEnabled = false
-        chart.isHighlightPerDragEnabled = false
-        chart.isHighlightPerTapEnabled = true
-        val x = chart.xAxis
-        x.isEnabled = true
-        x.setDrawGridLines(false)
-
-        val y = chart.axisRight
-        y.isEnabled = true
-        chart.axisLeft.isEnabled = false
-
-        x.valueFormatter = LineChartValueFormatter(viewModel.getLineChartDate(range), range)
-
-        x.position = XAxis.XAxisPosition.BOTTOM
-        x.textSize = 8f
-        x.typeface = Typeface.SANS_SERIF
-        x.labelRotationAngle = -30f
-        y.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART)
-        y.textSize = 8f
-        y.typeface = Typeface.SANS_SERIF
-        y.enableGridDashedLine(10f, 10f, 0f)
-        y.gridLineWidth = 1f
-
-        setupChartData()
-
-        chart.isHighlightPerTapEnabled = true
-        chart.setDrawMarkers(false)
-        chart.axisLeft.gridColor = gridColor
-        chart.axisLeft.gridLineWidth = 3f
-        chart.isHighlightPerDragEnabled = true
-        chart.dragDecelerationFrictionCoef = 0.3f
-        chart.setDrawMarkerViews(true)
-
-        val marker: MarkerView
-        if (range == "1day" || range == "1week") {
-            marker = MarkerView(requireContext(), R.layout.custom_marker_view, price.reversed(),
-                priceDaily, priceChartYearly, range)
-        } else if (range == "all") {
-            marker = MarkerView(requireContext(), R.layout.custom_marker_view, price.reversed(),
-                priceDaily, priceChartYearly, range)
-        } else {
-            marker = MarkerView(requireContext(), R.layout.custom_marker_view, price.reversed(),
-                priceDaily, priceChartYearly, range)
-        }
-
-        chart.setMarker(marker)
-        chart.isAutoScaleMinMaxEnabled = true
-        chart.setKeepPositionOnRotation(true)
-        chart.extraBottomOffset = 5f
-        chart.setVisibleXRangeMinimum(20f)
-        chart.animateX(2000)
-        chart.notifyDataSetChanged()
-        chart.invalidate()
-    }
-
-    private fun setupChartData() {
-        val dataSet = LineDataSet(viewModel.getLineChart(range), "Label")
-        dataSet.mode = LineDataSet.Mode.CUBIC_BEZIER
-        dataSet.cubicIntensity = 0.2f
-        dataSet.setDrawCircles(false)
-        dataSet.lineWidth = 3f
-        dataSet.setColor(lineColor, 255)
-        dataSet.setDrawValues(false)
-        dataSet.highlightLineWidth = 2f
-        dataSet.highLightColor = gridColor
-        dataSet.setDrawFilled(true)
-        dataSet.fillColor = lineColor
-        dataSet.fillAlpha = 50
-        dataSet.setCircleColor(lineColor)
-        dataSet.setDrawHorizontalHighlightIndicator(false)
-        dataSet.notifyDataSetChanged()
-
-        val lineData = LineData(dataSet)
-        chart.data = lineData
-        lineData.notifyDataChanged()
     }
 }

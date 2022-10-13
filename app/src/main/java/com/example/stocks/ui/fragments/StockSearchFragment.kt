@@ -86,6 +86,7 @@ class StockSearchFragment() : Fragment(), OnItemClick {
 
         binding.clearText.setOnClickListener {
             binding.searchBar.text?.clear()
+            binding.searchBar.isFocused
         }
 
         viewModel.status.observe(this.viewLifecycleOwner) {

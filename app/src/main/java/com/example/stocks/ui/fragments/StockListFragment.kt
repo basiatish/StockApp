@@ -12,6 +12,7 @@ import com.example.stocks.databinding.FragmentStockListBinding
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import java.util.*
 
 class StockListFragment() : Fragment() {
 
@@ -29,6 +30,11 @@ class StockListFragment() : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
+//        val pound = Currency.getInstance("USD");
+//        val symbol = pound.symbol;
+//        println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@$symbol")
 
 //        val navbar = requireActivity().findViewById<BottomAppBar>(R.id.btm_bar)
 //        navbar.hideOnScroll = true

@@ -1,139 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="8dp">
+    android:layout_marginBottom="20dp"
+    android:orientation="vertical">
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/refresh"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/back_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="16dp"
+                android:background="@null"
+                android:src="@drawable/ic_arrow_back"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/comp_logo"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:shapeAppearanceOverlay="@style/ImageLogo"
+                    tools:src="@drawable/ic_apple_logo" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/comp_name"
+                    style="@style/TextApp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:gravity="center_horizontal"
+                    android:singleLine="true"
+                    android:textAppearance="?attr/textAppearanceHeadline6"
+                    app:layout_constraintLeft_toRightOf="@id/comp_logo"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    tools:text="Apple Inc." />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="8dp"
+                android:background="@null"
+                android:src="@drawable/ic_star"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/orange"
+            android:layout_marginTop="4dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_below="@id/header" />
+
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_below="@id/divider"
+            app:layout_constraintTop_toBottomOf="@+id/divider">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/top_bar"
+                    android:id="@+id/price_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
                     app:layout_constraintTop_toTopOf="parent">
-
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/back_btn"
-                        style="@style/TextApp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/custom_back_button"
-                        android:clickable="true"
-                        android:drawableStart="@drawable/ic_arrow_back"
-                        android:drawableTint="@color/black"
-                        android:enabled="true"
-                        android:focusable="true"
-                        android:text="@string/back"
-                        android:textAlignment="textStart"
-                        app:layout_constraintBottom_toBottomOf="@id/top_bar"
-                        app:layout_constraintLeft_toLeftOf="@id/top_bar"
-                        app:layout_constraintTop_toTopOf="@id/top_bar" />
-
-                    <androidx.appcompat.widget.LinearLayoutCompat
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:layout_gravity="center_vertical"
-                            android:elevation="20dp"
-                            app:cardCornerRadius="20dp">
-
-                            <androidx.appcompat.widget.AppCompatImageView
-                                android:id="@+id/comp_logo"
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:layout_gravity="center"
-                                tools:src="@drawable/ic_apple_logo" />
-
-                        </androidx.cardview.widget.CardView>
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/comp_name"
-                            style="@style/TextApp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginStart="8dp"
-                            android:gravity="center_horizontal"
-                            android:singleLine="true"
-                            android:textAppearance="?attr/textAppearanceHeadline6"
-                            tools:text="Apple Inc." />
-
-                    </androidx.appcompat.widget.LinearLayoutCompat>
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <View
-                    android:id="@+id/divider"
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:layout_marginTop="2dp"
-                    android:background="@color/light_grey"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/top_bar" />
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/price_info"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/divider">
-
-                    <TextView
-                        style="@style/TextApp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:text="@string/chart"
-                        android:textAppearance="?attr/textAppearanceHeadline6"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/stock_price"
                         style="@style/TextApp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
+                        android:layout_marginStart="16dp"
+                        android:text="$ 138.08"
                         android:textAppearance="?attr/textAppearanceHeadline6"
-                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        tools:text="$ 170.08" />
+                        tools:text="$ 138.08" />
 
                     <TextView
                         android:id="@+id/price_change"
                         style="@style/TextApp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="4dp"
-                        android:textSize="16sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintRight_toLeftOf="@id/price_percent"
+                        android:layout_marginEnd="2dp"
+                        android:text="+2.05"
+                        app:layout_constraintLeft_toLeftOf="@+id/stock_price"
+                        app:layout_constraintTop_toBottomOf="@+id/stock_price"
                         tools:text="+2.05"
                         tools:textColor="@color/green" />
 
@@ -142,153 +135,780 @@
                         style="@style/TextApp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="4dp"
-                        android:textSize="16sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintRight_toRightOf="@id/stock_price"
+                        android:text="(2.16%)"
+                        app:layout_constraintLeft_toRightOf="@+id/price_change"
                         app:layout_constraintTop_toBottomOf="@id/stock_price"
-                        tools:text="(0.5%)"
+                        tools:text="(2.16%)"
                         tools:textColor="@color/green" />
+
+                    <TextView
+                        android:id="@+id/high"
+                        style="@style/TextApp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:text="High:"
+                        android:textColor="@color/grey_700"
+                        app:layout_constraintRight_toLeftOf="@+id/high_price"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="High:"/>
+
+                    <TextView
+                        android:id="@+id/high_price"
+                        style="@style/TextApp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:text="141.91"
+                        android:textColor="@color/grey_700"
+                        app:layout_constraintBottom_toBottomOf="@+id/high"
+                        app:layout_constraintRight_toRightOf="parent"
+                        tools:text="141.91" />
+
+                    <TextView
+                        android:id="@+id/low"
+                        style="@style/TextApp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:text="Low:"
+                        android:textColor="@color/grey_700"
+                        app:layout_constraintLeft_toLeftOf="@id/high"
+                        app:layout_constraintTop_toBottomOf="@+id/high"
+                        tools:text="Low:"/>
+
+                    <TextView
+                        android:id="@+id/low_price"
+                        style="@style/TextApp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:text="136.58"
+                        android:textColor="@color/grey_700"
+                        app:layout_constraintLeft_toLeftOf="@id/high_price"
+                        app:layout_constraintTop_toBottomOf="@id/high_price"
+                        tools:text="136.58"/>
+
+                    <TextView
+                        android:id="@+id/vol"
+                        style="@style/TextApp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Vol:"
+                        android:textColor="@color/grey_700"
+                        app:layout_constraintLeft_toLeftOf="@+id/low"
+                        app:layout_constraintTop_toBottomOf="@id/low"
+                        tools:text="Vol:"/>
+
+                    <TextView
+                        android:id="@+id/vol_value"
+                        style="@style/TextApp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:text="1.1M"
+                        android:textColor="@color/grey_700"
+                        app:layout_constraintLeft_toLeftOf="@id/low_price"
+                        app:layout_constraintTop_toBottomOf="@id/low_price"
+                        tools:text="1.1M"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <com.github.mikephil.charting.charts.LineChart
-                    android:id="@+id/chart"
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/key_stat_divider"
                     android:layout_width="match_parent"
-                    android:layout_height="350dp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/price_info" />
-
-                <com.google.android.material.chip.ChipGroup
-                    android:id="@+id/buttons_panel"
-                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="8dp"
+                    android:weightSum="100"
+                    app:layout_constraintTop_toBottomOf="@+id/price_container">
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="40"
+                        android:background="@color/orange" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/Divider"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="20"
+                        android:text="Key Statistics"
+                        tools:text="Key Statistics" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="40"
+                        android:background="@color/orange" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/high_stat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="24dp"
                     android:layout_marginTop="8dp"
+                    android:background="@drawable/custom_item_list_background"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/chart"
-                    app:selectionRequired="true"
-                    app:singleLine="true"
-                    app:singleSelection="true">
+                    app:layout_constraintRight_toLeftOf="@id/low_stat"
+                    app:layout_constraintTop_toBottomOf="@+id/key_stat_divider">
 
-                    <com.google.android.material.chip.Chip
-                        android:id="@+id/btn_1m"
-                        style="@style/CustomChipButton"
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/image_green_bar"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="4dp"
-                        android:checked="true"
-                        android:text="@string/_1min" />
+                        android:layout_marginStart="40dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="40dp"
+                        android:src="@drawable/ic_bar"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                    <com.google.android.material.chip.Chip
-                        android:id="@+id/btn_5m"
-                        style="@style/CustomChipButton"
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/text_high"
+                        style="@style/StatisticText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="4dp"
-                        android:text="@string/_5m" />
+                        android:text="52w High"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/image_green_bar"
+                        tools:text="52w High" />
 
-                    <com.google.android.material.chip.Chip
-                        android:id="@+id/btn_15m"
-                        style="@style/CustomChipButton"
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/TextApp"
+                        android:id="@+id/high_52w"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="4dp"
-                        android:text="@string/_15" />
+                        android:layout_marginStart="30dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="30dp"
+                        android:paddingBottom="16dp"
+                        android:text="152.37"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/text_high"
+                        tools:text="152.37" />
 
-                    <com.google.android.material.chip.Chip
-                        android:id="@+id/btn_1h"
-                        style="@style/CustomChipButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="4dp"
-                        android:text="@string/_1h" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <com.google.android.material.chip.Chip
-                        android:id="@+id/btn_4h"
-                        style="@style/CustomChipButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="4dp"
-                        android:text="@string/_4h" />
-
-                    <com.google.android.material.chip.Chip
-                        android:id="@+id/btn_1d"
-                        style="@style/CustomChipButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="4dp"
-                        android:text="@string/_1d" />
-
-                    <com.google.android.material.chip.Chip
-                        android:id="@+id/btn_5d"
-                        style="@style/CustomChipButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="4dp"
-                        android:text="@string/_1W" />
-
-                    <com.google.android.material.chip.Chip
-                        android:id="@+id/btn_all"
-                        style="@style/CustomChipButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/all" />
-
-                </com.google.android.material.chip.ChipGroup>
-
-                <com.google.android.material.chip.ChipGroup
-                    android:id="@+id/fragment_btn"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/low_stat"
                     android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/custom_item_list_background"
+                    app:layout_constraintLeft_toRightOf="@+id/high_stat"
+                    app:layout_constraintRight_toLeftOf="@+id/market_cap_stat"
+                    app:layout_constraintTop_toBottomOf="@+id/key_stat_divider">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/image_red_bar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="40dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="40dp"
+                        android:src="@drawable/ic_red_bar"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/text_low"
+                        style="@style/StatisticText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="52w Low"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/image_red_bar"
+                        tools:text="52w Low" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/TextApp"
+                        android:id="@+id/low_52w"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="30dp"
+                        android:paddingBottom="16dp"
+                        android:text="135.68"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/text_low"
+                        tools:text="135.68" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/market_cap_stat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="24dp"
+                    android:background="@drawable/custom_item_list_background"
+                    app:layout_constraintLeft_toRightOf="@+id/low_stat"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/key_stat_divider">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/image_market_cap"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="40dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="40dp"
+                        android:src="@drawable/ic_market_cap"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/text_market_cap"
+                        style="@style/StatisticText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Market Cap"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/image_market_cap"
+                        tools:text="Market Cap" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/TextApp"
+                        android:id="@+id/market_cap_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:paddingBottom="16dp"
+                        android:text="2.8T"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/text_market_cap"
+                        tools:text="2.8T" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/volume_stat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/custom_item_list_background"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@id/low_stat"
+                    app:layout_constraintTop_toBottomOf="@+id/high_stat">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/image_bars"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="40dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="40dp"
+                        android:src="@drawable/ic_bars"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/text_volume"
+                        style="@style/StatisticText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Avg. Volume"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/image_bars"
+                        tools:text="Avg. Volume" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/TextApp"
+                        android:id="@+id/avg_volume_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:paddingBottom="16dp"
+                        android:text="111.8M"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/text_volume"
+                        tools:text="111.8M" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/pe_stat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:background="@drawable/custom_item_list_background"
+                    app:layout_constraintLeft_toRightOf="@id/volume_stat"
+                    app:layout_constraintRight_toLeftOf="@id/beta_stat"
+                    app:layout_constraintTop_toTopOf="@+id/volume_stat">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/image_pe"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="40dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="40dp"
+                        android:src="@drawable/ic_pe"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/text_pe_ratio"
+                        style="@style/StatisticText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="P/E Ratio"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/image_pe"
+                        tools:text="P/E Ratio" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/TextApp"
+                        android:id="@+id/pe_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:paddingBottom="16dp"
+                        android:text="40.05"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/text_pe_ratio"
+                        tools:text="40.05" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/beta_stat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="24dp"
+                    android:background="@drawable/custom_item_list_background"
+                    app:layout_constraintLeft_toRightOf="@id/pe_stat"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/volume_stat">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/image_beta"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="40dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="40dp"
+                        android:src="@drawable/ic_beta"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/text_beta"
+                        style="@style/StatisticText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Beta"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/image_beta"
+                        tools:text="Beta" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/TextApp"
+                        android:id="@+id/beta_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:paddingBottom="16dp"
+                        android:text="1.20"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/text_beta"
+                        tools:text="1.20" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/key_dividend_divider"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
                     android:layout_marginTop="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:weightSum="100"
+                    app:layout_constraintTop_toBottomOf="@+id/volume_stat">
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="40"
+                        android:background="@color/orange" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/Divider"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="20"
+                        android:text="Dividends"
+                        tools:text="Dividends" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="40"
+                        android:background="@color/orange" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/dividends_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="24dp"
+                    app:layout_constraintTop_toBottomOf="@+id/key_dividend_divider"
+                    tools:itemCount="5"
+                    tools:listitem="@layout/item_dividends" />
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/more_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:background="@drawable/more_button_background"
+                    android:paddingStart="16dp"
+                    android:paddingTop="4dp"
+                    android:paddingEnd="16dp"
+                    android:paddingBottom="4dp"
+                    android:src="@drawable/ic_more"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/buttons_panel"
-                    app:selectionRequired="true"
-                    app:singleLine="true"
-                    app:singleSelection="true">
+                    app:layout_constraintTop_toBottomOf="@id/dividends_view" />
 
-                    <com.google.android.material.chip.Chip
-                        android:id="@+id/overview"
-                        style="@style/CustomFragmentChip"
-                        android:layout_width="90dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="10dp"
-                        android:checked="true"
-                        android:text="@string/overview" />
-
-                    <com.google.android.material.chip.Chip
-                        android:id="@+id/dividend"
-                        style="@style/CustomFragmentChip"
-                        android:layout_width="90dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="10dp"
-                        android:text="@string/dividends" />
-
-                    <com.google.android.material.chip.Chip
-                        android:id="@+id/about"
-                        style="@style/CustomFragmentChip"
-                        android:layout_width="90dp"
-                        android:layout_height="wrap_content"
-                        android:text="@string/about" />
-
-                </com.google.android.material.chip.ChipGroup>
-
-                <androidx.fragment.app.FragmentContainerView
-                    android:id="@+id/fragment_container"
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/key_about_divider"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:weightSum="100"
+                    app:layout_constraintTop_toBottomOf="@+id/more_btn">
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="40"
+                        android:background="@color/orange" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/Divider"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="20"
+                        android:text="About"
+                        tools:text="About" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="40"
+                        android:background="@color/orange" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/about_symbol"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
                     android:layout_marginTop="8dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/fragment_btn" />
+                    android:layout_marginEnd="24dp"
+                    android:background="@drawable/custom_item_list_background"
+                    app:layout_constraintTop_toBottomOf="@+id/key_about_divider">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/TextApp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:text="Symbol"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="Symbol" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/TextApp"
+                        android:id="@+id/symbol"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginBottom="10dp"
+                        android:text="APPL"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="APPL" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/about_exchange"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="24dp"
+                    android:background="@drawable/custom_item_list_background"
+                    app:layout_constraintTop_toBottomOf="@+id/about_symbol">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/TextApp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:text="Exchange"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="Exchange" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/TextApp"
+                        android:id="@+id/exchange"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginBottom="10dp"
+                        android:text="NASDAQ"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="NASDAQ" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/about_industry"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="24dp"
+                    android:background="@drawable/custom_item_list_background"
+                    app:layout_constraintTop_toBottomOf="@+id/about_exchange">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/TextApp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:text="Industry"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="Industry" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/TextApp"
+                        android:id="@+id/industry"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginBottom="10dp"
+                        android:text="Consumer Electronics"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="Consumer Electronics" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/about_sector"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="24dp"
+                    android:background="@drawable/custom_item_list_background"
+                    app:layout_constraintTop_toBottomOf="@+id/about_industry">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/TextApp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:text="Sector"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="Sector" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/TextApp"
+                        android:id="@+id/sector"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginBottom="10dp"
+                        android:text="Technology"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="Technology" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/about_country"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="24dp"
+                    android:background="@drawable/custom_item_list_background"
+                    app:layout_constraintTop_toBottomOf="@+id/about_sector">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/TextApp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:text="Country"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="Country" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/TextApp"
+                        android:id="@+id/country"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginBottom="10dp"
+                        android:text="US"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="US" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/about_ceo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="24dp"
+                    android:background="@drawable/custom_item_list_background"
+                    app:layout_constraintTop_toBottomOf="@+id/about_country">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/TextApp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:text="CEO"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="CEO" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/TextApp"
+                        android:id="@+id/ceo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginBottom="10dp"
+                        android:text="Mr. Timothy Cook"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="Mr. Timothy Cook" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/about_company"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginBottom="24dp"
+                    android:background="@drawable/custom_item_list_background"
+                    app:layout_constraintTop_toBottomOf="@+id/about_ceo">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/TextApp"
+                        android:id="@+id/description"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginBottom="10dp"
+                        android:breakStrategy="simple"
+                        android:inputType="textMultiLine"
+                        android:scrollHorizontally="false"
+                        android:hyphenationFrequency="none"
+                        android:text="Apple Inc. designs, manufactures, and markets smartphones, personal computers, tablets, wearables, and accessories worldwide. It also sells various related services. The company offers..."
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        tools:text="Apple Inc. designs, manufactures, and markets smartphones, personal computers, tablets, wearables, and accessories worldwide. It also sells various related services. The company offers..." />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.core.widget.NestedScrollView>
 
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </RelativeLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

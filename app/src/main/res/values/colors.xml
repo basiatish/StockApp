@@ -20,6 +20,7 @@
     <color name="grey">#D5D5D5</color>
     <color name="red">#CC2121</color>
     <color name="greyL">#D1D0D0</color>
+    <color name="grey_700">#B4B4B4</color>
 
     <color name="overviewFragment">#D5D5D5</color>
 </resources>

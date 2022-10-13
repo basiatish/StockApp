@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_enabled="true" android:state_pressed="false">
+        <shape android:shape="rectangle">
+            <stroke android:width="2dp" android:color="@color/orange"/>
+            <corners android:radius="10dp"/>
+        </shape>
+        <rotate android:fromDegrees="180" android:toDegrees="0"/>
+    </item>
+
+    <item android:state_enabled="true" android:state_pressed="true">
+        <shape android:shape="rectangle">
+            <stroke android:width="2dp" android:color="@color/orange"/>
+            <corners android:radius="10dp"/>
+        </shape>
+        <rotate android:fromDegrees="0" android:toDegrees="180"/>
+    </item>
+
+</selector>

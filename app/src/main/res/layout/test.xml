@@ -1,0 +1,554 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/back_btn"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="16dp"
+            android:background="@color/light_grey_2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/comp_logo"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:background="@color/light_grey_2"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/comp_name"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:background="@color/light_grey_2"
+                android:gravity="center_horizontal"
+                android:singleLine="true"
+                android:textAppearance="?attr/textAppearanceHeadline6"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/comp_logo"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:background="@null"
+            android:src="@drawable/ic_star"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/header"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="8dp"
+        android:background="@color/orange"
+        app:layout_constraintTop_toBottomOf="@id/header" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/price_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@id/divider">
+
+        <TextView
+            android:id="@+id/stock_price"
+            style="@style/TextApp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="$ 138.08"
+            android:textAppearance="?attr/textAppearanceHeadline6"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="$ 138.08" />
+
+        <TextView
+            android:id="@+id/price_change"
+            style="@style/TextApp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="2dp"
+            android:text="+2.05"
+            app:layout_constraintLeft_toLeftOf="@+id/stock_price"
+            app:layout_constraintTop_toBottomOf="@+id/stock_price"
+            tools:text="+2.05"
+            tools:textColor="@color/green" />
+
+        <TextView
+            android:id="@+id/price_percent"
+            style="@style/TextApp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="(2.16%)"
+            app:layout_constraintLeft_toRightOf="@+id/price_change"
+            app:layout_constraintTop_toBottomOf="@id/stock_price"
+            tools:text="(2.16%)"
+            tools:textColor="@color/green" />
+
+        <TextView
+            android:id="@+id/high"
+            style="@style/TextApp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="High:"
+            app:layout_constraintRight_toLeftOf="@+id/high_price"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="High:"
+            tools:textColor="@color/nav_button_inactive" />
+
+        <TextView
+            android:id="@+id/high_price"
+            style="@style/TextApp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:text="141.91"
+            app:layout_constraintBottom_toBottomOf="@+id/high"
+            app:layout_constraintRight_toRightOf="parent"
+            tools:text="141.91"
+            tools:textColor="@color/nav_button_inactive" />
+
+        <TextView
+            android:id="@+id/low"
+            style="@style/TextApp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="Low:"
+            app:layout_constraintLeft_toLeftOf="@id/high"
+            app:layout_constraintTop_toBottomOf="@+id/high"
+            tools:text="Low:"
+            tools:textColor="@color/nav_button_inactive" />
+
+        <TextView
+            android:id="@+id/low_price"
+            style="@style/TextApp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:text="136.58"
+            app:layout_constraintLeft_toLeftOf="@id/high_price"
+            app:layout_constraintTop_toBottomOf="@id/high_price"
+            tools:text="136.58"
+            tools:textColor="@color/nav_button_inactive" />
+
+        <TextView
+            android:id="@+id/vol"
+            style="@style/TextApp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Vol:"
+            app:layout_constraintLeft_toLeftOf="@+id/low"
+            app:layout_constraintTop_toBottomOf="@id/low"
+            tools:text="Vol:"
+            tools:textColor="@color/nav_button_inactive" />
+
+        <TextView
+            android:id="@+id/vol_value"
+            style="@style/TextApp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:text="1.1M"
+            app:layout_constraintLeft_toLeftOf="@id/low_price"
+            app:layout_constraintTop_toBottomOf="@id/low_price"
+            tools:text="1.1M"
+            tools:textColor="@color/nav_button_inactive" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/key_stat_divider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="8dp"
+        android:weightSum="100"
+        app:layout_constraintTop_toBottomOf="@+id/price_container">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="40"
+            android:background="@color/orange" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/Divider"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="20"
+            android:text="Key Statistics"
+            tools:text="Key Statistics" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="40"
+            android:background="@color/orange" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/high_stat"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/custom_item_list_background"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/low_stat"
+        app:layout_constraintTop_toBottomOf="@+id/key_stat_divider">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/image_green_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="40dp"
+            android:src="@drawable/ic_bar"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/text_high"
+            style="@style/StatisticText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="52w High"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/image_green_bar"
+            tools:text="52w High" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TextApp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="30dp"
+            android:paddingBottom="16dp"
+            android:text="152.37"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_high"
+            tools:text="152.37" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/low_stat"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/custom_item_list_background"
+        app:layout_constraintLeft_toRightOf="@+id/high_stat"
+        app:layout_constraintRight_toLeftOf="@+id/market_cap_stat"
+        app:layout_constraintTop_toBottomOf="@+id/key_stat_divider">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/image_red_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="40dp"
+            android:src="@drawable/ic_red_bar"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/text_low"
+            style="@style/StatisticText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="52w Low"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/image_red_bar"
+            tools:text="52w Low" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TextApp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="30dp"
+            android:paddingBottom="16dp"
+            android:text="135.68"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_low"
+            tools:text="135.68" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/market_cap_stat"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/custom_item_list_background"
+        app:layout_constraintLeft_toRightOf="@+id/low_stat"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/key_stat_divider">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/image_market_cap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="40dp"
+            android:src="@drawable/ic_market_cap"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/text_market_cap"
+            style="@style/StatisticText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Market Cap"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/image_market_cap"
+            tools:text="Market Cap" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TextApp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:paddingBottom="16dp"
+            android:text="2.8T"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_market_cap"
+            tools:text="2.8T" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/volume_stat"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/custom_item_list_background"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/low_stat"
+        app:layout_constraintTop_toBottomOf="@+id/high_stat">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/image_bars"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="40dp"
+            android:src="@drawable/ic_bars"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/text_volume"
+            style="@style/StatisticText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Avg. Volume"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/image_bars"
+            tools:text="Avg. Volume" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TextApp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:paddingBottom="16dp"
+            android:text="111.8M"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_volume"
+            tools:text="111.8M" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/pe_stat"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:background="@drawable/custom_item_list_background"
+        app:layout_constraintLeft_toRightOf="@id/volume_stat"
+        app:layout_constraintRight_toLeftOf="@id/beta_stat"
+        app:layout_constraintTop_toTopOf="@+id/volume_stat">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/image_pe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="40dp"
+            android:src="@drawable/ic_pe"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/text_pe_ratio"
+            style="@style/StatisticText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="P/E Ratio"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/image_pe"
+            tools:text="P/E Ratio" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TextApp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:paddingBottom="16dp"
+            android:text="40.05"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_pe_ratio"
+            tools:text="40.05" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/beta_stat"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/custom_item_list_background"
+        app:layout_constraintLeft_toRightOf="@id/pe_stat"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/volume_stat">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/image_beta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="40dp"
+            android:src="@drawable/ic_beta"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/text_beta"
+            style="@style/StatisticText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Beta"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/image_beta"
+            tools:text="Beta" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TextApp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:paddingBottom="16dp"
+            android:text="1.20"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_beta"
+            tools:text="1.20" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/key_dividend_divider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:weightSum="100"
+        app:layout_constraintTop_toBottomOf="@+id/volume_stat">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="40"
+            android:background="@color/orange" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/Divider"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="20"
+            android:text="Dividends"
+            tools:text="Dividends" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="40"
+            android:background="@color/orange" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

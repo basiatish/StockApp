@@ -13,6 +13,7 @@
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
 
+        <item name="backgroundColor">@color/white</item>
         <item name="colorPrimaryContainer">@color/orange</item>
         <item name="colorSurface">#B4B4B4</item>
         <item name="colorOnSurface">#B4B4B4</item>
@@ -24,6 +25,10 @@
     <style name="ImageLogo" parent="">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">10%</item>
+    </style>
+
+    <style name="ImageLogo.Background" parent="">
+        <item name="android:background">@color/white</item>
     </style>
 
     <style name="FloatingButton" parent="Widget.MaterialComponents.FloatingActionButton">
@@ -58,28 +63,24 @@
         <item name="android:gravity">center_horizontal</item>
         <item name="android:singleLine">true</item>
     </style>
-    
-    <style name="CustomChipButton" parent="Widget.MaterialComponents.Chip.Choice">
-        <item name="chipMinTouchTargetSize">2dp</item>
-        <item name="textStartPadding">0dp</item>
-        <item name="textEndPadding">0dp</item>
-        <item name="chipCornerRadius">5dp</item>
-        <item name="chipBackgroundColor">@color/chip_background_color</item>
-        <item name="fontFamily">@font/roboto</item>
-        <item name="android:textColor">@color/black</item>
+
+    <style name="ChartButton" parent="">
+        <item name="android:padding">8dp</item>
+        <item name="android:background">@drawable/button_chart_background</item>
+        <item name="android:layout_margin">8dp</item>
     </style>
 
-    <style name="CustomFragmentChip" parent="Widget.MaterialComponents.Chip.Choice">
-        <item name="chipMinTouchTargetSize">2dp</item>
-        <item name="minHeight">25dp</item>
-        <item name="textStartPadding">5dp</item>
-        <item name="textEndPadding">5dp</item>
-        <item name="android:textAlignment">center</item>
-        <item name="chipMinHeight">35dp</item>
-        <item name="chipCornerRadius">20dp</item>
-        <item name="chipBackgroundColor">@color/chip_background_color</item>
-        <item name="fontFamily">@font/roboto</item>
-        <item name="android:textColor">@color/black</item>
+    <style name="BottomSheet" parent="Widget.MaterialComponents.BottomSheet.Modal">
+        <item name="backgroundTint">@color/white</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingStart">24dp</item>
+        <item name="android:paddingEnd">24dp</item>
+        <item name="shapeAppearanceOverlay">@style/SheetCorners</item>
+    </style>
+
+    <style name="SheetCorners" parent="ShapeAppearance.MaterialComponents.LargeComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
     </style>
 
 </resources>

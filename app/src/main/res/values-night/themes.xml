@@ -47,17 +47,13 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
-    <style name="CustomFragmentChip" parent="Widget.MaterialComponents.Chip.Choice">
-        <item name="chipMinTouchTargetSize">2dp</item>
-        <item name="minHeight">25dp</item>
-        <item name="textStartPadding">5dp</item>
-        <item name="textEndPadding">5dp</item>
-        <item name="android:textAlignment">center</item>
-        <item name="chipMinHeight">35dp</item>
-        <item name="chipCornerRadius">20dp</item>
-        <item name="chipBackgroundColor">@color/chip_background_color</item>
-        <item name="fontFamily">@font/roboto</item>
-        <item name="android:textColor">@color/black</item>
+    <style name="ImageLogo" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">10%</item>
+    </style>
+
+    <style name="ImageLogo.Background" parent="">
+        <item name="android:background">#59FFFFFF</item>
     </style>
 
 </resources>

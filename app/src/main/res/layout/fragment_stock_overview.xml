@@ -2,6 +2,7 @@
 <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/refresh"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginBottom="20dp"
@@ -37,6 +38,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.imageview.ShapeableImageView
+                    style="@style/ImageLogo.Background"
                     android:id="@+id/comp_logo"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
@@ -88,6 +90,7 @@
             android:layout_below="@id/header" />
 
         <androidx.core.widget.NestedScrollView
+            android:id="@+id/scroll_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/divider"
@@ -158,7 +161,7 @@
                         style="@style/TextApp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
+                        android:layout_marginEnd="20dp"
                         android:text="141.91"
                         android:textColor="@color/grey_700"
                         app:layout_constraintBottom_toBottomOf="@+id/high"
@@ -206,11 +209,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="16dp"
-                        android:text="1.1M"
+                        android:text="100.18M"
                         android:textColor="@color/grey_700"
                         app:layout_constraintLeft_toLeftOf="@id/low_price"
                         app:layout_constraintTop_toBottomOf="@id/low_price"
-                        tools:text="1.1M"/>
+                        tools:text="100.18M"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -251,10 +254,12 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/high_stat"
                     android:layout_width="wrap_content"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="8dp"
-                    android:background="@drawable/custom_item_list_background"
+                    android:elevation="4dp"
+                    app:layout_constraintDimensionRatio="1:1"
+                    android:background="@drawable/key_stat_background"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toLeftOf="@id/low_stat"
                     app:layout_constraintTop_toBottomOf="@+id/key_stat_divider">
@@ -302,9 +307,11 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/low_stat"
                     android:layout_width="wrap_content"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:background="@drawable/custom_item_list_background"
+                    android:elevation="4dp"
+                    android:background="@drawable/key_stat_background"
+                    app:layout_constraintDimensionRatio="1:1"
                     app:layout_constraintLeft_toRightOf="@+id/high_stat"
                     app:layout_constraintRight_toLeftOf="@+id/market_cap_stat"
                     app:layout_constraintTop_toBottomOf="@+id/key_stat_divider">
@@ -352,10 +359,12 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/market_cap_stat"
                     android:layout_width="wrap_content"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="24dp"
-                    android:background="@drawable/custom_item_list_background"
+                    android:elevation="4dp"
+                    android:background="@drawable/key_stat_background"
+                    app:layout_constraintDimensionRatio="1:1"
                     app:layout_constraintLeft_toRightOf="@+id/low_stat"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/key_stat_divider">
@@ -401,10 +410,12 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/volume_stat"
                     android:layout_width="wrap_content"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="8dp"
-                    android:background="@drawable/custom_item_list_background"
+                    android:elevation="4dp"
+                    android:background="@drawable/key_stat_background"
+                    app:layout_constraintDimensionRatio="1:1"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toLeftOf="@id/low_stat"
                     app:layout_constraintTop_toBottomOf="@+id/high_stat">
@@ -450,8 +461,10 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/pe_stat"
                     android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:background="@drawable/custom_item_list_background"
+                    android:layout_height="wrap_content"
+                    android:elevation="4dp"
+                    android:background="@drawable/key_stat_background"
+                    app:layout_constraintDimensionRatio="1:1"
                     app:layout_constraintLeft_toRightOf="@id/volume_stat"
                     app:layout_constraintRight_toLeftOf="@id/beta_stat"
                     app:layout_constraintTop_toTopOf="@+id/volume_stat">
@@ -497,9 +510,11 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/beta_stat"
                     android:layout_width="wrap_content"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginEnd="24dp"
-                    android:background="@drawable/custom_item_list_background"
+                    android:elevation="4dp"
+                    android:background="@drawable/key_stat_background"
+                    app:layout_constraintDimensionRatio="1:1"
                     app:layout_constraintLeft_toRightOf="@id/pe_stat"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/volume_stat">
@@ -598,7 +613,7 @@
                     android:paddingTop="4dp"
                     android:paddingEnd="16dp"
                     android:paddingBottom="4dp"
-                    android:src="@drawable/ic_more"
+                    android:src="@drawable/avd_anim_more"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dividends_view" />
@@ -645,7 +660,7 @@
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="24dp"
-                    android:background="@drawable/custom_item_list_background"
+                    android:background="@drawable/key_stat_background"
                     app:layout_constraintTop_toBottomOf="@+id/key_about_divider">
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -684,7 +699,7 @@
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="24dp"
-                    android:background="@drawable/custom_item_list_background"
+                    android:background="@drawable/key_stat_background"
                     app:layout_constraintTop_toBottomOf="@+id/about_symbol">
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -723,7 +738,7 @@
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="24dp"
-                    android:background="@drawable/custom_item_list_background"
+                    android:background="@drawable/key_stat_background"
                     app:layout_constraintTop_toBottomOf="@+id/about_exchange">
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -762,7 +777,7 @@
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="24dp"
-                    android:background="@drawable/custom_item_list_background"
+                    android:background="@drawable/key_stat_background"
                     app:layout_constraintTop_toBottomOf="@+id/about_industry">
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -801,7 +816,7 @@
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="24dp"
-                    android:background="@drawable/custom_item_list_background"
+                    android:background="@drawable/key_stat_background"
                     app:layout_constraintTop_toBottomOf="@+id/about_sector">
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -840,7 +855,7 @@
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="24dp"
-                    android:background="@drawable/custom_item_list_background"
+                    android:background="@drawable/key_stat_background"
                     app:layout_constraintTop_toBottomOf="@+id/about_country">
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -880,7 +895,7 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="24dp"
                     android:layout_marginBottom="24dp"
-                    android:background="@drawable/custom_item_list_background"
+                    android:background="@drawable/key_stat_background"
                     app:layout_constraintTop_toBottomOf="@+id/about_ceo">
 
                     <androidx.appcompat.widget.AppCompatTextView

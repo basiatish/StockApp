@@ -11,7 +11,15 @@ import com.example.stocks.utils.network.StockApiStatus
 import com.tradingview.lightweightcharts.api.series.common.SeriesData
 import com.tradingview.lightweightcharts.api.series.models.LineData
 import com.tradingview.lightweightcharts.api.series.models.Time
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.*
+import kotlin.math.roundToInt
 
 class StockChartViewModel: ViewModel() {
 
@@ -33,40 +41,99 @@ class StockChartViewModel: ViewModel() {
 
     val priceChartYearly: LiveData<MutableList<StockYearlyPriceHeader>> = _priceChartYearly
 
+    var priceDaily: MutableList<StockDailyPriceHeader>? = mutableListOf()
+
     fun getChartData(time: String, compName: String) {
-        viewModelScope.launch {
-            _status.value = StockApiStatus.LOADING
+        viewModelScope.launch(IO) {
+            withContext(Main) {
+                _status.value = StockApiStatus.LOADING
+            }
             try {
                 if (time == "1day" || time == "1week") {
-                    _priceChartDaily.value = mutableListOf(
+                    priceDaily = mutableListOf(
                         StockApi.retrofitService
                             .getFullHistoryDailyPrice(compName, apiKey))
-                } else if (time == "all") {
-                    _priceChartYearly.value = mutableListOf(
-                        StockApi.retrofitService
-                            .getFullHistoryPrice(compName, "line", apiKey))
-                } else {
-                    _priceChart.value = StockApi.retrofitService
-                        .getChart(time, compName, apiKey)
+                    setupChartData()
+//                } else if (time == "all") {
+//                    _priceChartYearly.value = mutableListOf(
+//                        StockApi.retrofitService
+//                            .getFullHistoryPrice(compName, "line", apiKey))
+//                } else {
+//                    _priceChart.value = StockApi.retrofitService
+//                        .getChart(time, compName, apiKey)
                 }
-                _status.value = StockApiStatus.DONE
+                withContext(Main) {
+                    _status.value = StockApiStatus.DONE
+                }
             } catch (e: Exception) {
-                _status.value = StockApiStatus.ERROR
-                _priceChart.value = mutableListOf()
+                withContext(Main) {
+                    _status.value = StockApiStatus.ERROR
+                }
+                priceDaily = mutableListOf()
                 println(e.message)
             }
         }
     }
 
-    fun setupChartData(): MutableList<SeriesData> {
-        val price = _priceChartDaily.value!!
+//    fun getPointDate(point: Int): String {
+//        return priceDaily!![0].historical
+//    }
 
-        val data: MutableList<SeriesData> = mutableListOf()
+//    fun getChartData(time: String, compName: String) {
+//        viewModelScope.launch(IO) {
+//            _status.value = StockApiStatus.LOADING
+//            try {
+//                if (time == "1day" || time == "1week") {
+//                    _priceChartDaily.value = mutableListOf(
+//                        StockApi.retrofitService
+//                            .getFullHistoryDailyPrice(compName, apiKey))
+//                } else if (time == "all") {
+//                    _priceChartYearly.value = mutableListOf(
+//                        StockApi.retrofitService
+//                            .getFullHistoryPrice(compName, "line", apiKey))
+//                } else {
+//                    _priceChart.value = StockApi.retrofitService
+//                        .getChart(time, compName, apiKey)
+//                }
+//                withContext(Main) {
+//                    _status.value = StockApiStatus.DONE
+//                }
+//            } catch (e: Exception) {
+//                withContext(Main) {
+//                    _status.value = StockApiStatus.ERROR
+//                }
+//                _priceChart.value = mutableListOf()
+//                println(e.message)
+//            }
+//        }
+//    }
+
+    fun getChartData(): MutableList<SeriesData> {
+        return data
+    }
+
+    fun getLastChartPoint(): MutableMap<String, String> {
+        val lastBar = mutableMapOf<String, String>()
+        val format = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+        val date = LocalDate.
+        parse(priceDaily?.get(0)?.historical?.first()?.date.toString(), format)
+        lastBar["date"] = "${date.dayOfMonth} - ${date.monthValue} - ${date.year}"
+        lastBar["price"] = (((priceDaily?.get(0)?.historical?.first()?.close)!! * 100.0).
+        roundToInt() / 100.0).toString()
+        return lastBar
+    }
+
+    val data: MutableList<SeriesData> = mutableListOf()
+
+    private fun setupChartData() {
+
+        val price = priceDaily!!
 
         for (item in price[0].historical.reversed()) {
             data.add(LineData(Time.StringTime(item.date!!), item.close!!))
         }
-        return data
+
+
 //        return mutableListOf(
 //            LineData(Time.StringTime("2022-08-01"), 180.24.toFloat()),
 //            LineData(Time.StringTime("2022-08-02"), 144.56.toFloat()),

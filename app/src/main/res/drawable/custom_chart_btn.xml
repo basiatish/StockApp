@@ -1,26 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:state_enabled="true">
+    <item android:state_checked="true">
         <shape android:shape="rectangle">
             <corners android:radius="5dp"/>
-            <padding android:bottom="2dp"
-                android:top="2dp"
-                android:left="2dp"
-                android:right="2dp"/>
             <solid android:color="@color/orange"/>
         </shape>
-        <clip android:drawable="@drawable/chart_btn_shadow"/>
     </item>
 
-    <item android:state_enabled="false">
+    <item android:state_checked="false">
         <shape android:shape="rectangle">
             <corners android:radius="5dp"/>
-            <padding android:bottom="2dp"
-                android:top="2dp"
-                android:left="2dp"
-                android:right="2dp"/>
-            <solid android:color="@color/grey"/>
+            <stroke android:color="@color/grey"
+                android:width="1dp">
+            </stroke>
         </shape>
     </item>
 </selector>

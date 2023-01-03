@@ -234,7 +234,7 @@
         android:layout_height="0dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
-        android:background="@drawable/custom_item_list_background"
+        android:background="@drawable/key_stat_background"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/low_stat"
         app:layout_constraintTop_toBottomOf="@+id/key_stat_divider">
@@ -283,7 +283,7 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
-        android:background="@drawable/custom_item_list_background"
+        android:background="@drawable/key_stat_background"
         app:layout_constraintLeft_toRightOf="@+id/high_stat"
         app:layout_constraintRight_toLeftOf="@+id/market_cap_stat"
         app:layout_constraintTop_toBottomOf="@+id/key_stat_divider">
@@ -333,7 +333,7 @@
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
-        android:background="@drawable/custom_item_list_background"
+        android:background="@drawable/key_stat_background"
         app:layout_constraintLeft_toRightOf="@+id/low_stat"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/key_stat_divider">
@@ -381,7 +381,7 @@
         android:layout_height="0dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
-        android:background="@drawable/custom_item_list_background"
+        android:background="@drawable/key_stat_background"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/low_stat"
         app:layout_constraintTop_toBottomOf="@+id/high_stat">
@@ -427,7 +427,7 @@
         android:id="@+id/pe_stat"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:background="@drawable/custom_item_list_background"
+        android:background="@drawable/key_stat_background"
         app:layout_constraintLeft_toRightOf="@id/volume_stat"
         app:layout_constraintRight_toLeftOf="@id/beta_stat"
         app:layout_constraintTop_toTopOf="@+id/volume_stat">
@@ -474,7 +474,7 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginEnd="24dp"
-        android:background="@drawable/custom_item_list_background"
+        android:background="@drawable/key_stat_background"
         app:layout_constraintLeft_toRightOf="@id/pe_stat"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/volume_stat">

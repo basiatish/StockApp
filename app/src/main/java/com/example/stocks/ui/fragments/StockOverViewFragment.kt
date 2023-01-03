@@ -1,5 +1,6 @@
 package com.example.stocks.ui.fragments
 
+import android.graphics.drawable.AnimatedVectorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,23 +10,27 @@ import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.stocks.*
 import com.example.stocks.adapters.StockDividendsAdapter
 import com.example.stocks.databinding.FragmentStockOverviewBinding
 import com.example.stocks.models.remote.CompanyProfile
 import com.example.stocks.models.remote.CompanyQuote
+import com.example.stocks.utils.network.StockApiStatus
+import com.example.stocks.viewmodels.SharedViewModel
 import com.example.stocks.viewmodels.StockOverViewViewModel
 import kotlin.math.roundToInt
 
 class StockOverViewFragment: Fragment() {
 
     private val viewModel: StockOverViewViewModel by viewModels()
+
+    private val sharedViewModel: SharedViewModel by activityViewModels()
 
     private val navArgs: StockOverViewFragmentArgs by navArgs()
 
@@ -44,7 +49,9 @@ class StockOverViewFragment: Fragment() {
         super.onCreate(savedInstanceState)
         compName = navArgs.name
         shortName = navArgs.shortName
-        viewModel.getCompanyProfile(shortName)
+        sharedViewModel.saveCompanyName(compName, shortName)
+        viewModel.getComp(shortName)
+        //viewModel.getCompanyProfile(shortName)
         viewModel.getCompanyQuote(shortName)
         viewModel.getCompanyDividends(shortName)
     }
@@ -55,9 +62,6 @@ class StockOverViewFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentStockOverviewBinding.inflate(inflater, container, false)
-//        binding.keyDividendDivider.visibility = View.GONE
-//        binding.dividends.visibility = View.GONE
-//        binding.moreBtn.visibility = View.GONE
 
         return binding.root
     }
@@ -70,52 +74,73 @@ class StockOverViewFragment: Fragment() {
         layoutManager = GridLayoutManager(this.context, 1)
         binding.dividendsView.layoutManager = layoutManager
 
+        binding.refresh.setOnRefreshListener {
+            viewModel.apply {
+                getCompanyProfile(shortName)
+                getCompanyQuote(shortName)
+                viewModel.quoteStatus.observe(viewLifecycleOwner) { status ->
+                    if (status == StockApiStatus.DONE) {
+                        binding.refresh.isRefreshing = false
+                    }
+                }
+            }
+
+        }
+
+        viewModel.profileStatus.observe(this.viewLifecycleOwner) {
+            if (it == StockApiStatus.DONE && viewModel.compProf.isNotEmpty()) {
+                week52High = ""
+                week52Low = ""
+                loadCompanyLogo(viewModel.compProf)
+                rangeBetaBind(viewModel.compProf)
+                topBarBind()
+                aboutBind(viewModel.compProf)
+            }
+        }
+
         setupObservers()
 
+        var clickedFlag = false
         binding.moreBtn.setOnClickListener {
             if (!viewModel.companyDividends.value.isNullOrEmpty()) {
                 viewModel.getDividendsList()
-             }
-        }
+                if (!clickedFlag) {
+                    binding.moreBtn.setImageResource(R.drawable.avd_anim_more)
+                    val less = binding.moreBtn.drawable
+                    if (less is AnimatedVectorDrawable) {
+                        val anim = less as AnimatedVectorDrawable
+                        anim.start()
+                    }
+                    clickedFlag = true
+                } else {
+                    binding.moreBtn.setImageResource(R.drawable.avd_anim_less)
+                    val more = binding.moreBtn.drawable
+                    if (more is AnimatedVectorDrawable) {
+                        val anim = more as AnimatedVectorDrawable
+                        anim.start()
+                    }
+                    binding.scrollView.smoothScrollTo(binding.keyDividendDivider.x.toInt(),
+                        binding.keyDividendDivider.y.toInt(), 800)
+                    clickedFlag = false
+                }
+            } }
 
-//        val constraint = binding.keyAboutDivider.layoutParams as ConstraintLayout.LayoutParams
-//        constraint.topToBottom = binding.volumeStat.id
-
-//        viewModel.companyProfile.observe(this.viewLifecycleOwner) {
-//            if (it.isNotEmpty()) {
-//                loadCompanyLogo(it)
-//            }
-//        }
         binding.backBtn.setOnClickListener {
             NavigationUI.navigateUp(findNavController(), null)
         }
-
-//        viewModel.companyProfile.observe(this.viewLifecycleOwner) { profile ->
-//            if (!profile.isNullOrEmpty()) {
-//                topBarBind()
-//                loadCompanyLogo(profile)
-//            }
-//        }
-
-//        binding.refresh.setOnRefreshListener {
-//            viewModel.getChartData(range, navArgs.shortName)
-//            viewModel.getCompanyProfile(navArgs.shortName)
-//            viewModel.getCompanyDividends(navArgs.shortName)
-//            binding.refresh.isRefreshing = false
-//        }
     }
 
     private fun setupObservers() {
-        viewModel.companyProfile.observe(this.viewLifecycleOwner) {
-            if (!it.isNullOrEmpty()) {
-                week52High = ""
-                week52Low = ""
-                loadCompanyLogo(it)
-                rangeBetaBind(it)
-                topBarBind()
-                aboutBind(it)
-            }
-        }
+//        viewModel.companyProfile.observe(this.viewLifecycleOwner) {
+//            if (!it.isNullOrEmpty()) {
+//                week52High = ""
+//                week52Low = ""
+//                loadCompanyLogo(it)
+//                rangeBetaBind(it)
+//                topBarBind()
+//                aboutBind(it)
+//            }
+//        }
         viewModel.companyQuote.observe(this.viewLifecycleOwner) {
             if (!it.isNullOrEmpty()) {
                 statBind(it)

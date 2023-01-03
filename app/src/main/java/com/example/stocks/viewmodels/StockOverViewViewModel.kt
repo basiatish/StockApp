@@ -1,5 +1,6 @@
 package com.example.stocks.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -7,7 +8,10 @@ import androidx.lifecycle.viewModelScope
 import com.example.stocks.*
 import com.example.stocks.models.remote.*
 import com.example.stocks.utils.network.StockApiStatus
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class StockOverViewViewModel: ViewModel() {
 
@@ -49,20 +53,46 @@ class StockOverViewViewModel: ViewModel() {
 
     val companyDividendsList: LiveData<MutableList<StockDividends>> = _companyDividendsList
 
+    fun getComp(compName: String) {
+        getCompanyProfile(compName)
+    }
+
+    fun complist() {
+        _companyProfile.value = compProf
+    }
+
+    var compProf: MutableList<CompanyProfile> = mutableListOf()
+
     fun getCompanyProfile(compName: String) {
-        viewModelScope.launch {
-            _profileStatus.value = StockApiStatus.LOADING
+        viewModelScope.launch(IO) {
             try {
-                _companyProfile.value = StockApi.retrofitService.
+                compProf = StockApi.retrofitService.
                 getCompanyProfile(compName, apiKey)
-                _profileStatus.value = StockApiStatus.DONE
+                withContext(Main) {
+                    _profileStatus.value = StockApiStatus.DONE
+                    Log.d("Status", "Profile status ${_profileStatus.value}")
+                }
             } catch (e: Exception) {
-                _companyProfile.value = mutableListOf()
-                _profileStatus.value = StockApiStatus.ERROR
-                println(e.message)
+                compProf = mutableListOf()
+                println("Loading profile error ${e.message}")
             }
         }
     }
+
+//    fun getCompanyProfile(compName: String) {
+//        viewModelScope.launch {
+//            _profileStatus.value = StockApiStatus.LOADING
+//            try {
+//                _companyProfile.value = StockApi.retrofitService.
+//                getCompanyProfile(compName, apiKey)
+//                _profileStatus.value = StockApiStatus.DONE
+//            } catch (e: Exception) {
+//                _companyProfile.value = mutableListOf()
+//                _profileStatus.value = StockApiStatus.ERROR
+//                println(e.message)
+//            }
+//        }
+//    }
 
     fun getCompanyQuote(compName: String) {
         viewModelScope.launch {

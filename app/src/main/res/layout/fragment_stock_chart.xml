@@ -23,42 +23,67 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
-                android:background="@drawable/custom_textview"
-                android:elevation="4dp"
-                android:minWidth="120dp"
                 android:padding="8dp">
 
                 <TextView
-                    android:id="@+id/company_name"
+                    style="@style/TextApp"
+                    android:id="@+id/company_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:textColor="#b4b4b4"
+                    android:fontFamily="@font/roboto_medium"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="21-03-2022" />
+
+                <TextView
+                    android:id="@+id/company_open"
                     style="@style/TextApp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="15sp"
+                    android:layout_marginTop="2dp"
+                    android:fontFamily="@font/roboto_medium"
+                    android:textColor="#b4b4b4"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="Apple Inc." />
+                    app:layout_constraintTop_toBottomOf="@+id/company_date"
+                    tools:text="Open: 34.191" />
 
                 <TextView
                     android:id="@+id/company_price"
                     style="@style/TextApp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:textSize="15sp"
+                    android:layout_marginTop="2dp"
+                    android:fontFamily="@font/roboto_medium"
+                    android:textColor="#b4b4b4"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/company_name"
-                    tools:text="148.23" />
+                    app:layout_constraintTop_toBottomOf="@+id/company_open"
+                    tools:text="Close: 35.154" />
 
                 <TextView
-                    android:id="@+id/company_date"
+                    android:id="@+id/company_high"
                     style="@style/TextApp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:textSize="15sp"
+                    android:layout_marginTop="2dp"
+                    android:fontFamily="@font/roboto_medium"
+                    android:textColor="#b4b4b4"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/company_price"
-                    tools:text="November 10, 21" />
+                    tools:text="High: 36.91" />
+
+                <TextView
+                    android:id="@+id/company_low"
+                    style="@style/TextApp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:fontFamily="@font/roboto_medium"
+                    android:textColor="#b4b4b4"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/company_high"
+                    tools:text="Low: 32.21" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -96,20 +121,8 @@
 
     </RelativeLayout>
 
-    <FrameLayout
-        android:id="@+id/bottom_menu"
-        style="@style/BottomSheet"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:elevation="4dp"
-        android:visibility="visible"
-        app:behavior_hideable="true"
-        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
-
-        <include
-            android:id="@+id/bottom_sheet"
-            layout="@layout/bottom_sheet" />
-
-    </FrameLayout>
+    <include
+        android:id="@+id/bottom_sheet"
+        layout="@layout/bottom_sheet" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

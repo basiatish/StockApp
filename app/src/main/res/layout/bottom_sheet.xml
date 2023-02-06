@@ -3,41 +3,42 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/BottomSheet"
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:behavior_hideable="true"
+    android:elevation="4dp"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/title"
-        style="@style/TextApp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?attr/textAppearanceHeadline5"
-        android:text="Settings"
+    <View
+        android:background="@drawable/bottom_sheet_top_line"
+        android:layout_width="30dp"
+        android:layout_height="5dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <androidx.appcompat.widget.AppCompatTextView
-        style="@style/TextApp"
-        android:id="@+id/date_range"
+        android:id="@+id/title"
+        android:fontFamily="@font/roboto_medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?attr/textAppearanceHeadline6"
-        android:text="Date Range"
-        android:textColor="@color/light_grey"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="16dp"
-        app:layout_constraintTop_toBottomOf="@id/title"
-        app:layout_constraintLeft_toLeftOf="parent"/>
+        android:textAppearance="?attr/textAppearanceHeadline5"
+        android:text="Chart Range"
+        android:layout_marginTop="24dp"
+        android:layout_marginStart="24dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/btn_line_1"
         android:gravity="center_horizontal"
-        app:layout_constraintTop_toBottomOf="@id/date_range">
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/title">
 
         <androidx.appcompat.widget.AppCompatButton
             style="@style/ChartButton"
@@ -106,15 +107,14 @@
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.AppCompatTextView
-        style="@style/TextApp"
         android:id="@+id/chart_type"
+        android:fontFamily="@font/roboto_medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Chart Type"
-        android:textAppearance="?attr/textAppearanceHeadline6"
-        android:textColor="@color/light_grey"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:textAppearance="?attr/textAppearanceHeadline5"
+        android:text="Chart Range"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn_line_2" />
 
@@ -132,31 +132,31 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/ChartButton"
+            android:textSize="14sp"
             android:enabled="false"
             android:textAllCaps="false"
-            android:padding="8dp"
             android:text="Line"
-            android:drawableTop="@drawable/ic_apple_logo"/>
+            android:drawableTop="@drawable/ic_line_active"/>
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/area_chart"
+            android:id="@+id/candlestick_chart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/ChartButton"
+            android:textSize="14sp"
             android:textAllCaps="false"
-            android:padding="8dp"
             android:text="Candle Stick"
-            android:drawableTop="@drawable/ic_apple_logo"/>
+            android:drawableTop="@drawable/ic_candle_stick_active"/>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/bar_chart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/ChartButton"
+            android:textSize="14sp"
             android:textAllCaps="false"
-            android:padding="8dp"
             android:text="Bar"
-            android:drawableTop="@drawable/ic_apple_logo"/>
+            android:drawableTop="@drawable/ic_chart_bar_active"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -172,30 +172,30 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/ChartButton"
+            android:textSize="14sp"
             android:textAllCaps="false"
-            android:padding="8dp"
             android:text="BaseLine"
-            android:drawableTop="@drawable/ic_apple_logo"/>
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/candlestick_chart"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/ChartButton"
-            android:textAllCaps="false"
-            android:padding="8dp"
-            android:text="Add Volume"
-            android:drawableTop="@drawable/ic_apple_logo"/>
+            android:drawableTop="@drawable/ic_baseline_default"/>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/volume_chart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/ChartButton"
+            android:textSize="14sp"
             android:textAllCaps="false"
-            android:padding="8dp"
+            android:text="Add Volume"
+            android:drawableTop="@drawable/ic_volume_active"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/area_chart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/ChartButton"
+            android:textSize="14sp"
+            android:textAllCaps="false"
             android:text="Area"
-            android:drawableTop="@drawable/ic_apple_logo"/>
+            android:drawableTop="@drawable/ic_area_active"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

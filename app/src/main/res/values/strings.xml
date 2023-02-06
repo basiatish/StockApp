@@ -33,4 +33,11 @@
     <string name="value_format_T">%.2fT</string>
     <string name="last_dividends">Last Dividends</string>
     <string name="status">status</string>
+    <string name="chartPointDateBD">%s - %s - %s</string>
+    <string name="chartPointDateUtc">%s, %s:%s</string>
+    <string name="chartPriceOpen">Open: %s</string>
+    <string name="chartPriceClose">Close: %s</string>
+    <string name="chartPriceLine">Price: %s</string>
+    <string name="chartPriceHigh">High: %s</string>
+    <string name="chartPriceLow">Low: %s</string>
 </resources>

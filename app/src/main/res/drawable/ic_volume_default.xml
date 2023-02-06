@@ -1,0 +1,93 @@
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt">
+  <aapt:attr name="android:drawable">
+    <vector
+        android:width="32dp"
+        android:height="32dp"
+        android:viewportWidth="32"
+        android:viewportHeight="32">
+
+      <path
+          android:name="bar1"
+          android:pathData="M2.667,15.095C2.667,14.543 3.114,14.095 3.667,14.095H9.51C10.062,14.095 10.51,14.543 10.51,15.095V29.333H2.667V15.095Z"
+          android:fillColor="#B4B4B4"
+          android:fillAlpha="0.6"/>
+      <path
+          android:name="bar2"
+          android:pathData="M12.078,3.667C12.078,3.114 12.526,2.667 13.078,2.667H18.921C19.474,2.667 19.921,3.114 19.921,3.667V29.333H12.078V3.667Z"
+          android:fillColor="#B4B4B4"
+          android:fillAlpha="0.6"/>
+      <path
+          android:name="bar3"
+          android:pathData="M21.49,10.016C21.49,9.464 21.938,9.016 22.49,9.016H28.333C28.886,9.016 29.333,9.464 29.333,10.016V29.333H21.49V10.016Z"
+          android:fillColor="#B4B4B4"
+          android:fillAlpha="0.6"/>
+    </vector>
+  </aapt:attr>
+  <target android:name="bar1">
+    <aapt:attr name="android:animation">
+      <objectAnimator
+          android:duration="500"
+          android:interpolator="@android:anim/accelerate_decelerate_interpolator"
+          android:propertyName="trimPathEnd"
+          android:valueFrom="0.0"
+          android:valueTo="1.0"
+          android:valueType="floatType" />
+    </aapt:attr>
+  </target>
+  <target android:name="bar1">
+    <aapt:attr name="android:animation">
+      <objectAnimator
+          android:duration="500"
+          android:interpolator="@android:anim/accelerate_decelerate_interpolator"
+          android:propertyName="fillColor"
+          android:valueFrom="#00BB61"
+          android:valueTo="#B4B4B4"
+          android:valueType="colorType" />
+    </aapt:attr>
+  </target>
+  <target android:name="bar2">
+    <aapt:attr name="android:animation">
+      <objectAnimator
+          android:duration="500"
+          android:interpolator="@android:anim/accelerate_decelerate_interpolator"
+          android:propertyName="trimPathEnd"
+          android:valueFrom="0.0"
+          android:valueTo="1.0"
+          android:valueType="floatType" />
+    </aapt:attr>
+  </target>
+  <target android:name="bar2">
+    <aapt:attr name="android:animation">
+      <objectAnimator
+          android:duration="500"
+          android:interpolator="@android:anim/accelerate_decelerate_interpolator"
+          android:propertyName="fillColor"
+          android:valueFrom="#00BB61"
+          android:valueTo="#B4B4B4"
+          android:valueType="colorType" />
+    </aapt:attr>
+  </target>
+  <target android:name="bar3">
+    <aapt:attr name="android:animation">
+      <objectAnimator
+          android:duration="500"
+          android:interpolator="@android:anim/accelerate_decelerate_interpolator"
+          android:propertyName="trimPathEnd"
+          android:valueFrom="0.0"
+          android:valueTo="1.0"
+          android:valueType="floatType" />
+    </aapt:attr>
+  </target>
+  <target android:name="bar3">
+    <aapt:attr name="android:animation">
+      <objectAnimator
+          android:duration="500"
+          android:interpolator="@android:anim/accelerate_decelerate_interpolator"
+          android:propertyName="fillColor"
+          android:valueFrom="#E10808"
+          android:valueTo="#B4B4B4"
+          android:valueType="colorType" />
+    </aapt:attr>
+  </target>
+</animated-vector>

@@ -1,45 +1,42 @@
 package com.example.stocks.ui.fragments
 
 import android.graphics.Color
-import android.graphics.drawable.Animatable
-import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.StateListDrawable
-import android.graphics.drawable.TransitionDrawable
+import android.graphics.drawable.*
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.stocks.R
 import com.example.stocks.databinding.FragmentStockChartBinding
-import com.example.stocks.models.remote.CompanyProfile
 import com.example.stocks.utils.network.StockApiStatus
 import com.example.stocks.viewmodels.SharedViewModel
 import com.example.stocks.viewmodels.StockChartViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.tradingview.lightweightcharts.api.chart.models.color.surface.SolidColor
 import com.tradingview.lightweightcharts.api.chart.models.color.toIntColor
 import com.tradingview.lightweightcharts.api.interfaces.SeriesApi
 import com.tradingview.lightweightcharts.api.options.models.*
 import com.tradingview.lightweightcharts.api.series.enums.CrosshairMode
 import com.tradingview.lightweightcharts.api.series.enums.LastPriceAnimationMode
-import com.tradingview.lightweightcharts.api.series.enums.LineStyle
-import com.tradingview.lightweightcharts.api.series.enums.LineWidth
-import com.tradingview.lightweightcharts.api.series.models.Time
+import com.tradingview.lightweightcharts.api.series.models.*
 import com.tradingview.lightweightcharts.runtime.plugins.DateTimeFormat
-import com.tradingview.lightweightcharts.runtime.plugins.PriceFormatter
 import com.tradingview.lightweightcharts.runtime.plugins.TimeFormatter
 import com.tradingview.lightweightcharts.view.ChartsView
+import java.time.Instant
+import java.time.LocalDateTime
+import java.time.ZoneId
 import java.util.*
-import kotlin.math.roundToInt
 
 class StockChartFragment : Fragment() {
 
@@ -52,31 +49,40 @@ class StockChartFragment : Fragment() {
 
     private val sharedViewModel: SharedViewModel by activityViewModels()
 
-    private var bottomSheetBehavior: BottomSheetBehavior<FrameLayout>? = null
+    private var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>? = null
 
-    private lateinit var lineSeries: SeriesApi
+    private var bottomSheetState: Boolean = true
 
-    private lateinit var lastPressedButton: AppCompatButton
+    private lateinit var dataSeries: SeriesApi
+    private lateinit var volumeSeries: SeriesApi
+
+    private lateinit var lastPressedRangeButton: AppCompatButton
+    private lateinit var lastPressedChartTypeButton: AppCompatButton
 
     private var compName = ""
     private var compShortName = ""
+
+    private var chartType = "Line"
+    private var prefChartType = "Line"
+    private var chartRange = "1min"
+    private var volumeClickFlag = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentStockChartBinding.inflate(inflater, container, false)
         compShortName = sharedViewModel.companyShortName.value.toString()
         compName = sharedViewModel.companyName.value.toString()
 
-        bottomSheetBehavior?.state = BottomSheetBehavior.STATE_HIDDEN
-
-        if (viewModel.priceDaily.isNullOrEmpty()) {
-            viewModel.getChartData("1day", compShortName)
+        if (viewModel.priceDaily.isEmpty() || viewModel.priceChartMH.isEmpty()) {
+            viewModel.loadChartData(chartRange, compShortName)
         }
 
         activity?.findViewById<LinearLayoutCompat>(R.id.btm_bar)?.visibility = View.GONE
+
+        onBackPressed()
 
         return binding.root
     }
@@ -84,28 +90,26 @@ class StockChartFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        bindCompName()
         setupObservers()
-        setupButtonsOnClick()
+        setupRangeButtons()
+        setupChartTypeButtons()
         loadCompanyLogo()
 
-        lastPressedButton = binding.bottomSheet.btn1m
+        lastPressedRangeButton = binding.bottomSheet.btn1m
+        lastPressedChartTypeButton = binding.bottomSheet.lineChart
+        applyBorderAnimation(lastPressedRangeButton, false)
+        startButtonAnimation(lastPressedChartTypeButton, true)
 
-        bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomMenu)
+        bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomSheet.root)
         bottomSheetBehavior?.state = BottomSheetBehavior.STATE_HIDDEN
+        bottomSheetBehavior?.peekHeight = BottomSheetBehavior.PEEK_HEIGHT_AUTO
+        bottomSheetListener()
 
         chart = binding.chartView
         setupChart()
 
         binding.chartSetting.setOnClickListener {
-            bottomSheetBehavior?.state = BottomSheetBehavior.STATE_HALF_EXPANDED
-            bottomSheetBehavior?.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
-                override fun onStateChanged(bottomSheet: View, newState: Int) {
-                }
-
-                override fun onSlide(bottomSheet: View, slideOffset: Float) {
-                }
-            })
+            bottomSheetBehavior?.state = BottomSheetBehavior.STATE_COLLAPSED
         }
 
         chart.subscribeOnChartStateChange { state ->
@@ -120,80 +124,392 @@ class StockChartFragment : Fragment() {
         chart.api.subscribeCrosshairMove { params ->
             val prices = params.seriesPrices
             if (params.time != null && !prices.isNullOrEmpty()) {
-                val time = params.time as Time.BusinessDay
-                binding.companyDate.text = "${time.day} - ${time.month} - ${time.year}"
-                binding.companyPrice.text = ((prices.first().prices.value!! * 100.0).
-                roundToInt() / 100.0).toString()
+                try {
+                    if (chartRange == "all") {
+                        val time = params.time as Time.BusinessDay
+                        val day = viewModel.convertDate(time.day)
+                        val month = viewModel.convertDate(time.month)
+                        binding.companyDate.text = resources.getString(
+                            R.string.chartPointDateBD, day,
+                            month, time.year.toString()
+                        )
+                    } else {
+                        val time = params.time as Time.Utc
+                        val date = LocalDateTime.ofInstant(
+                            Instant.ofEpochSecond(time.timestamp),
+                            ZoneId.of("Etc/UTC"))
+                        val day = date.dayOfWeek.toString().subSequence(0, 3)
+                        val hour = viewModel.convertDate(date.hour)
+                        val minute = viewModel.convertDate(date.minute)
+                        binding.companyDate.text = resources.getString(
+                            R.string.chartPointDateUtc,
+                            day, hour, minute
+                        )
+                    }
+
+                    when (chartType) {
+                        "Line" -> {
+                            binding.companyPrice.text = resources.getString(
+                                R.string.chartPriceLine,
+                                viewModel.convertPrice(prices.first().prices.value!!)
+                            )
+                        }
+                        "Bar" -> {
+                            binding.companyOpen.text = resources.getString(
+                                R.string.chartPriceOpen,
+                                viewModel.convertPrice(prices.first().prices.open!!)
+                            )
+                            binding.companyPrice.text = resources.getString(
+                                R.string.chartPriceClose,
+                                viewModel.convertPrice(prices.first().prices.close!!)
+                            )
+                            binding.companyHigh.text = resources.getString(
+                                R.string.chartPriceHigh,
+                                viewModel.convertPrice(prices.first().prices.high!!)
+                            )
+                            binding.companyLow.text = resources.getString(
+                                R.string.chartPriceLow,
+                                viewModel.convertPrice(prices.first().prices.low!!)
+                            )
+                        }
+                        "BaseLine" -> {
+                            binding.companyPrice.text = resources.getString(
+                                R.string.chartPriceLine,
+                                viewModel.convertPrice(prices.first().prices.value!!)
+                            )
+                        }
+                        "Candle" -> {
+                            binding.companyOpen.text = resources.getString(
+                                R.string.chartPriceOpen,
+                                viewModel.convertPrice(prices.first().prices.open!!)
+                            )
+                            binding.companyPrice.text = resources.getString(
+                                R.string.chartPriceClose,
+                                viewModel.convertPrice(prices.first().prices.close!!)
+                            )
+                            binding.companyHigh.text = resources.getString(
+                                R.string.chartPriceHigh,
+                                viewModel.convertPrice(prices.first().prices.high!!)
+                            )
+                            binding.companyLow.text = resources.getString(
+                                R.string.chartPriceLow,
+                                viewModel.convertPrice(prices.first().prices.low!!)
+                            )
+                        }
+                        "Area" -> {
+                            binding.companyPrice.text = resources.getString(
+                                R.string.chartPriceLine,
+                                viewModel.convertPrice(prices.first().prices.value!!)
+                            )
+                        }
+                    }
+                } catch (e: Exception) {
+                    Log.e("CrossHair bind error", e.toString())
+                }
             } else {
                 bindLegend()
             }
         }
     }
 
-    private fun setupButtonsOnClick() {
+    private fun bottomSheetListener() {
+        bottomSheetBehavior?.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                bottomSheetState = newState != BottomSheetBehavior.STATE_HIDDEN
+            }
+
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+            }
+        })
+    }
+
+    private fun setupRangeButtons() {
         binding.bottomSheet.apply {
             btn1m.setOnClickListener {
-                buttonState(it as AppCompatButton)
+                binding.chartSetting.isClickable = false
+                bottomSheetBehavior!!.state = BottomSheetBehavior.STATE_HIDDEN
+                rangeButtonState(it as AppCompatButton)
+                chartRangeChange(it)
+                resetChart()
+                viewModel.loadChartData("1min", compShortName)
             }
             btn5m.setOnClickListener {
-                buttonState(it as AppCompatButton)
+                binding.chartSetting.isClickable = false
+                bottomSheetBehavior!!.state = BottomSheetBehavior.STATE_HIDDEN
+                rangeButtonState(it as AppCompatButton)
+                chartRangeChange(it)
+                resetChart()
+                viewModel.loadChartData("5min", compShortName)
             }
             btn30m.setOnClickListener {
-                buttonState(it as AppCompatButton)
+                binding.chartSetting.isClickable = false
+                bottomSheetBehavior!!.state = BottomSheetBehavior.STATE_HIDDEN
+                rangeButtonState(it as AppCompatButton)
+                chartRangeChange(it)
+                resetChart()
+                viewModel.loadChartData("30min", compShortName)
             }
             btn1h.setOnClickListener {
-                buttonState(it as AppCompatButton)
+                binding.chartSetting.isClickable = false
+                bottomSheetBehavior!!.state = BottomSheetBehavior.STATE_HIDDEN
+                rangeButtonState(it as AppCompatButton)
+                chartRangeChange(it)
+                resetChart()
+                viewModel.loadChartData("1hour", compShortName)
             }
             btn4h.setOnClickListener {
-                buttonState(it as AppCompatButton)
+                binding.chartSetting.isClickable = false
+                bottomSheetBehavior!!.state = BottomSheetBehavior.STATE_HIDDEN
+                rangeButtonState(it as AppCompatButton)
+                chartRangeChange(it)
+                resetChart()
+                viewModel.loadChartData("4hour", compShortName)
             }
             btnAll.setOnClickListener {
-                buttonState(it as AppCompatButton)
+                binding.chartSetting.isClickable = false
+                bottomSheetBehavior!!.state = BottomSheetBehavior.STATE_HIDDEN
+                rangeButtonState(it as AppCompatButton)
+                chartRangeChange(it)
+                resetChart()
+                viewModel.loadChartData("all", compShortName)
             }
         }
     }
 
-    private fun buttonState(pressed: AppCompatButton) {
+    private fun chartRangeChange(button: AppCompatButton) {
+        chartRange = when (button) {
+            binding.bottomSheet.btn1m -> "1min"
+            binding.bottomSheet.btn5m -> "5min"
+            binding.bottomSheet.btn30m -> "30min"
+            binding.bottomSheet.btn1h -> "1hour"
+            binding.bottomSheet.btn4h -> "4hour"
+            binding.bottomSheet.btnAll -> "all"
+            else -> ""
+        }
+    }
+
+    private fun resetChart() {
+        try {
+            chart.api.removeSeries(dataSeries)
+            if (volumeClickFlag) {
+                chart.api.removeSeries(volumeSeries)
+                volumeClickFlag = false
+                val volume = binding.bottomSheet.volumeChart
+                startButtonAnimation(volume, false)
+            }
+            chartStateChange(binding.bottomSheet.lineChart)
+            if (lastPressedChartTypeButton != binding.bottomSheet.lineChart) {
+                chartTypeButtonState(binding.bottomSheet.lineChart)
+            }
+        } catch (e: Exception) {
+            Log.e("Chart error", "Delete dataSeries error!")
+        }
+    }
+
+    private fun rangeButtonState(pressed: AppCompatButton) {
         pressed.isEnabled = false
-        lastPressedButton.isEnabled = true
-        lastPressedButton = pressed
+        applyBorderAnimation(pressed, false)
+        lastPressedRangeButton.isEnabled = true
+        applyBorderAnimation(lastPressedRangeButton, true)
+        lastPressedRangeButton = pressed
+    }
+
+    private fun setupChartTypeButtons() {
+        val bottomSh = binding.bottomSheet
+        bottomSh.lineChart.setOnClickListener {
+            binding.chartSetting.isClickable = false
+            bottomSheetBehavior!!.state = BottomSheetBehavior.STATE_HIDDEN
+            chartTypeButtonState(it as AppCompatButton)
+            chart.api.removeSeries(dataSeries)
+            chartStateChange(it)
+            viewModel.createData(chartType, chartRange)
+        }
+        bottomSh.candlestickChart.setOnClickListener {
+            binding.chartSetting.isClickable = false
+            bottomSheetBehavior!!.state = BottomSheetBehavior.STATE_HIDDEN
+            chartTypeButtonState(it as AppCompatButton)
+            chartStateChange(it)
+            chart.api.removeSeries(dataSeries)
+            viewModel.createData(chartType, chartRange)
+        }
+        bottomSh.barChart.setOnClickListener {
+            binding.chartSetting.isClickable = false
+            bottomSheetBehavior!!.state = BottomSheetBehavior.STATE_HIDDEN
+            chartTypeButtonState(it as AppCompatButton)
+            chartStateChange(it)
+            chart.api.removeSeries(dataSeries)
+            viewModel.createData(chartType, chartRange)
+        }
+        bottomSh.baselineChart.setOnClickListener {
+            binding.chartSetting.isClickable = false
+            bottomSheetBehavior!!.state = BottomSheetBehavior.STATE_HIDDEN
+            chartTypeButtonState(it as AppCompatButton)
+            chartStateChange(it)
+            chart.api.removeSeries(dataSeries)
+            viewModel.createData(chartType, chartRange)
+        }
+        bottomSh.areaChart.setOnClickListener {
+            binding.chartSetting.isClickable = false
+            bottomSheetBehavior!!.state = BottomSheetBehavior.STATE_HIDDEN
+            chartTypeButtonState(it as AppCompatButton)
+            chartStateChange(it)
+            chart.api.removeSeries(dataSeries)
+            viewModel.createData(chartType, chartRange)
+        }
+        bottomSh.volumeChart.setOnClickListener {
+            binding.chartSetting.isClickable = false
+            bottomSheetBehavior!!.state = BottomSheetBehavior.STATE_HIDDEN
+            volumeButtonState(it as AppCompatButton)
+            if (volumeClickFlag) {
+                chartStateChange(it)
+                viewModel.createData(chartType, chartRange)
+            } else {
+                chart.api.removeSeries(volumeSeries)
+            }
+        }
+    }
+
+    private fun startButtonAnimation(button: AppCompatButton, pressed: Boolean) {
+        if (pressed) {
+            applyBorderAnimation(button, false)
+            val icon: Drawable? = when (button) {
+                binding.bottomSheet.lineChart -> ResourcesCompat.getDrawable(resources,
+                    R.drawable.ic_line_active, context?.theme)
+                binding.bottomSheet.candlestickChart -> ResourcesCompat.getDrawable(resources,
+                    R.drawable.ic_candle_stick_active, context?.theme)
+                binding.bottomSheet.barChart -> ResourcesCompat.getDrawable(resources,
+                    R.drawable.ic_chart_bar_active, context?.theme)
+                binding.bottomSheet.baselineChart -> ResourcesCompat.getDrawable(resources,
+                    R.drawable.ic_baseline_active, context?.theme)
+                binding.bottomSheet.volumeChart -> ResourcesCompat.getDrawable(resources,
+                    R.drawable.ic_volume_active, context?.theme)
+                binding.bottomSheet.areaChart -> ResourcesCompat.getDrawable(resources,
+                    R.drawable.ic_area_active, context?.theme)
+                else -> null
+            }
+            button.setCompoundDrawablesWithIntrinsicBounds(null, icon, null, null)
+            val drawable = button.compoundDrawables[1] as AnimatedVectorDrawable
+            drawable.start()
+        } else {
+            applyBorderAnimation(button, true)
+            val icon: Drawable? = when (button) {
+                binding.bottomSheet.lineChart -> ResourcesCompat.getDrawable(resources,
+                    R.drawable.ic_line_default, context?.theme)
+                binding.bottomSheet.candlestickChart -> ResourcesCompat.getDrawable(resources,
+                    R.drawable.ic_candle_stick_default, context?.theme)
+                binding.bottomSheet.barChart -> ResourcesCompat.getDrawable(resources,
+                    R.drawable.ic_chart_bar_default, context?.theme)
+                binding.bottomSheet.baselineChart -> ResourcesCompat.getDrawable(resources,
+                    R.drawable.ic_baseline_default, context?.theme)
+                binding.bottomSheet.volumeChart -> ResourcesCompat.getDrawable(resources,
+                    R.drawable.ic_volume_default, context?.theme)
+                binding.bottomSheet.areaChart -> ResourcesCompat.getDrawable(resources,
+                    R.drawable.ic_area_default, context?.theme)
+                else -> null
+            }
+            button.setCompoundDrawablesWithIntrinsicBounds(null, icon, null, null)
+            val drawable = button.compoundDrawables[1] as AnimatedVectorDrawable
+            drawable.start()
+        }
+    }
+
+    private fun chartStateChange(button: AppCompatButton) {
+        prefChartType = chartType
+        chartType = when (button) {
+            binding.bottomSheet.lineChart -> "Line"
+            binding.bottomSheet.candlestickChart -> "Candle"
+            binding.bottomSheet.barChart -> "Bar"
+            binding.bottomSheet.baselineChart -> "BaseLine"
+            binding.bottomSheet.volumeChart -> "Volume"
+            binding.bottomSheet.areaChart -> "Area"
+            else -> ""
+        }
+    }
+
+    private fun volumeButtonState(button: AppCompatButton) {
+        volumeClickFlag = if (!volumeClickFlag) {
+            startButtonAnimation(button, true)
+            true
+        } else {
+            startButtonAnimation(button, false)
+            false
+        }
+    }
+
+    private fun chartTypeButtonState(pressed: AppCompatButton) {
+        if (lastPressedChartTypeButton != pressed) {
+            pressed.isEnabled = false
+            startButtonAnimation(pressed, true)
+            lastPressedChartTypeButton.isEnabled = true
+            startButtonAnimation(lastPressedChartTypeButton, false)
+            lastPressedChartTypeButton = pressed
+        }
+    }
+
+    private fun applyBorderAnimation(button: AppCompatButton, reverse: Boolean) {
+        val transition = button.background as TransitionDrawable
+        if (reverse) {
+            transition.reverseTransition(200)
+        } else {
+            transition.startTransition(200)
+        }
     }
 
     private fun bindLegend() {
-        val data = viewModel.getLastChartPoint()
-        binding.companyDate.text = data["date"]
-        binding.companyPrice.text = data["price"]
-    }
+        val data = viewModel.getLastChartPoint(chartRange)
+        if (chartType == "Candle" || chartType == "Bar") {
+            val priceConstraint = binding.companyPrice.layoutParams as ConstraintLayout.LayoutParams
+            priceConstraint.topToBottom = binding.companyOpen.id
+            binding.companyOpen.visibility = View.VISIBLE
+            binding.companyHigh.visibility = View.VISIBLE
+            binding.companyLow.visibility = View.VISIBLE
+        } else {
+            val priceConstraint = binding.companyPrice.layoutParams as ConstraintLayout.LayoutParams
+            priceConstraint.topToBottom = binding.companyDate.id
+            binding.companyOpen.visibility = View.GONE
+            binding.companyHigh.visibility = View.GONE
+            binding.companyLow.visibility = View.GONE
+        }
 
-    private fun bindCompName() {
-        binding.companyName.text = compName
+        binding.companyDate.text = data["date"]
+        binding.companyOpen.text = resources.getString(R.string.chartPriceOpen, data["open"])
+        if (chartType == "bar" || chartType == "Candle") {
+            binding.companyPrice.text = resources.getString(R.string.chartPriceClose, data["price"])
+        } else {
+            binding.companyPrice.text = resources.getString(R.string.chartPriceLine, data["price"])
+        }
+        binding.companyHigh.text = resources.getString(R.string.chartPriceHigh, data["high"])
+        binding.companyLow.text = resources.getString(R.string.chartPriceLow, data["low"])
     }
 
     private fun setupChart() {
         chart.api.applyOptions {
             layout = layoutOptions {
-                background = SolidColor(Color.WHITE)
-                textColor = Color.BLACK.toIntColor()
+                //background = SolidColor(Color.WHITE)
+                //textColor = Color.BLACK.toIntColor()
             }
             rightPriceScale = PriceScaleOptions(borderVisible = false)
             timeScale = TimeScaleOptions(borderVisible = false)
             crosshair = crosshairOptions {
-                mode = CrosshairMode.MAGNET
+                mode = CrosshairMode.NORMAL
                 horzLine = crosshairLineOptions {
                     visible = false
                     labelVisible = false
                 }
                 vertLine = crosshairLineOptions {
                     visible = true
-                    style = LineStyle.SOLID
-                    width = LineWidth.TWO
-                    color = resources.getColor(R.color.light_grey_2).toIntColor()
+                    //style = LineStyle.SOLID
+                    //width = LineWidth.TWO
+                    //color = resources.getColor(R.color.light_grey_2).toIntColor()
                     labelVisible = false
                 }
             }
+            timeScale = timeScaleOptions {
+                timeVisible = true
+            }
             localization = localizationOptions {
                 locale = Locale.getDefault().language
-                priceFormatter = PriceFormatter(template = "{price:#2:#2}$")
+                //priceFormatter = PriceFormatter(template = "{price:#2:#2}")
                 timeFormatter = TimeFormatter(
                     locale = Locale.getDefault().language,
                     dateTimeFormat = DateTimeFormat.DATE
@@ -204,24 +520,82 @@ class StockChartFragment : Fragment() {
 
     private fun setupObservers() {
         viewModel.status.observe(this.viewLifecycleOwner) { status ->
-            if (status == StockApiStatus.DONE && !viewModel.priceDaily.isNullOrEmpty()) {
-//                chart.api.addLineSeries(
-//                    onSeriesCreated = { series ->
-//                        lineSeries = series
-//                        lineSeries.setData(viewModel.getChartData())
-//                    }
-//                )
-                bindLegend()
-                chart.api.addLineSeries(LineSeriesOptions(priceLineColor =
-                resources.getColor(R.color.orange).toIntColor(),
-                    color = resources.getColor(R.color.orange).toIntColor(),
-                lastPriceAnimation = LastPriceAnimationMode.CONTINUOUS),
-                    onSeriesCreated = { series ->
-                    lineSeries = series
-                    lineSeries.setData(viewModel.getChartData())
-                })
+            if (status == StockApiStatus.DONE) {
+                viewModel.createData(chartType, chartRange)
             } else if (status == StockApiStatus.ERROR) {
                 Toast.makeText(requireContext(), "No chart data", Toast.LENGTH_SHORT).show()
+            }
+        }
+        viewModel.dataStatus.observe(this.viewLifecycleOwner) { status ->
+            if (status == StockApiStatus.DONE) {
+                bindLegend()
+                bindChartData()
+            }
+        }
+    }
+
+    private fun bindChartData() {
+        when (chartType) {
+            "Line" -> {
+                chart.api.addLineSeries(LineSeriesOptions(
+                    priceLineColor = resources.getColor(R.color.orange).toIntColor(),
+                    color = resources.getColor(R.color.orange).toIntColor(),
+                    lastPriceAnimation = LastPriceAnimationMode.CONTINUOUS),
+                    onSeriesCreated = { series ->
+                        dataSeries = series
+                        dataSeries.setData(viewModel.getChartData())
+                    })
+                binding.chartSetting.isClickable = true
+            }
+            "Candle" -> {
+                chart.api.addCandlestickSeries(
+                    onSeriesCreated = { series ->
+                        dataSeries = series
+                        dataSeries.setData(viewModel.getChartData())
+                    })
+                binding.chartSetting.isClickable = true
+            }
+            "Bar" -> {
+                chart.api.addBarSeries(
+                    onSeriesCreated = { series ->
+                        dataSeries = series
+                        dataSeries.setData(viewModel.getChartData())
+                    })
+                binding.chartSetting.isClickable = true
+            }
+            "BaseLine" -> {
+                chart.api.addBaselineSeries(BaselineSeriesOptions(baseValue =
+                    BaseValuePrice(viewModel.getLastPrice(chartRange))),
+                    onSeriesCreated = { series ->
+                        dataSeries = series
+                        dataSeries.setData(viewModel.getChartData())
+                    })
+                binding.chartSetting.isClickable = true
+            }
+            "Volume" -> {
+                chart.api.addHistogramSeries(HistogramSeriesOptions(
+                    priceFormat = PriceFormat(type = PriceFormat.Type.VOLUME),
+                    priceScaleId = PriceScaleId(""),
+                    scaleMargins = PriceScaleMargins(top = 0.9f, bottom = 0f)),
+                    onSeriesCreated = { series ->
+                        volumeSeries = series
+                        volumeSeries.setData(viewModel.getChartData())
+                    }
+                )
+                binding.chartSetting.isClickable = true
+                chartType = prefChartType
+            }
+            "Area" -> {
+                chart.api.addAreaSeries(AreaSeriesOptions(lineColor =
+                resources.getColor(R.color.orange).toIntColor(), topColor =
+                resources.getColor(R.color.orange).toIntColor(), bottomColor =
+                Color.argb(10, 252, 163, 17).toIntColor()),
+                    onSeriesCreated = { series ->
+                        dataSeries = series
+                        dataSeries.setData(viewModel.getChartData())
+                    }
+                )
+                binding.chartSetting.isClickable = true
             }
         }
     }
@@ -232,5 +606,19 @@ class StockChartFragment : Fragment() {
         error(R.drawable.ic_warning)
             .centerCrop().into(binding.logo)
     }
+
+    private fun onBackPressed() {
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (bottomSheetState) {
+                    bottomSheetBehavior?.state = BottomSheetBehavior.STATE_HIDDEN
+                } else {
+                    findNavController().navigateUp()
+                }
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+    }
+
 
 }

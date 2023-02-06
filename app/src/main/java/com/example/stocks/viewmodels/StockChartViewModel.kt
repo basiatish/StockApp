@@ -1,23 +1,32 @@
 package com.example.stocks.viewmodels
 
+import android.annotation.SuppressLint
+import android.graphics.Color
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.stocks.BuildConfig
+import com.example.stocks.R
 import com.example.stocks.StockApi
 import com.example.stocks.models.remote.*
 import com.example.stocks.utils.network.StockApiStatus
+import com.tradingview.lightweightcharts.api.chart.models.color.toIntColor
 import com.tradingview.lightweightcharts.api.series.common.SeriesData
-import com.tradingview.lightweightcharts.api.series.models.LineData
-import com.tradingview.lightweightcharts.api.series.models.Time
+import com.tradingview.lightweightcharts.api.series.models.*
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.sql.Timestamp
 import java.text.SimpleDateFormat
 import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeFormatter.ofPattern
 import java.util.*
 import kotlin.math.roundToInt
 
@@ -29,121 +38,323 @@ class StockChartViewModel: ViewModel() {
 
     val status: LiveData<StockApiStatus> = _status
 
-    private val _priceChart = MutableLiveData<MutableList<StockChart>>()
+    private val _dataStatus = MutableLiveData<StockApiStatus>()
 
-    val priceChart: LiveData<MutableList<StockChart>> = _priceChart
+    val dataStatus: LiveData<StockApiStatus> = _dataStatus
+
+    private var _priceChartMH: MutableList<StockChart> = mutableListOf()
+
+    val priceChartMH: MutableList<StockChart> = _priceChartMH
 
     private val _priceChartDaily = MutableLiveData<MutableList<StockDailyPriceHeader>>()
 
     val priceChartDaily: LiveData<MutableList<StockDailyPriceHeader>> = _priceChartDaily
 
-    private var _priceChartYearly = MutableLiveData<MutableList<StockYearlyPriceHeader>>()
+    private var _priceChartYearly: MutableList<StockYearlyPriceHeader> = mutableListOf()
 
-    val priceChartYearly: LiveData<MutableList<StockYearlyPriceHeader>> = _priceChartYearly
+    val priceChartYearly: List<StockYearlyPriceHeader> = _priceChartYearly
 
-    var priceDaily: MutableList<StockDailyPriceHeader>? = mutableListOf()
+    private var _priceDaily: MutableList<StockDailyPriceHeader> = mutableListOf()
 
-    fun getChartData(time: String, compName: String) {
+    val priceDaily: List<StockDailyPriceHeader> = _priceDaily
+
+    var data: MutableList<SeriesData> = mutableListOf()
+
+    fun loadChartData(time: String, compName: String) {
         viewModelScope.launch(IO) {
             withContext(Main) {
                 _status.value = StockApiStatus.LOADING
             }
             try {
-                if (time == "1day" || time == "1week") {
-                    priceDaily = mutableListOf(
+                if (time == "all") {
+                    _priceDaily = mutableListOf(
                         StockApi.retrofitService
                             .getFullHistoryDailyPrice(compName, apiKey))
-                    setupChartData()
-//                } else if (time == "all") {
-//                    _priceChartYearly.value = mutableListOf(
-//                        StockApi.retrofitService
-//                            .getFullHistoryPrice(compName, "line", apiKey))
-//                } else {
-//                    _priceChart.value = StockApi.retrofitService
-//                        .getChart(time, compName, apiKey)
+                } else {
+                    _priceChartMH = StockApi.retrofitService
+                        .getChart(time, compName, apiKey)
                 }
                 withContext(Main) {
                     _status.value = StockApiStatus.DONE
                 }
             } catch (e: Exception) {
                 withContext(Main) {
-                    _status.value = StockApiStatus.ERROR
+                _status.value = StockApiStatus.ERROR
                 }
-                priceDaily = mutableListOf()
+                _priceDaily = mutableListOf()
                 println(e.message)
             }
         }
     }
 
-//    fun getPointDate(point: Int): String {
-//        return priceDaily!![0].historical
-//    }
-
-//    fun getChartData(time: String, compName: String) {
-//        viewModelScope.launch(IO) {
-//            _status.value = StockApiStatus.LOADING
-//            try {
-//                if (time == "1day" || time == "1week") {
-//                    _priceChartDaily.value = mutableListOf(
-//                        StockApi.retrofitService
-//                            .getFullHistoryDailyPrice(compName, apiKey))
-//                } else if (time == "all") {
-//                    _priceChartYearly.value = mutableListOf(
-//                        StockApi.retrofitService
-//                            .getFullHistoryPrice(compName, "line", apiKey))
-//                } else {
-//                    _priceChart.value = StockApi.retrofitService
-//                        .getChart(time, compName, apiKey)
-//                }
-//                withContext(Main) {
-//                    _status.value = StockApiStatus.DONE
-//                }
-//            } catch (e: Exception) {
-//                withContext(Main) {
-//                    _status.value = StockApiStatus.ERROR
-//                }
-//                _priceChart.value = mutableListOf()
-//                println(e.message)
-//            }
-//        }
-//    }
-
     fun getChartData(): MutableList<SeriesData> {
         return data
     }
 
-    fun getLastChartPoint(): MutableMap<String, String> {
+    fun getLastChartPoint(range: String): MutableMap<String, String> {
         val lastBar = mutableMapOf<String, String>()
-        val format = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-        val date = LocalDate.
-        parse(priceDaily?.get(0)?.historical?.first()?.date.toString(), format)
-        lastBar["date"] = "${date.dayOfMonth} - ${date.monthValue} - ${date.year}"
-        lastBar["price"] = (((priceDaily?.get(0)?.historical?.first()?.close)!! * 100.0).
-        roundToInt() / 100.0).toString()
+        if (range == "all") {
+            val format = ofPattern("yyyy-MM-dd")
+            val date = LocalDate.
+            parse(_priceDaily[0].historical.reversed().last().date.toString(), format)
+            val day = convertDate(date.dayOfMonth)
+            val month = convertDate(date.monthValue)
+            lastBar["date"] = "$day - $month - ${date.year}"
+            lastBar["open"] = convertPrice(_priceDaily[0].historical.reversed().last().open!!)
+            lastBar["price"] = convertPrice(_priceDaily[0].historical.reversed().last().close!!)
+            lastBar["high"] = convertPrice(_priceDaily[0].historical.reversed().last().high!!)
+            lastBar["low"] = convertPrice(_priceDaily[0].historical.reversed().last().low!!)
+        } else {
+            val format = ofPattern("yyyy-MM-dd HH:mm:ss")
+            val date = LocalDateTime.parse(_priceChartMH.reversed().last().date, format)
+            val hour = convertDate(date.hour)
+            val minute = convertDate(date.minute)
+            lastBar["date"] = "$hour:$minute"
+            lastBar["open"] = convertPrice(_priceChartMH.reversed().last().open!!)
+            lastBar["price"] = convertPrice(_priceChartMH.reversed().last().close!!)
+            lastBar["high"] = convertPrice(_priceChartMH.reversed().last().high!!)
+            lastBar["low"] = convertPrice(_priceChartMH.reversed().last().low!!)
+        }
         return lastBar
     }
 
-    val data: MutableList<SeriesData> = mutableListOf()
-
-    private fun setupChartData() {
-
-        val price = priceDaily!!
-
-        for (item in price[0].historical.reversed()) {
-            data.add(LineData(Time.StringTime(item.date!!), item.close!!))
+    fun getLastPrice(range: String): Int {
+        return when(range) {
+            "all" -> _priceDaily[0].historical.reversed().last().close!!.roundToInt()
+            else -> _priceChartMH.reversed().last().close!!.roundToInt()
         }
-
-
-//        return mutableListOf(
-//            LineData(Time.StringTime("2022-08-01"), 180.24.toFloat()),
-//            LineData(Time.StringTime("2022-08-02"), 144.56.toFloat()),
-//            LineData(Time.StringTime("2022-08-03"), 133.88.toFloat()),
-//            LineData(Time.StringTime("2022-08-04"), 154.43.toFloat()),
-//            LineData(Time.StringTime("2022-08-05"), 163.04.toFloat()),
-//            LineData(Time.StringTime("2022-08-08"), 164.87.toFloat()),
-//            LineData(Time.StringTime("2022-08-09"), 164.92.toFloat()),
-//            LineData(Time.StringTime("2022-08-10"), 169.24.toFloat())
-//        )
     }
 
+    fun convertPrice(priceValue: Float): String {
+        return ((priceValue * 1000.0).roundToInt() / 1000.0).toString()
+    }
+
+    fun convertDate(dateValue: Int): String {
+        return when {
+            dateValue < 10 -> "0$dateValue"
+            else -> dateValue.toString()
+        }
+    }
+
+    fun formattedValue(value: Double): String {
+        return when (value) {
+            in 1000.0..999999.0 -> "${(value / 10.0).roundToInt() / 100.0}K"
+            in 1000000.0..999999999.0 -> "${(value / 10000.0).roundToInt() / 100.0}M"
+            in 1000000000.0..999999999999.0 -> "${(value / 10000000.0).roundToInt() / 100.0}B"
+            in 1000000000000.0..999999999999999.0 -> "${(value / 10000000000.0).roundToInt() / 100.0}T"
+            0.0 -> "—"
+            else -> "$value"
+        }
+    }
+
+    fun createData(type: String, time: String) {
+        data = mutableListOf()
+        when (type) {
+            "Line" -> createLineData(time)
+            "Candle" -> createCandleData(time)
+            "Bar" -> createBarData(time)
+            "BaseLine" -> createLineData(time)
+            "Volume" -> createVolumeData(time)
+            "Area" -> createAreaData(time)
+        }
+    }
+
+    private fun createLineData(time: String) {
+        viewModelScope.launch(IO) {
+            try {
+                if (time == "all") {
+                    val price = _priceDaily
+                    for (item in price[0].historical.reversed()) {
+                        data.add(LineData(Time.StringTime(item.date!!), item.close!!))
+                    }
+                } else {
+                    val price = _priceChartMH
+                    for (item in price.reversed()) {
+                        val strDate = LocalDateTime.parse(item.date!!,
+                            ofPattern("yyyy-MM-dd HH:mm:ss"))
+                        val timestamp = LocalDateTime.of(strDate.year, strDate.monthValue,
+                        strDate.dayOfMonth, strDate.hour, strDate.minute, strDate.second).
+                        toEpochSecond(ZoneOffset.UTC)
+                        data.add(LineData(Time.Utc(timestamp), item.close!!))
+                    }
+                }
+                withContext(Main) {
+                    _dataStatus.value = StockApiStatus.DONE
+                }
+            } catch (e: Exception) {
+                withContext(Main) {
+                    _dataStatus.value = StockApiStatus.ERROR
+                }
+                Log.e("Data Error", "Failed to create line data!, ${e.message}")
+            }
+        }
+    }
+
+    private fun createVolumeData(time: String) {
+        viewModelScope.launch(IO) {
+            try {
+                if (time == "all") {
+                    val volume = _priceDaily
+                    var prefVolume = 0f
+                    for (item in volume[0].historical.reversed()) {
+                        if (item.volume!! >= prefVolume) {
+                            data.add(
+                                HistogramData(
+                                    Time.StringTime(item.date!!), item.volume!!,
+                                    Color.parseColor("#26a69a").toIntColor()
+                                )
+                            )
+                            prefVolume = item.volume!!
+                        } else {
+                            data.add(
+                                HistogramData(
+                                    Time.StringTime(item.date!!), item.volume!!,
+                                    Color.parseColor("#ef5350").toIntColor()
+                                )
+                            )
+                            prefVolume = item.volume!!
+                        }
+                    }
+                } else {
+                    val volume = _priceChartMH
+                    var prefVolume = 0f
+                    for (item in volume.reversed()) {
+                        val strDate = LocalDateTime.parse(item.date!!,
+                            ofPattern("yyyy-MM-dd HH:mm:ss"))
+                        val timestamp = LocalDateTime.of(strDate.year, strDate.monthValue,
+                            strDate.dayOfMonth, strDate.hour, strDate.minute, strDate.second).
+                        toEpochSecond(ZoneOffset.UTC)
+                        if (item.volume!! >= prefVolume) {
+                            data.add(
+                                HistogramData(
+                                    Time.Utc(timestamp), item.volume!!,
+                                    Color.parseColor("#26a69a").toIntColor()
+                                )
+                            )
+                            prefVolume = item.volume!!
+                        } else {
+                            data.add(
+                                HistogramData(
+                                    Time.Utc(timestamp), item.volume!!,
+                                    Color.parseColor("#ef5350").toIntColor()
+                                )
+                            )
+                            prefVolume = item.volume!!
+                        }
+                    }
+                }
+                withContext(Main) {
+                    _dataStatus.value = StockApiStatus.DONE
+                }
+            } catch (e: Exception) {
+                withContext(Main) {
+                    _dataStatus.value = StockApiStatus.ERROR
+                }
+                Log.e("Data Error", "Failed to create volume data!, ${e.message}")
+            }
+        }
+    }
+
+    private fun createCandleData(time: String) {
+        viewModelScope.launch(IO) {
+            try {
+                if (time == "all") {
+                    val price = _priceDaily
+                    for (item in price[0].historical.reversed()) {
+                        data.add(
+                            CandlestickData(
+                                Time.StringTime(item.date!!), item.open!!,
+                                item.high!!, item.low!!, item.close!!
+                            )
+                        )
+                    }
+                } else {
+                    val price = _priceChartMH
+                    for (item in price.reversed()) {
+                        val strDate = LocalDateTime.parse(item.date!!,
+                            ofPattern("yyyy-MM-dd HH:mm:ss"))
+                        val timestamp = LocalDateTime.of(strDate.year, strDate.monthValue,
+                            strDate.dayOfMonth, strDate.hour, strDate.minute, strDate.second).
+                        toEpochSecond(ZoneOffset.UTC)
+                        data.add(CandlestickData(Time.Utc(timestamp), item.open!!, item.high!!,
+                        item.low!!, item.close!!))
+                    }
+                }
+                withContext(Main) {
+                    _dataStatus.value = StockApiStatus.DONE
+                }
+            } catch (e: Exception) {
+                withContext(Main) {
+                    _dataStatus.value = StockApiStatus.ERROR
+                }
+                Log.e("Data Error", "Failed to create candle stick data!")
+            }
+        }
+    }
+
+    private fun createBarData(time: String) {
+        viewModelScope.launch(IO) {
+            try {
+                if (time == "all") {
+                    val price = _priceDaily
+                    for (item in price[0].historical.reversed()) {
+                        data.add(
+                            BarData(Time.StringTime(item.date!!), item.open!!,
+                                item.high!!, item.low!!, item.close!!)
+                        )
+                    }
+                } else {
+                    val price = _priceChartMH
+                    for (item in price.reversed()) {
+                        val strDate = LocalDateTime.parse(item.date!!,
+                            ofPattern("yyyy-MM-dd HH:mm:ss"))
+                        val timestamp = LocalDateTime.of(strDate.year, strDate.monthValue,
+                            strDate.dayOfMonth, strDate.hour, strDate.minute, strDate.second).
+                        toEpochSecond(ZoneOffset.UTC)
+                        data.add(BarData(Time.Utc(timestamp), item.open!!, item.high!!,
+                            item.low!!, item.close!!))
+                    }
+                }
+                withContext(Main) {
+                    _dataStatus.value = StockApiStatus.DONE
+                }
+            } catch (e: Exception) {
+                withContext(Main) {
+                    _dataStatus.value = StockApiStatus.ERROR
+                }
+                Log.e("Data Error", "Failed to create candle stick data!")
+            }
+        }
+    }
+
+    private fun createAreaData(time: String) {
+        viewModelScope.launch(IO) {
+            try {
+                if (time == "all") {
+                    val price = _priceDaily
+                    for (item in price[0].historical.reversed()) {
+                        data.add(LineData(Time.StringTime(item.date!!), item.close!!))
+                    }
+                } else {
+                    val price = _priceChartMH
+                    for (item in price.reversed()) {
+                        val strDate = LocalDateTime.parse(item.date!!,
+                            ofPattern("yyyy-MM-dd HH:mm:ss"))
+                        val timestamp = LocalDateTime.of(strDate.year, strDate.monthValue,
+                            strDate.dayOfMonth, strDate.hour, strDate.minute, strDate.second).
+                        toEpochSecond(ZoneOffset.UTC)
+                        data.add(LineData(Time.Utc(timestamp), item.close!!))
+                    }
+                }
+                withContext(Main) {
+                    _dataStatus.value = StockApiStatus.DONE
+                }
+            } catch (e: Exception) {
+                withContext(Main) {
+                    _dataStatus.value = StockApiStatus.ERROR
+                }
+                Log.e("Data Error", "Failed to create area data!, ${e.message}")
+            }
+        }
+    }
 }

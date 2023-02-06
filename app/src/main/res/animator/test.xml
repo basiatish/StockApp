@@ -1,20 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
+<objectAnimator xmlns:android="http://schemas.android.com/apk/res/android"
+    android:interpolator="@android:anim/linear_interpolator"
+    android:valueType="floatType"
+    android:propertyName=""
+    android:valueFrom="#B4B4B4"
+    android:valueTo=""
+    android:startOffset="1"
+    android:duration="500">
 
-    <item android:state_enabled="true">
-        <objectAnimator
-            android:duration="300"
-            android:valueFrom="@color/white"
-            android:valueTo="@color/orange"
-            android:valueType="colorType"/>
-    </item>
-
-    <item android:state_enabled="false">
-        <objectAnimator
-            android:duration="300"
-            android:valueFrom="@color/orange"
-            android:valueTo="@color/white"
-            android:valueType="colorType"/>
-    </item>
-
-</selector>
+</objectAnimator>

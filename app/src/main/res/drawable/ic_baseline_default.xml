@@ -1,0 +1,49 @@
+<animated-vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt">
+  <aapt:attr name="android:drawable">
+    <vector
+        android:width="32dp"
+        android:height="32dp"
+        android:viewportWidth="32"
+        android:viewportHeight="32">
+      <path
+          android:name="line"
+          android:pathData="M4,25.333C6.996,20.443 8.767,17.553 11.594,12.939C11.927,12.396 12.677,12.297 13.138,12.737L18.42,17.779C18.872,18.21 19.604,18.126 19.947,17.604L28,5.333"
+          android:strokeWidth="1.8"
+          android:strokeAlpha="0.6"
+          android:strokeLineCap="round"
+          android:strokeColor="#b4b4b4">
+      </path>
+      <path
+          android:name="line_horizontal"
+          android:pathData="M4.75,15.167C4.336,15.167 4,15.502 4,15.917C4,16.331 4.336,16.667 4.75,16.667H5.776C6.191,16.667 6.526,16.331 6.526,15.917C6.526,15.502 6.191,15.167 5.776,15.167H4.75ZM9.171,15.167C8.757,15.167 8.421,15.502 8.421,15.917C8.421,16.331 8.757,16.667 9.171,16.667H11.46C11.875,16.667 12.21,16.331 12.21,15.917C12.21,15.502 11.875,15.167 11.46,15.167H9.171ZM14.105,15.917C14.105,15.502 14.441,15.167 14.855,15.167H17.776C18.19,15.167 18.526,15.502 18.526,15.917C18.526,16.331 18.19,16.667 17.776,16.667H14.855C14.441,16.667 14.105,16.331 14.105,15.917ZM20.421,15.917C20.421,15.502 20.757,15.167 21.171,15.167H23.46C23.875,15.167 24.21,15.502 24.21,15.917C24.21,16.331 23.875,16.667 23.46,16.667H21.171C20.757,16.667 20.421,16.331 20.421,15.917ZM25.474,15.917C25.474,15.502 25.809,15.167 26.224,15.167H27.25C27.664,15.167 28,15.502 28,15.917C28,16.331 27.664,16.667 27.25,16.667H26.224C25.809,16.667 25.474,16.331 25.474,15.917Z"
+          android:fillAlpha="0.6"
+          android:fillType="evenOdd"
+          android:fillColor="#b4b4b4">
+      </path>
+    </vector>
+  </aapt:attr>
+  <target android:name="line">
+    <aapt:attr name="android:animation">
+      <objectAnimator
+          android:propertyName="trimPathStart"
+          android:valueFrom="1.0"
+          android:valueTo="0.0"
+          android:duration="500"
+          android:valueType="floatType"
+          android:interpolator="@android:anim/accelerate_decelerate_interpolator"/>
+    </aapt:attr>
+  </target>
+  <target android:name="line_horizontal">
+    <aapt:attr name="android:animation">
+      <objectAnimator
+          android:interpolator="@android:anim/accelerate_decelerate_interpolator"
+          android:valueType="colorType"
+          android:propertyName="fillColor"
+          android:valueFrom=""
+          android:valueTo="#b4b4b4"
+          android:duration="700"/>
+    </aapt:attr>
+  </target>
+</animated-vector>

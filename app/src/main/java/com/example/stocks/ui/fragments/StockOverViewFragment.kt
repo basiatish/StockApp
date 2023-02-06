@@ -102,6 +102,7 @@ class StockOverViewFragment: Fragment() {
 
         var clickedFlag = false
         binding.moreBtn.setOnClickListener {
+            it.isClickable = false
             if (!viewModel.companyDividends.value.isNullOrEmpty()) {
                 viewModel.getDividendsList()
                 if (!clickedFlag) {
@@ -123,7 +124,9 @@ class StockOverViewFragment: Fragment() {
                         binding.keyDividendDivider.y.toInt(), 800)
                     clickedFlag = false
                 }
-            } }
+            }
+            it.isClickable = true
+        }
 
         binding.backBtn.setOnClickListener {
             NavigationUI.navigateUp(findNavController(), null)

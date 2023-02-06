@@ -47,9 +47,23 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
+    <style name="BottomSheet" parent="Widget.MaterialComponents.BottomSheet.Modal">
+        <item name="backgroundTint">#2C2C2C</item>
+        <item name="shapeAppearanceOverlay">@style/SheetCorners</item>
+    </style>
+
     <style name="ImageLogo" parent="">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">10%</item>
+    </style>
+
+    <style name="ChartButton" parent="">
+        <item name="android:padding">12dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="fontFamily">@font/roboto_medium</item>
+        <item name="android:minWidth">100dp</item>
+        <item name="android:background">@drawable/chart_button_transition</item>
+        <item name="android:layout_margin">8dp</item>
     </style>
 
     <style name="ImageLogo.Background" parent="">

@@ -8,5 +8,5 @@ data class StockChart(
     @SerializedName("low") var low: Float? = null,
     @SerializedName("high") var high: Float? = null,
     @SerializedName("close") var close: Float? = null,
-    @SerializedName("volume") var volume: Int?    = null
+    @SerializedName("volume") var volume: Float?    = null
 )

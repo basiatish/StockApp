@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             app:itemIconTint="@color/bottom_nav_item_color"
-            app:itemRippleColor="@color/dark_blue"
+            app:itemRippleColor="@color/light_grey_3"
             app:labelVisibilityMode="unlabeled"
             app:menu="@menu/bottom_menu" />
 
@@ -40,7 +40,7 @@
             android:layout_gravity="center"
             android:visibility="gone"
             app:itemIconTint="@color/bottom_nav_item_color"
-            app:itemRippleColor="@color/dark_blue"
+            app:itemRippleColor="@color/light_grey_3"
             app:labelVisibilityMode="unlabeled"
             app:menu="@menu/fragment_bottom_menu" />
 

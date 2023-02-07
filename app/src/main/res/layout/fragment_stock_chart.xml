@@ -93,6 +93,7 @@
             android:id="@+id/container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/light_grey_3"
             android:layout_alignParentBottom="true">
 
             <com.google.android.material.imageview.ShapeableImageView
@@ -105,6 +106,17 @@
                 android:layout_marginStart="20dp"
                 app:shapeAppearanceOverlay="@style/ImageLogo"
                 tools:src="@drawable/ic_apple_logo" />
+
+            <TextView
+                android:id="@+id/comp_short_name"
+                style="@style/TextApp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:textSize="16sp"
+                android:fontFamily="@font/roboto_medium"
+                tools:text="AAPL"/>
 
             <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/chart_setting"
@@ -123,6 +135,33 @@
 
     <include
         android:id="@+id/bottom_sheet"
-        layout="@layout/bottom_sheet" />
+        layout="@layout/bottom_sheet"/>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/loading_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:src="@drawable/ic_loading_line"/>
+
+        <TextView
+            style="@style/TextApp"
+            android:id="@+id/loading_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/loading_logo"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

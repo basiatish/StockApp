@@ -1,0 +1,46 @@
+<animated-vector
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:aapt="http://schemas.android.com/aapt">
+<aapt:attr name="android:drawable">
+  <vector
+      android:width="64dp"
+      android:height="64dp"
+      android:viewportWidth="64"
+      android:viewportHeight="64">
+
+    <path
+        android:name="root"
+        android:pathData="M8,50.667C14.218,40.518 17.797,34.676 23.836,24.821C24.169,24.278 24.919,
+        24.179 25.379,24.619L37.708,36.387C38.16,36.818 38.892,36.734 39.235,36.212L56,10.667"
+        android:strokeAlpha="0.6"
+        android:strokeWidth="5"
+        android:fillColor="#00000000"
+        android:strokeColor="#00BB61"
+        android:strokeLineCap="round"/>
+  </vector>
+</aapt:attr>
+<target android:name="root">
+  <aapt:attr name="android:animation">
+    <objectAnimator
+        android:interpolator="@android:anim/accelerate_decelerate_interpolator"
+        android:valueType="colorType"
+        android:propertyName="strokeColor"
+        android:valueFrom="#B4B4B4"
+        android:valueTo="#00BB61"
+        android:duration="500"/>
+  </aapt:attr>
+</target>
+<target android:name="root">
+  <aapt:attr name="android:animation">
+    <objectAnimator
+        android:propertyName="trimPathEnd"
+        android:valueFrom="0.0"
+        android:valueTo="1.0"
+        android:duration="1000"
+        android:valueType="floatType"
+        android:repeatMode="restart"
+        android:repeatCount="infinite"
+        android:interpolator="@android:anim/accelerate_decelerate_interpolator"/>
+  </aapt:attr>
+</target>
+</animated-vector>

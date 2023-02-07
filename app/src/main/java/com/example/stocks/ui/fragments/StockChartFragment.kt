@@ -117,6 +117,11 @@ class StockChartFragment : Fragment() {
             bottomSheetBehavior?.state = BottomSheetBehavior.STATE_COLLAPSED
         }
 
+        onChartStateChange()
+        onCrossHairMove()
+    }
+
+    private fun onChartStateChange() {
         chart.subscribeOnChartStateChange { state ->
             when(state) {
                 is ChartsView.State.Ready -> {
@@ -131,6 +136,9 @@ class StockChartFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun onCrossHairMove() {
         chart.api.subscribeCrosshairMove { params ->
             val prices = params.seriesPrices
             if (params.time != null && !prices.isNullOrEmpty()) {
@@ -294,8 +302,9 @@ class StockChartFragment : Fragment() {
 
     private fun loadingAnimation() {
         binding.chartLegend.visibility = View.INVISIBLE
-        binding.loadingLogo.visibility = View.VISIBLE
-        binding.loadingText.visibility = View.VISIBLE
+        binding.loadingView.visibility = View.VISIBLE
+//        binding.loadingLogo.visibility = View.VISIBLE
+//        binding.loadingText.visibility = View.VISIBLE
         val loading = binding.loadingLogo.drawable as AnimatedVectorDrawable
         loading.start()
         val textAnimation = AnimationUtils.loadAnimation(requireContext(), R.anim.chart_loading_animation)
@@ -303,9 +312,10 @@ class StockChartFragment : Fragment() {
     }
 
     private fun deleteLoadingAnimation() {
-        binding.loadingLogo.visibility = View.GONE
-        binding.loadingText.clearAnimation()
-        binding.loadingText.visibility = View.GONE
+        binding.loadingView.visibility = View.GONE
+//        binding.loadingLogo.visibility = View.GONE
+//        binding.loadingText.clearAnimation()
+//        binding.loadingText.visibility = View.GONE
         binding.chartLegend.visibility = View.VISIBLE
     }
 

@@ -9,16 +9,20 @@ import androidx.core.view.get
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
 import com.example.stocks.R
 import com.example.stocks.databinding.ActivityMainBinding
 import com.example.stocks.ui.fragments.StockListFragmentDirections
 import com.example.stocks.ui.fragments.StockOverViewFragment
 import com.example.stocks.ui.fragments.StockOverViewFragmentDirections
 import com.example.stocks.ui.fragments.StockSearchFragmentDirections
+import com.example.stocks.workers.PriceAlarm
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationBarView
+import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
@@ -94,6 +98,11 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+
+
+        val  myWorkRequest = PeriodicWorkRequestBuilder<PriceAlarm>(15, TimeUnit.MINUTES,
+            15, TimeUnit.MINUTES).build()
+        WorkManager.getInstance(applicationContext).enqueue(myWorkRequest)
     }
 
     override fun onSupportNavigateUp(): Boolean {

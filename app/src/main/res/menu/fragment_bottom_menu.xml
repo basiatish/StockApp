@@ -12,12 +12,6 @@
         android:title="" />
 
     <item
-        android:id="@+id/news"
-        android:icon="@drawable/ic_newspaper"
-        android:title=""
-        android:enabled="false"/>
-
-    <item
         android:id="@+id/bell"
         android:icon="@drawable/ic_bell"
         android:title=""

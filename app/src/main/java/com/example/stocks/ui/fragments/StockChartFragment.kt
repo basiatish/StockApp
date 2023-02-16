@@ -52,7 +52,7 @@ class StockChartFragment : Fragment() {
 
     private var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>? = null
 
-    private var bottomSheetState: Boolean = true
+    private var bottomSheetState: Boolean = false
 
     private lateinit var dataSeries: SeriesApi
     private lateinit var volumeSeries: SeriesApi
@@ -303,8 +303,6 @@ class StockChartFragment : Fragment() {
     private fun loadingAnimation() {
         binding.chartLegend.visibility = View.INVISIBLE
         binding.loadingView.visibility = View.VISIBLE
-//        binding.loadingLogo.visibility = View.VISIBLE
-//        binding.loadingText.visibility = View.VISIBLE
         val loading = binding.loadingLogo.drawable as AnimatedVectorDrawable
         loading.start()
         val textAnimation = AnimationUtils.loadAnimation(requireContext(), R.anim.chart_loading_animation)
@@ -313,9 +311,6 @@ class StockChartFragment : Fragment() {
 
     private fun deleteLoadingAnimation() {
         binding.loadingView.visibility = View.GONE
-//        binding.loadingLogo.visibility = View.GONE
-//        binding.loadingText.clearAnimation()
-//        binding.loadingText.visibility = View.GONE
         binding.chartLegend.visibility = View.VISIBLE
     }
 

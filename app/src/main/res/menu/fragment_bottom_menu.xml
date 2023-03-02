@@ -12,9 +12,9 @@
         android:title="" />
 
     <item
-        android:id="@+id/bell"
+        android:id="@+id/alert"
         android:icon="@drawable/ic_bell"
         android:title=""
-        android:enabled="false"/>
+        android:enabled="true"/>
 
 </menu>

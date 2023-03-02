@@ -60,7 +60,7 @@ class StockOverViewFragment: Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentStockOverviewBinding.inflate(inflater, container, false)
 
         return binding.root

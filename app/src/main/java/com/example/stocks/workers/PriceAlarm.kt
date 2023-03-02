@@ -1,10 +1,18 @@
 package com.example.stocks.workers
 
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Context
 import android.util.Log
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.work.CoroutineWorker
+import androidx.work.ForegroundInfo
+import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import com.example.stocks.BuildConfig
+import com.example.stocks.R
 import com.example.stocks.StockApi
 import com.example.stocks.models.remote.StockChart
 import kotlinx.coroutines.Dispatchers.IO
@@ -22,12 +30,25 @@ class PriceAlarm(appContext: Context, params: WorkerParameters) : CoroutineWorke
 
     private val apiKey = BuildConfig.API_KEY
     private var priceChartMH: MutableList<StockChart> = mutableListOf()
-    private val targetPrice = 154
-    private val timeCreated = Timestamp(1676212097).time
+    private val targetPrice = 150
+    private val timeCreated = Timestamp(1676973907).time
+    private var message = ""
+
+    private val notificationManager =
+        appContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
     override suspend fun doWork(): Result {
 
-        makeStatusNotification("Worker Started", applicationContext)
+
+//        setForeground(makeStatusNotification("Worker Started", applicationContext))
+//        setForegroundAsync(createForegroundInfo("Worker Started"))
+        message = "Worker Started"
+        with(NotificationManagerCompat.from(applicationContext)) {
+            notify(1, createForegroundInfo())
+        }
+
+        //createForegroundInfo("Worker Started")
+        //makeStatusNotification("Worker Started", applicationContext)
 
         return withContext(IO) {
             return@withContext try {
@@ -43,9 +64,18 @@ class PriceAlarm(appContext: Context, params: WorkerParameters) : CoroutineWorke
                         toEpochSecond(ZoneOffset.UTC)
                     if (timestamp > timeCreated) {
                         if (item.close!! > targetPrice) {
-                            makeStatusNotification("Target Price reached at ${item.date}" +
-                                    "!!! Current price is ${item.close}",
-                                applicationContext)
+                            message = "Target Price reached at ${item.date}" +
+                                    "!!! Current price is ${item.close}"
+                            with(NotificationManagerCompat.from(applicationContext)) {
+                                notify(1, createForegroundInfo())
+                            }
+//                            createForegroundInfo("Target Price reached at ${item.date}" +
+//                                    "!!! Current price is ${item.close}")
+//                            setForegroundAsync(createForegroundInfo("Target Price reached at ${item.date}" +
+//                                    "!!! Current price is ${item.close}"))
+//                            setForeground(makeStatusNotification("Target Price reached at ${item.date}" +
+//                                    "!!! Current price is ${item.close}",
+//                                applicationContext))
                             break
                         }
                     }
@@ -58,6 +88,36 @@ class PriceAlarm(appContext: Context, params: WorkerParameters) : CoroutineWorke
             }
         }
 
+    }
+
+    override suspend fun getForegroundInfo(): ForegroundInfo {
+        return ForegroundInfo(1, createForegroundInfo())
+    }
+
+    private fun createForegroundInfo() : Notification {
+        val id = "1225"
+        val title = "WorkRequest Starting"
+
+        val name = VERBOSE_NOTIFICATION_CHANNEL_NAME
+        val description = VERBOSE_NOTIFICATION_CHANNEL_DESCRIPTION
+        val importance = NotificationManager.IMPORTANCE_HIGH
+        val channel = NotificationChannel(id, name, importance)
+        channel.description = description
+
+        // Add the channel
+        notificationManager.createNotificationChannel(channel)
+
+
+        val builder = NotificationCompat.Builder(applicationContext, id)
+            .setSmallIcon(R.drawable.ic_launcher_foreground)
+            .setContentTitle(title)
+            .setContentText(message)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setVibrate(LongArray(0))
+
+
+        //notificationManager.notify(1, builder.build())
+        return builder.build()
     }
 
 }

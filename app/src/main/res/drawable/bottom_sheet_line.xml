@@ -4,7 +4,6 @@
     <item android:state_enabled="true">
         <shape android:shape="rectangle">
             <corners android:radius="3dp"/>
-            <solid android:color="@color/nav_button_inactive"/>
         </shape>
     </item>
 

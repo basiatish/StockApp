@@ -12,7 +12,8 @@
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
     <View
-        android:background="@drawable/bottom_sheet_top_line"
+        android:background="@drawable/bottom_sheet_line"
+        android:backgroundTint="@color/nav_button_inactive"
         android:layout_width="30dp"
         android:layout_height="5dp"
         android:layout_marginTop="16dp"

@@ -9,14 +9,10 @@ import androidx.core.view.get
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
-import androidx.work.PeriodicWorkRequestBuilder
-import androidx.work.WorkManager
+import androidx.work.*
 import com.example.stocks.R
 import com.example.stocks.databinding.ActivityMainBinding
-import com.example.stocks.ui.fragments.StockListFragmentDirections
-import com.example.stocks.ui.fragments.StockOverViewFragment
-import com.example.stocks.ui.fragments.StockOverViewFragmentDirections
-import com.example.stocks.ui.fragments.StockSearchFragmentDirections
+import com.example.stocks.ui.fragments.*
 import com.example.stocks.workers.PriceAlarm
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
@@ -73,6 +69,11 @@ class MainActivity : AppCompatActivity() {
                         navController.navigate(action)
                     }
                 }
+                R.id.alert -> {
+                    if (!it.isChecked) {
+                        AlertListBottomSheetFragment().show(supportFragmentManager, "AlertSheet")
+                    }
+                }
             }
             true
         }
@@ -100,9 +101,14 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-        val  myWorkRequest = PeriodicWorkRequestBuilder<PriceAlarm>(15, TimeUnit.MINUTES,
-            15, TimeUnit.MINUTES).build()
-        WorkManager.getInstance(applicationContext).enqueue(myWorkRequest)
+
+        //val constraints = Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
+        //val  myWorkRequest = PeriodicWorkRequestBuilder<PriceAlarm>(repeatInterval = 15, TimeUnit.MINUTES).
+        //    addTag("kek").build()
+        //WorkManager.getInstance(applicationContext).enqueue(myWorkRequest)
+        //val work = PeriodicWorkRequest.Builder(PriceAlarm::class.java, 15, TimeUnit.MINUTES).addTag("kek").build()
+        //WorkManager.getInstance(applicationContext).enqueueUniquePeriodicWork("kek",
+        //    ExistingPeriodicWorkPolicy.REPLACE, myWorkRequest)
     }
 
     override fun onSupportNavigateUp(): Boolean {

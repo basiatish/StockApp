@@ -21,13 +21,13 @@
                 android:id="@+id/back_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
                 android:background="@null"
                 android:src="@drawable/ic_arrow_back"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="wrap_content"
@@ -38,13 +38,13 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.imageview.ShapeableImageView
-                    style="@style/ImageLogo.Background"
                     android:id="@+id/comp_logo"
+                    style="@style/ImageLogo.Background"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
-                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
                     app:shapeAppearanceOverlay="@style/ImageLogo"
                     tools:src="@drawable/ic_apple_logo" />
 
@@ -57,9 +57,9 @@
                     android:gravity="center_horizontal"
                     android:singleLine="true"
                     android:textAppearance="?attr/textAppearanceHeadline6"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toRightOf="@id/comp_logo"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     tools:text="Apple Inc." />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -67,13 +67,13 @@
             <androidx.appcompat.widget.AppCompatImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
                 android:background="@null"
                 android:src="@drawable/ic_star"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -81,13 +81,13 @@
             android:id="@+id/divider"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/orange"
-            android:layout_marginTop="4dp"
+            android:layout_below="@id/header"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
             android:layout_marginEnd="8dp"
+            android:background="@color/orange"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            android:layout_below="@id/header" />
+            app:layout_constraintRight_toRightOf="parent" />
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/scroll_view"
@@ -104,8 +104,8 @@
                     android:id="@+id/price_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
                     android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
                     app:layout_constraintTop_toTopOf="parent">
 
@@ -154,7 +154,7 @@
                         android:textColor="@color/grey_700"
                         app:layout_constraintRight_toLeftOf="@+id/high_price"
                         app:layout_constraintTop_toTopOf="parent"
-                        tools:text="High:"/>
+                        tools:text="High:" />
 
                     <TextView
                         android:id="@+id/high_price"
@@ -178,7 +178,7 @@
                         android:textColor="@color/grey_700"
                         app:layout_constraintLeft_toLeftOf="@id/high"
                         app:layout_constraintTop_toBottomOf="@+id/high"
-                        tools:text="Low:"/>
+                        tools:text="Low:" />
 
                     <TextView
                         android:id="@+id/low_price"
@@ -190,7 +190,7 @@
                         android:textColor="@color/grey_700"
                         app:layout_constraintLeft_toLeftOf="@id/high_price"
                         app:layout_constraintTop_toBottomOf="@id/high_price"
-                        tools:text="136.58"/>
+                        tools:text="136.58" />
 
                     <TextView
                         android:id="@+id/vol"
@@ -201,7 +201,7 @@
                         android:textColor="@color/grey_700"
                         app:layout_constraintLeft_toLeftOf="@+id/low"
                         app:layout_constraintTop_toBottomOf="@id/low"
-                        tools:text="Vol:"/>
+                        tools:text="Vol:" />
 
                     <TextView
                         android:id="@+id/vol_value"
@@ -213,7 +213,7 @@
                         android:textColor="@color/grey_700"
                         app:layout_constraintLeft_toLeftOf="@id/low_price"
                         app:layout_constraintTop_toBottomOf="@id/low_price"
-                        tools:text="100.18M"/>
+                        tools:text="100.18M" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -257,9 +257,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="8dp"
+                    android:background="@drawable/key_stat_background"
                     android:elevation="4dp"
                     app:layout_constraintDimensionRatio="1:1"
-                    android:background="@drawable/key_stat_background"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toLeftOf="@id/low_stat"
                     app:layout_constraintTop_toBottomOf="@+id/key_stat_divider">
@@ -288,8 +288,8 @@
                         tools:text="52w High" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/TextApp"
                         android:id="@+id/high_52w"
+                        style="@style/TextApp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="30dp"
@@ -309,8 +309,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:elevation="4dp"
                     android:background="@drawable/key_stat_background"
+                    android:elevation="4dp"
                     app:layout_constraintDimensionRatio="1:1"
                     app:layout_constraintLeft_toRightOf="@+id/high_stat"
                     app:layout_constraintRight_toLeftOf="@+id/market_cap_stat"
@@ -340,8 +340,8 @@
                         tools:text="52w Low" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/TextApp"
                         android:id="@+id/low_52w"
+                        style="@style/TextApp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="30dp"
@@ -362,8 +362,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="24dp"
-                    android:elevation="4dp"
                     android:background="@drawable/key_stat_background"
+                    android:elevation="4dp"
                     app:layout_constraintDimensionRatio="1:1"
                     app:layout_constraintLeft_toRightOf="@+id/low_stat"
                     app:layout_constraintRight_toRightOf="parent"
@@ -393,8 +393,8 @@
                         tools:text="Market Cap" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/TextApp"
                         android:id="@+id/market_cap_value"
+                        style="@style/TextApp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
@@ -413,8 +413,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="8dp"
-                    android:elevation="4dp"
                     android:background="@drawable/key_stat_background"
+                    android:elevation="4dp"
                     app:layout_constraintDimensionRatio="1:1"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toLeftOf="@id/low_stat"
@@ -444,8 +444,8 @@
                         tools:text="Avg. Volume" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/TextApp"
                         android:id="@+id/avg_volume_value"
+                        style="@style/TextApp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
@@ -462,8 +462,8 @@
                     android:id="@+id/pe_stat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:elevation="4dp"
                     android:background="@drawable/key_stat_background"
+                    android:elevation="4dp"
                     app:layout_constraintDimensionRatio="1:1"
                     app:layout_constraintLeft_toRightOf="@id/volume_stat"
                     app:layout_constraintRight_toLeftOf="@id/beta_stat"
@@ -493,8 +493,8 @@
                         tools:text="P/E Ratio" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/TextApp"
                         android:id="@+id/pe_value"
+                        style="@style/TextApp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
@@ -512,8 +512,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="24dp"
-                    android:elevation="4dp"
                     android:background="@drawable/key_stat_background"
+                    android:elevation="4dp"
                     app:layout_constraintDimensionRatio="1:1"
                     app:layout_constraintLeft_toRightOf="@id/pe_stat"
                     app:layout_constraintRight_toRightOf="parent"
@@ -543,8 +543,8 @@
                         tools:text="Beta" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/TextApp"
                         android:id="@+id/beta_value"
+                        style="@style/TextApp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
@@ -677,8 +677,8 @@
                         tools:text="Symbol" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/TextApp"
                         android:id="@+id/symbol"
+                        style="@style/TextApp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -716,8 +716,8 @@
                         tools:text="Exchange" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/TextApp"
                         android:id="@+id/exchange"
+                        style="@style/TextApp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -755,8 +755,8 @@
                         tools:text="Industry" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/TextApp"
                         android:id="@+id/industry"
+                        style="@style/TextApp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -794,8 +794,8 @@
                         tools:text="Sector" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/TextApp"
                         android:id="@+id/sector"
+                        style="@style/TextApp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -833,8 +833,8 @@
                         tools:text="Country" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/TextApp"
                         android:id="@+id/country"
+                        style="@style/TextApp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -872,8 +872,8 @@
                         tools:text="CEO" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/TextApp"
                         android:id="@+id/ceo"
+                        style="@style/TextApp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -899,8 +899,8 @@
                     app:layout_constraintTop_toBottomOf="@+id/about_ceo">
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/TextApp"
                         android:id="@+id/description"
+                        style="@style/TextApp"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
@@ -908,14 +908,14 @@
                         android:layout_marginEnd="16dp"
                         android:layout_marginBottom="10dp"
                         android:breakStrategy="simple"
+                        android:hyphenationFrequency="none"
                         android:inputType="textMultiLine"
                         android:scrollHorizontally="false"
-                        android:hyphenationFrequency="none"
                         android:text="Apple Inc. designs, manufactures, and markets smartphones, personal computers, tablets, wearables, and accessories worldwide. It also sells various related services. The company offers..."
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
                         tools:text="Apple Inc. designs, manufactures, and markets smartphones, personal computers, tablets, wearables, and accessories worldwide. It also sells various related services. The company offers..." />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -927,3 +927,6 @@
     </RelativeLayout>
 
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
+

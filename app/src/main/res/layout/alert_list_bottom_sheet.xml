@@ -2,14 +2,16 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/test"
     style="@style/BottomSheetTest"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
     <RelativeLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_margin="24dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -48,15 +50,27 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/list"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/add_button"
-            android:layout_below="@+id/header"
-            android:layout_marginTop="24dp"
-            tools:itemCount="1"
-            tools:listitem="@layout/item_alert_list" />
+            android:layout_height="match_parent"
+            android:layout_below="@id/header"
+            android:layout_above="@id/add_button">
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    tools:itemCount="10"
+                    tools:listitem="@layout/item_alert_list" />
+
+            </androidx.core.widget.NestedScrollView>
+
+        </RelativeLayout>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/add_button"
@@ -65,11 +79,10 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="8dp"
             android:text="Alert"
-            app:icon="@drawable/ic_add_alert" />
+            app:icon="@drawable/ic_add_alert"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
     </RelativeLayout>
-
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

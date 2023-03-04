@@ -44,10 +44,18 @@
         <action
             android:id="@+id/action_stockOverViewFragment_to_stockChartFragment"
             app:destination="@id/stockChartFragment"/>
+        <action
+            android:id="@+id/action_stockOverViewFragment_to_alertListDialog"
+            app:destination="@id/alertListDialog" />
     </fragment>
     <fragment
         android:id="@+id/stockChartFragment"
         android:name="com.example.stocks.ui.fragments.StockChartFragment"
         android:label="StockChartFragment"
         tools:layout="@layout/fragment_stock_chart"/>
+    <dialog
+        android:id="@+id/alertListDialog"
+        android:name="com.example.stocks.ui.fragments.AlertListBottomSheetFragment"
+        android:label="AlertListBottomSheetFragment"
+        tools:layout="@layout/alert_list_bottom_sheet"/>
 </navigation>

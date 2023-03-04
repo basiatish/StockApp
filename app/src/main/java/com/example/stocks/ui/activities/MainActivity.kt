@@ -71,7 +71,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.alert -> {
                     if (!it.isChecked) {
-                        AlertListBottomSheetFragment().show(supportFragmentManager, "AlertSheet")
+                        navController.navigate(R.id.action_stockOverViewFragment_to_alertListDialog)
                     }
                 }
             }
@@ -95,11 +95,13 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.stockChartFragment -> {
                 }
+                R.id.alertListDialog -> {
+                    binding.fragmentNav.selectedItemId = R.id.home
+                }
                 else -> {
                 }
             }
         }
-
 
 
         //val constraints = Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()

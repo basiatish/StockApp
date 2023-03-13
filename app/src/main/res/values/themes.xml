@@ -36,8 +36,8 @@
         <item name="android:textAppearance">?attr/textAppearanceHeadline6</item>
         <item name="iconGravity">textStart</item>
         <item name="font">@font/roboto_medium</item>
-        <item name="android:background">@drawable/add_alert_button_background</item>
         <item name="rippleColor">@null</item>
+        <item name="android:background">@drawable/add_alert_button_background</item>
     </style>
 
     <style name="ImageLogo" parent="">
@@ -47,10 +47,6 @@
 
     <style name="ImageLogo.Background" parent="">
         <item name="android:background">@color/white</item>
-    </style>
-
-    <style name="FloatingButton" parent="Widget.MaterialComponents.FloatingActionButton">
-        <item name="backgroundTint">@color/orange</item>
     </style>
 
     <style name="CancelBtn" parent="Widget.MaterialComponents.Button.TextButton">
@@ -104,6 +100,8 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSizeTopLeft">16dp</item>
         <item name="cornerSizeTopRight">16dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
     </style>
 
 </resources>

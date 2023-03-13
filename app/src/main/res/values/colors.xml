@@ -26,4 +26,6 @@
     <color name="grey_700">#B4B4B4</color>
 
     <color name="overviewFragment">#D5D5D5</color>
+    <color name="red_60">#99E10808</color>
+    <color name="green_60">#9900BB61</color>
 </resources>

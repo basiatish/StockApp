@@ -1,24 +1,14 @@
 package com.example.stocks.ui.activities
 
-import android.animation.LayoutTransition
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.LinearLayout
-import androidx.core.view.get
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
-import androidx.work.*
 import com.example.stocks.R
 import com.example.stocks.databinding.ActivityMainBinding
 import com.example.stocks.ui.fragments.*
-import com.example.stocks.workers.PriceAlarm
-import com.google.android.material.bottomappbar.BottomAppBar
-import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.navigation.NavigationBarView
-import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
@@ -97,6 +87,8 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.alertListDialog -> {
                     binding.fragmentNav.selectedItemId = R.id.home
+                }
+                R.id.addAlertDialog -> {
                 }
                 else -> {
                 }

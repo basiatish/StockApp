@@ -20,11 +20,6 @@
         <item name="colorOnSecondaryContainer">#2E4052</item>
     </style>
 
-
-    <style name="FloatingButton" parent="Widget.MaterialComponents.FloatingActionButton">
-        <item name="backgroundTint">@color/orange</item>
-    </style>
-
     <style name="CancelBtn" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="shapeAppearance">?attr/shapeAppearanceSmallComponent</item>
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Small</item>

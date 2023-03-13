@@ -57,5 +57,16 @@
         android:id="@+id/alertListDialog"
         android:name="com.example.stocks.ui.fragments.AlertListBottomSheetFragment"
         android:label="AlertListBottomSheetFragment"
-        tools:layout="@layout/alert_list_bottom_sheet"/>
+        tools:layout="@layout/alert_list_bottom_sheet">
+        <action
+            android:id="@+id/action_alertListDialog_to_addAlert"
+            app:destination="@id/addAlertDialog"
+            app:popUpTo="@id/alertListDialog"
+            app:popUpToInclusive="true" />
+    </dialog>
+    <dialog
+        android:id="@+id/addAlertDialog"
+        android:name="com.example.stocks.ui.fragments.AddAlertBottomSheetFragment"
+        android:label="AddAlertBottomSheetFragment"
+        tools:layout="@layout/add_alert_bottom_sheet"/>
 </navigation>

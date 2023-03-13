@@ -1,0 +1,46 @@
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt">
+    <aapt:attr name="android:drawable">
+        <vector
+            android:width="20dp"
+            android:height="20dp"
+            android:viewportWidth="20"
+            android:viewportHeight="20">
+            <path
+                android:name="color"
+                android:fillAlpha="0.6"
+                android:fillColor="#00BB61"
+                android:pathData="M20,10C20,15.523 15.523,20 10,20C4.477,20 0,15.523 0,10C0,4.477 4.477,0 10,0C15.523,0 20,4.477 20,10Z" />
+            <group
+                android:name="path"
+                android:pivotX="10"
+                android:pivotY="10">
+                <path
+                    android:fillAlpha="0.5"
+                    android:fillColor="#000000"
+                    android:pathData="M9.5,16C9.5,16.276 9.724,16.5 10,16.5C10.276,16.5 10.5,16.276 10.5,16H9.5ZM10.354,3.646C10.158,3.451 9.842,3.451 9.646,3.646L6.464,6.828C6.269,7.024 6.269,7.34 6.464,7.536C6.66,7.731 6.976,7.731 7.172,7.536L10,4.707L12.828,7.536C13.024,7.731 13.34,7.731 13.535,7.536C13.731,7.34 13.731,7.024 13.535,6.828L10.354,3.646ZM10.5,16L10.5,4H9.5L9.5,16H10.5Z" />
+            </group>
+        </vector>
+    </aapt:attr>
+    <target android:name="path">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:duration="500"
+                android:interpolator="@android:anim/accelerate_decelerate_interpolator"
+                android:propertyName="rotation"
+                android:valueFrom="0"
+                android:valueTo="180" />
+        </aapt:attr>
+    </target>
+    <target android:name="color">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:duration="250"
+                android:interpolator="@android:anim/accelerate_decelerate_interpolator"
+                android:propertyName="fillColor"
+                android:valueFrom="#00BB61"
+                android:valueTo="#E10808"
+                android:valueType="colorType" />
+        </aapt:attr>
+    </target>
+</animated-vector>

@@ -22,7 +22,7 @@
     <string name="price_change_equals">%.2f</string>
     <string name="price_change_percent">(%.2f%%)</string>
     <string name="key_statistics">Key Statistics</string>
-    <string name="close">Previous Close</string>
+    <string name="prev_close">Previous Close</string>
     <string name="avg_volume">Avg. Volume</string>
     <string name="market_cap">Market Cap</string>
     <string name="week_range">52 Week Range</string>
@@ -40,4 +40,12 @@
     <string name="chartPriceLine">Price: %s</string>
     <string name="chartPriceHigh">High: %s</string>
     <string name="chartPriceLow">Low: %s</string>
+    <string name="alert_text_below">below</string>
+    <string name="alert_text_above">above</string>
+    <string name="price_is_higher">When price is higher than</string>
+    <string name="price_is_lower">When price is lower than</string>
+    <string name="alert">Alert</string>
+    <string name="alerts">Alerts</string>
+    <string name="close">Close</string>
+    <string name="alert_price">$ %.2f</string>
 </resources>

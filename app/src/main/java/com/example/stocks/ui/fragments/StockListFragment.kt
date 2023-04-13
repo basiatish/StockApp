@@ -6,9 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.example.stocks.App
 import com.example.stocks.R
 import com.example.stocks.databinding.FragmentStockListBinding
+import com.example.stocks.viewmodels.StockListViewModel
+import com.example.stocks.viewmodels.StockListViewModelFactory
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -18,6 +22,10 @@ class StockListFragment() : Fragment() {
 
     private var _binding: FragmentStockListBinding? = null
     private val binding get() = _binding!!
+
+    private val viewModel: StockListViewModel by viewModels {
+        StockListViewModelFactory((requireContext().applicationContext as App).stockDataBase.stockDao())
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,24 +39,5 @@ class StockListFragment() : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-//        val pound = Currency.getInstance("USD");
-//        val symbol = pound.symbol;
-//        println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@$symbol")
-
-//        val navbar = requireActivity().findViewById<BottomAppBar>(R.id.btm_bar)
-//        navbar.hideOnScroll = true
-
-        //val fab = requireActivity().findViewById<FloatingActionButton>(R.id.fab)
-
-//        fab.setOnClickListener {
-//            val action = StockListFragmentDirections.actionStockListFragmentToStockSearchFragment()
-//            this.findNavController().navigate(action)
-//        }
-//        val search = requireActivity().findViewById<BottomNavigationItemView>(R.id.search)
-//        search.setOnClickListener {
-//            val action = StockListFragmentDirections.actionStockListFragmentToStockSearchFragment()
-//            this.findNavController().navigate(action)
-//        }
     }
 }

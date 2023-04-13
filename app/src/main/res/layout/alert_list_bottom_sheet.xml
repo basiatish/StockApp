@@ -34,39 +34,51 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:fontFamily="@font/roboto_medium"
-                android:text="Alerts"
+                android:text="@string/alerts"
                 android:textAppearance="?attr/textAppearanceHeadline5"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageButton
+                android:id="@+id/close_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@null"
-                android:src="@drawable/ic_less"
+                android:src="@drawable/ic_close"
                 app:layout_constraintBottom_toBottomOf="@+id/title"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/title" />
+                app:layout_constraintTop_toTopOf="@+id/title"
+                android:contentDescription="@string/close" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <RelativeLayout
+        <androidx.core.widget.NestedScrollView
             android:id="@+id/list_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/header"
+            android:layout_height="match_parent"
             android:layout_above="@id/add_button"
-            android:layout_marginBottom="16dp">
+            android:layout_below="@id/header"
+            android:fillViewport="true"
+            android:layout_marginBottom="8dp"
+            android:scrollbars="none">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/list"
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                tools:itemCount="10"
-                tools:listitem="@layout/item_alert_list" />
+                android:layout_height="wrap_content">
 
-        </RelativeLayout>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:nestedScrollingEnabled="false"
+                    android:paddingBottom="16dp"
+                    tools:itemCount="10"
+                    tools:listitem="@layout/item_alert_list" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.core.widget.NestedScrollView>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/add_button"
@@ -76,7 +88,7 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="8dp"
-            android:text="Alert"
+            android:text="@string/alert"
             app:icon="@drawable/ic_add_alert" />
 
     </RelativeLayout>

@@ -68,5 +68,13 @@
         android:id="@+id/addAlertDialog"
         android:name="com.example.stocks.ui.fragments.AddAlertBottomSheetFragment"
         android:label="AddAlertBottomSheetFragment"
-        tools:layout="@layout/add_alert_bottom_sheet"/>
+        tools:layout="@layout/add_alert_bottom_sheet">
+        <argument
+            android:name="shortName"
+            app:argType="string" />
+        <argument
+            android:name="alertId"
+            app:argType="integer"
+            android:defaultValue="-1" />
+    </dialog>
 </navigation>

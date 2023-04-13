@@ -12,7 +12,7 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/key_stat"
-        style="@style/TextApp"
+        style="@style/DefaultTextApp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/key_statistics"
@@ -32,11 +32,11 @@
         app:layout_constraintTop_toBottomOf="@id/key_stat">
 
         <androidx.appcompat.widget.AppCompatTextView
-            style="@style/TextApp"
+            style="@style/DefaultTextApp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
-            android:text="@string/close"
+            android:text="@string/prev_close"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@id/close"
             app:layout_constraintLeft_toLeftOf="@id/close"
@@ -44,7 +44,7 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/close_price"
-            style="@style/TextApp"
+            style="@style/DefaultTextApp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="32dp"
@@ -68,7 +68,7 @@
         app:layout_constraintTop_toBottomOf="@id/close">
 
         <androidx.appcompat.widget.AppCompatTextView
-            style="@style/TextApp"
+            style="@style/DefaultTextApp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
@@ -80,7 +80,7 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/last_div"
-            style="@style/TextApp"
+            style="@style/DefaultTextApp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="32dp"
@@ -104,7 +104,7 @@
         app:layout_constraintTop_toBottomOf="@id/div">
 
         <androidx.appcompat.widget.AppCompatTextView
-            style="@style/TextApp"
+            style="@style/DefaultTextApp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
@@ -116,7 +116,7 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/avg_volume"
-            style="@style/TextApp"
+            style="@style/DefaultTextApp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="32dp"
@@ -140,7 +140,7 @@
         app:layout_constraintTop_toBottomOf="@id/volume">
 
         <androidx.appcompat.widget.AppCompatTextView
-            style="@style/TextApp"
+            style="@style/DefaultTextApp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
@@ -152,7 +152,7 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/market_cap"
-            style="@style/TextApp"
+            style="@style/DefaultTextApp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="32dp"
@@ -176,7 +176,7 @@
         app:layout_constraintTop_toBottomOf="@id/cap">
 
         <androidx.appcompat.widget.AppCompatTextView
-            style="@style/TextApp"
+            style="@style/DefaultTextApp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
@@ -188,7 +188,7 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/week_range"
-            style="@style/TextApp"
+            style="@style/DefaultTextApp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="32dp"
@@ -213,7 +213,7 @@
         app:layout_constraintTop_toBottomOf="@id/pe">
 
         <androidx.appcompat.widget.AppCompatTextView
-            style="@style/TextApp"
+            style="@style/DefaultTextApp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
@@ -225,7 +225,7 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/comp_beta"
-            style="@style/TextApp"
+            style="@style/DefaultTextApp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="32dp"

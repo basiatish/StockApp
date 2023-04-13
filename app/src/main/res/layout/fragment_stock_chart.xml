@@ -21,7 +21,7 @@
             android:src="@drawable/ic_loading_line"/>
 
         <TextView
-            style="@style/TextApp"
+            style="@style/DefaultTextApp"
             android:id="@+id/loading_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -53,7 +53,7 @@
                 android:padding="8dp">
 
                 <TextView
-                    style="@style/TextApp"
+                    style="@style/DefaultTextApp"
                     android:id="@+id/company_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -66,7 +66,7 @@
 
                 <TextView
                     android:id="@+id/company_open"
-                    style="@style/TextApp"
+                    style="@style/DefaultTextApp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
@@ -78,7 +78,7 @@
 
                 <TextView
                     android:id="@+id/company_price"
-                    style="@style/TextApp"
+                    style="@style/DefaultTextApp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
@@ -90,7 +90,7 @@
 
                 <TextView
                     android:id="@+id/company_high"
-                    style="@style/TextApp"
+                    style="@style/DefaultTextApp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
@@ -102,7 +102,7 @@
 
                 <TextView
                     android:id="@+id/company_low"
-                    style="@style/TextApp"
+                    style="@style/DefaultTextApp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
@@ -136,7 +136,7 @@
 
             <TextView
                 android:id="@+id/comp_short_name"
-                style="@style/TextApp"
+                style="@style/DefaultTextApp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"

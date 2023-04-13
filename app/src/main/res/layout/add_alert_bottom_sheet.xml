@@ -49,10 +49,12 @@
         android:background="@drawable/edittext_background"
         android:backgroundTint="@color/green_60"
         android:drawableStart="@drawable/ic_dollar_green_to_red"
+        android:drawablePadding="8dp"
         android:inputType="numberDecimal"
+        android:textCursorDrawable="@drawable/add_alert_edit_text_cursor"
         android:minWidth="130dp"
         android:singleLine="true"
-        android:maxLength="7"
+        android:maxLength="10"
         android:textAlignment="center"
         android:textSize="20sp"
         android:layout_marginStart="16dp"
@@ -60,15 +62,13 @@
         app:layout_constraintTop_toBottomOf="@id/title"
         tools:text="124.46"/>
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextSwitcher
         android:id="@+id/price_up_or_down"
-        android:fontFamily="@font/roboto_medium"
-        android:textColor="@color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="below"
+        android:inAnimation="@anim/add_alert_edittext_animation_in"
+        android:outAnimation="@anim/add_alert_edittext_animation_out"
         android:layout_marginEnd="4dp"
-        android:textSize="18sp"
         app:layout_constraintRight_toLeftOf="@id/price_arrow"
         app:layout_constraintBottom_toBottomOf="@id/price"
         app:layout_constraintTop_toTopOf="@id/price"/>
@@ -78,6 +78,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
+        android:paddingStart="4dp"
         android:src="@drawable/ic_arrow_above_to_below"
         app:layout_constraintRight_toRightOf="@+id/close_sheet"
         app:layout_constraintTop_toTopOf="@id/price_up_or_down"

@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/alert_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/custom_item_list_background"
@@ -14,14 +15,14 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:text="Than price is higher than"
+        android:text="@string/price_is_higher"
         android:textSize="14sp"
         android:layout_marginTop="16dp"
         android:layout_marginStart="16dp" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/price"
-        style="@style/TextApp"
+        style="@style/MediumTextApp"
         android:textSize="20sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -30,7 +31,7 @@
         android:singleLine="true"
         app:layout_constraintTop_toBottomOf="@+id/title"
         app:layout_constraintLeft_toLeftOf="@+id/title"
-        android:text="$ 124.36"/>
+        tools:text="$ 124.36"/>
 
     <Switch
         android:id="@+id/alarm_switch"

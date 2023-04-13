@@ -94,15 +94,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-
-
-        //val constraints = Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
-        //val  myWorkRequest = PeriodicWorkRequestBuilder<PriceAlarm>(repeatInterval = 15, TimeUnit.MINUTES).
-        //    addTag("kek").build()
-        //WorkManager.getInstance(applicationContext).enqueue(myWorkRequest)
-        //val work = PeriodicWorkRequest.Builder(PriceAlarm::class.java, 15, TimeUnit.MINUTES).addTag("kek").build()
-        //WorkManager.getInstance(applicationContext).enqueueUniquePeriodicWork("kek",
-        //    ExistingPeriodicWorkPolicy.REPLACE, myWorkRequest)
     }
 
     override fun onSupportNavigateUp(): Boolean {

@@ -9,7 +9,7 @@
 
     <TextView
         android:id="@+id/priceContent"
-        style="@style/TextApp"
+        style="@style/DefaultTextApp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
@@ -23,7 +23,7 @@
 
     <TextView
         android:id="@+id/dateContent"
-        style="@style/TextApp"
+        style="@style/DefaultTextApp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"

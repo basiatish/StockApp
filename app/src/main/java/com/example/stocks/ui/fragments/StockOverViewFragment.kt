@@ -6,16 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.stocks.*
 import com.example.stocks.adapters.StockDividendsAdapter
 import com.example.stocks.databinding.FragmentStockOverviewBinding
@@ -24,11 +24,14 @@ import com.example.stocks.models.remote.CompanyQuote
 import com.example.stocks.utils.network.StockApiStatus
 import com.example.stocks.viewmodels.SharedViewModel
 import com.example.stocks.viewmodels.StockOverViewViewModel
+import com.example.stocks.viewmodels.StockOverViewViewModelFactory
 import kotlin.math.roundToInt
 
 class StockOverViewFragment: Fragment() {
 
-    private val viewModel: StockOverViewViewModel by viewModels()
+    private val viewModel: StockOverViewViewModel by viewModels {
+        StockOverViewViewModelFactory((requireContext().applicationContext as App).stockDataBase.stockDao())
+    }
 
     private val sharedViewModel: SharedViewModel by activityViewModels()
 
@@ -45,15 +48,19 @@ class StockOverViewFragment: Fragment() {
     private var week52Low: String = ""
     private var week52High: String = ""
 
+    private var isFavourite = false
+    private var isExist = false
+    private var isMoreButtonClicked = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         compName = navArgs.name
         shortName = navArgs.shortName
         sharedViewModel.saveCompanyName(compName, shortName)
         viewModel.getComp(shortName)
-        //viewModel.getCompanyProfile(shortName)
         viewModel.getCompanyQuote(shortName)
         viewModel.getCompanyDividends(shortName)
+        viewModel.isStockFavourite(shortName)
     }
 
     override fun onCreateView(
@@ -74,18 +81,20 @@ class StockOverViewFragment: Fragment() {
         layoutManager = GridLayoutManager(this.context, 1)
         binding.dividendsView.layoutManager = layoutManager
 
-        binding.refresh.setOnRefreshListener {
-            viewModel.apply {
-                getCompanyProfile(shortName)
-                getCompanyQuote(shortName)
-                viewModel.quoteStatus.observe(viewLifecycleOwner) { status ->
-                    if (status == StockApiStatus.DONE) {
-                        binding.refresh.isRefreshing = false
-                    }
-                }
-            }
+        setupObservers()
+        setupListeners()
+    }
 
+    override fun onStop() {
+        super.onStop()
+        if (isExist) {
+            viewModel.updateStock(shortName, compName, 150.0, 2.0, 4.0)
+        } else {
+            viewModel.saveStock(shortName, compName, 150.0, 2.0, 4.0)
         }
+    }
+
+    private fun setupObservers() {
 
         viewModel.profileStatus.observe(this.viewLifecycleOwner) {
             if (it == StockApiStatus.DONE && viewModel.compProf.isNotEmpty()) {
@@ -97,53 +106,6 @@ class StockOverViewFragment: Fragment() {
                 aboutBind(viewModel.compProf)
             }
         }
-
-        setupObservers()
-
-        var clickedFlag = false
-        binding.moreBtn.setOnClickListener {
-            it.isClickable = false
-            if (!viewModel.companyDividends.value.isNullOrEmpty()) {
-                viewModel.getDividendsList()
-                if (!clickedFlag) {
-                    binding.moreBtn.setImageResource(R.drawable.avd_anim_more)
-                    val less = binding.moreBtn.drawable
-                    if (less is AnimatedVectorDrawable) {
-                        val anim = less as AnimatedVectorDrawable
-                        anim.start()
-                    }
-                    clickedFlag = true
-                } else {
-                    binding.moreBtn.setImageResource(R.drawable.avd_anim_less)
-                    val more = binding.moreBtn.drawable
-                    if (more is AnimatedVectorDrawable) {
-                        val anim = more as AnimatedVectorDrawable
-                        anim.start()
-                    }
-                    binding.scrollView.smoothScrollTo(binding.keyDividendDivider.x.toInt(),
-                        binding.keyDividendDivider.y.toInt(), 800)
-                    clickedFlag = false
-                }
-            }
-            it.isClickable = true
-        }
-
-        binding.backBtn.setOnClickListener {
-            NavigationUI.navigateUp(findNavController(), null)
-        }
-    }
-
-    private fun setupObservers() {
-//        viewModel.companyProfile.observe(this.viewLifecycleOwner) {
-//            if (!it.isNullOrEmpty()) {
-//                week52High = ""
-//                week52Low = ""
-//                loadCompanyLogo(it)
-//                rangeBetaBind(it)
-//                topBarBind()
-//                aboutBind(it)
-//            }
-//        }
         viewModel.companyQuote.observe(this.viewLifecycleOwner) {
             if (!it.isNullOrEmpty()) {
                 statBind(it)
@@ -161,6 +123,65 @@ class StockOverViewFragment: Fragment() {
                 deleteDividendsView()
             }
         }
+
+        viewModel.isFavourite.observe(this.viewLifecycleOwner) {
+            if (it == shortName) {
+                isExist = true
+                isFavourite = true
+                favouriteButtonView()
+            }
+        }
+    }
+
+    private fun setupListeners() {
+
+        binding.refresh.setOnRefreshListener {
+            viewModel.apply {
+                getCompanyProfile(shortName)
+                getCompanyQuote(shortName)
+                viewModel.quoteStatus.observe(viewLifecycleOwner) { status ->
+                    if (status == StockApiStatus.DONE) {
+                        binding.refresh.isRefreshing = false
+                    }
+                }
+            }
+        }
+
+        binding.favoriteBtn.setOnClickListener {
+            isFavourite = !isFavourite
+            favouriteButtonView()
+        }
+
+        binding.moreBtn.setOnClickListener {
+            it.isClickable = false
+            if (!viewModel.companyDividends.value.isNullOrEmpty()) {
+                viewModel.getDividendsList()
+                if (!isMoreButtonClicked) {
+                    binding.moreBtn.setImageResource(R.drawable.avd_anim_more)
+                    val less = binding.moreBtn.drawable
+                    if (less is AnimatedVectorDrawable) {
+                        val anim = less as AnimatedVectorDrawable
+                        anim.start()
+                    }
+                    isMoreButtonClicked = true
+                } else {
+                    binding.moreBtn.setImageResource(R.drawable.avd_anim_less)
+                    val more = binding.moreBtn.drawable
+                    if (more is AnimatedVectorDrawable) {
+                        val anim = more as AnimatedVectorDrawable
+                        anim.start()
+                    }
+                    binding.scrollView.smoothScrollTo(binding.keyDividendDivider.x.toInt(),
+                        binding.keyDividendDivider.y.toInt(), 800)
+                    isMoreButtonClicked = false
+                }
+            }
+            it.isClickable = true
+        }
+
+        binding.backBtn.setOnClickListener {
+            NavigationUI.navigateUp(findNavController(), null)
+        }
     }
 
     private fun topBarBind() {
@@ -170,20 +191,30 @@ class StockOverViewFragment: Fragment() {
         binding.compName.text = compName
     }
 
+    private fun favouriteButtonView() {
+        if (!isFavourite) {
+            val drawable = ResourcesCompat.getDrawable(resources, R.drawable.ic_star_outlined, context?.theme)
+            binding.favoriteBtn.setImageDrawable(drawable)
+        } else {
+            val drawable = ResourcesCompat.getDrawable(resources, R.drawable.ic_star, context?.theme)
+            binding.favoriteBtn.setImageDrawable(drawable)
+        }
+    }
+
     private fun statBind(quote: MutableList<CompanyQuote>) {
         binding.apply {
             stockPrice.text = "$ ${cutValueZeros(quote[0].price ?: 0.0)}"
             priceChange.apply {
                 val change = quote[0].change ?: 0.0
                 text = if(change < 0) cutValueZeros(change) else "+${cutValueZeros(change)}"
-                if (change >= 0) setTextColor(resources.getColor(R.color.green))
-                else setTextColor(resources.getColor(R.color.red))
+                if (change >= 0) setTextColor(resources.getColor(R.color.green, context.theme))
+                else setTextColor(resources.getColor(R.color.red, context.theme))
             }
             pricePercent.apply {
                 val changesPercentage = quote[0].changesPercentage ?: 0.0
                 text = "(${cutValueZeros(changesPercentage)}%)"
-                if (changesPercentage > 0) setTextColor(resources.getColor(R.color.green))
-                else setTextColor(resources.getColor(R.color.red))
+                if (changesPercentage > 0) setTextColor(resources.getColor(R.color.green, context.theme))
+                else setTextColor(resources.getColor(R.color.red, context.theme))
             }
             highPrice.text = cutValueZeros(quote[0].dayHigh ?: 0.0)
             lowPrice.text = cutValueZeros(quote[0].dayLow ?: 0.0)
@@ -217,7 +248,9 @@ class StockOverViewFragment: Fragment() {
     }
 
     private fun loadCompanyLogo(profile: MutableList<CompanyProfile>) {
-        Glide.with(requireContext()).load(profile[0].image).error(R.drawable.ic_warning)
+        Glide.with(requireContext()).load(profile[0].image).diskCacheStrategy(DiskCacheStrategy.ALL)
+            .diskCacheStrategy(DiskCacheStrategy.DATA)
+            .error(R.drawable.ic_warning)
             .centerCrop().into(binding.compLogo)
     }
     

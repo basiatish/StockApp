@@ -56,8 +56,13 @@
         <item name="rippleColor">@color/white</item>
     </style>
 
-    <style name="TextApp" parent="Widget.AppCompat.TextView">
+    <style name="DefaultTextApp" parent="Widget.AppCompat.TextView">
         <item name="fontFamily">@font/roboto</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="MediumTextApp" parent="Widget.AppCompat.TextView">
+        <item name="fontFamily">@font/roboto_medium</item>
         <item name="android:textColor">@color/black</item>
     </style>
 

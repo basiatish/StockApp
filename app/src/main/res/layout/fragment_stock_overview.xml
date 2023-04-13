@@ -50,7 +50,7 @@
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/comp_name"
-                    style="@style/TextApp"
+                    style="@style/DefaultTextApp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -65,12 +65,13 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/favorite_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:background="@null"
-                android:src="@drawable/ic_star"
+                android:src="@drawable/ic_star_outlined"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -111,7 +112,7 @@
 
                     <TextView
                         android:id="@+id/stock_price"
-                        style="@style/TextApp"
+                        style="@style/DefaultTextApp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
@@ -123,7 +124,7 @@
 
                     <TextView
                         android:id="@+id/price_change"
-                        style="@style/TextApp"
+                        style="@style/DefaultTextApp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="2dp"
@@ -135,7 +136,7 @@
 
                     <TextView
                         android:id="@+id/price_percent"
-                        style="@style/TextApp"
+                        style="@style/DefaultTextApp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="(2.16%)"
@@ -146,7 +147,7 @@
 
                     <TextView
                         android:id="@+id/high"
-                        style="@style/TextApp"
+                        style="@style/DefaultTextApp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="8dp"
@@ -158,7 +159,7 @@
 
                     <TextView
                         android:id="@+id/high_price"
-                        style="@style/TextApp"
+                        style="@style/DefaultTextApp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="20dp"
@@ -170,7 +171,7 @@
 
                     <TextView
                         android:id="@+id/low"
-                        style="@style/TextApp"
+                        style="@style/DefaultTextApp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="8dp"
@@ -182,7 +183,7 @@
 
                     <TextView
                         android:id="@+id/low_price"
-                        style="@style/TextApp"
+                        style="@style/DefaultTextApp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="16dp"
@@ -194,7 +195,7 @@
 
                     <TextView
                         android:id="@+id/vol"
-                        style="@style/TextApp"
+                        style="@style/DefaultTextApp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Vol:"
@@ -205,7 +206,7 @@
 
                     <TextView
                         android:id="@+id/vol_value"
-                        style="@style/TextApp"
+                        style="@style/DefaultTextApp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="16dp"
@@ -289,7 +290,7 @@
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/high_52w"
-                        style="@style/TextApp"
+                        style="@style/DefaultTextApp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="30dp"
@@ -341,7 +342,7 @@
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/low_52w"
-                        style="@style/TextApp"
+                        style="@style/DefaultTextApp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="30dp"
@@ -394,7 +395,7 @@
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/market_cap_value"
-                        style="@style/TextApp"
+                        style="@style/DefaultTextApp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
@@ -445,7 +446,7 @@
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/avg_volume_value"
-                        style="@style/TextApp"
+                        style="@style/DefaultTextApp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
@@ -494,7 +495,7 @@
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/pe_value"
-                        style="@style/TextApp"
+                        style="@style/DefaultTextApp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
@@ -544,7 +545,7 @@
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/beta_value"
-                        style="@style/TextApp"
+                        style="@style/DefaultTextApp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
@@ -664,7 +665,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/key_about_divider">
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/TextApp"
+                        style="@style/DefaultTextApp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
@@ -678,7 +679,7 @@
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/symbol"
-                        style="@style/TextApp"
+                        style="@style/DefaultTextApp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -703,7 +704,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/about_symbol">
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/TextApp"
+                        style="@style/DefaultTextApp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
@@ -717,7 +718,7 @@
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/exchange"
-                        style="@style/TextApp"
+                        style="@style/DefaultTextApp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -742,7 +743,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/about_exchange">
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/TextApp"
+                        style="@style/DefaultTextApp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
@@ -756,7 +757,7 @@
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/industry"
-                        style="@style/TextApp"
+                        style="@style/DefaultTextApp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -781,7 +782,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/about_industry">
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/TextApp"
+                        style="@style/DefaultTextApp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
@@ -795,7 +796,7 @@
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/sector"
-                        style="@style/TextApp"
+                        style="@style/DefaultTextApp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -820,7 +821,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/about_sector">
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/TextApp"
+                        style="@style/DefaultTextApp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
@@ -834,7 +835,7 @@
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/country"
-                        style="@style/TextApp"
+                        style="@style/DefaultTextApp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -859,7 +860,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/about_country">
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/TextApp"
+                        style="@style/DefaultTextApp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
@@ -873,7 +874,7 @@
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/ceo"
-                        style="@style/TextApp"
+                        style="@style/DefaultTextApp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -900,7 +901,7 @@
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/description"
-                        style="@style/TextApp"
+                        style="@style/DefaultTextApp"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"

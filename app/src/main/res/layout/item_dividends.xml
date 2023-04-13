@@ -13,7 +13,7 @@
         android:background="@drawable/key_stat_background">
 
         <androidx.appcompat.widget.AppCompatTextView
-            style="@style/TextApp"
+            style="@style/DefaultTextApp"
             android:id="@+id/div_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -26,7 +26,7 @@
             tools:text="May 07, 21"/>
 
         <androidx.appcompat.widget.AppCompatTextView
-            style="@style/TextApp"
+            style="@style/DefaultTextApp"
             android:id="@+id/div_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -35,6 +35,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/top_bar"
+        android:layout_marginTop="16dp"
         tools:itemCount="20"
         tools:listitem="@layout/item_stock_list" />
 

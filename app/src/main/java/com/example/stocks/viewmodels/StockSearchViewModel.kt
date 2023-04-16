@@ -2,15 +2,14 @@ package com.example.stocks
 
 import androidx.lifecycle.*
 import com.example.stocks.models.remote.StockSearch
-import com.example.stocks.utils.network.StockApiStatus
+import com.example.stocks.utils.network.StockStatus
 import kotlinx.coroutines.launch
-import java.lang.IllegalArgumentException
 
 class StockSearchViewModel: ViewModel() {
 
-    private val _status = MutableLiveData<StockApiStatus>()
+    private val _status = MutableLiveData<StockStatus>()
 
-    val status: LiveData<StockApiStatus> = _status
+    val status: LiveData<StockStatus> = _status
 
     private val _companies = MutableLiveData<List<StockSearch>>()
 
@@ -20,13 +19,13 @@ class StockSearchViewModel: ViewModel() {
 
     fun findCompany(name: String) : LiveData<List<StockSearch>> {
         viewModelScope.launch {
-            _status.value = StockApiStatus.LOADING
+            _status.value = StockStatus.LOADING
             try {
                 _companies.value = StockApi.retrofitService
                     .getCompanies(name, "20", apiKey)
-                _status.value = StockApiStatus.DONE
+                _status.value = StockStatus.DONE
             } catch (e: Exception) {
-                _status.value = StockApiStatus.ERROR
+                _status.value = StockStatus.ERROR
                 _companies.value = listOf()
             }
 

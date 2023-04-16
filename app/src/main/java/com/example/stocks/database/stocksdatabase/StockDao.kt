@@ -6,7 +6,7 @@ import androidx.room.*
 interface StockDao {
 
     @Query("Select * from stock")
-    suspend fun getAlerts() : List<Stock>
+    suspend fun getStocks() : List<Stock>
 
     @Query("Select stock.Short_name from stock where stock.Short_name = :shortName")
     suspend fun isExist(shortName: String) : String?

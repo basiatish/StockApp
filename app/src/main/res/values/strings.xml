@@ -16,7 +16,7 @@
     <string name="overview">Overview</string>
     <string name="dividends">Dividends</string>
     <string name="about">About</string>
-    <string name="price">$ %.2f</string>
+    <string name="price">$ %s</string>
     <string name="price_change_above">+%.2f</string>
     <string name="price_change_below">%.2f</string>
     <string name="price_change_equals">%.2f</string>
@@ -48,4 +48,5 @@
     <string name="alerts">Alerts</string>
     <string name="close">Close</string>
     <string name="alert_price">$ %.2f</string>
+    <string name="price_percent">(%s%%)</string>
 </resources>

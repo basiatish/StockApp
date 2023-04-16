@@ -15,8 +15,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.stocks.*
 import com.example.stocks.databinding.FragmentStockSearchBinding
 import com.example.stocks.models.remote.StockSearch
-import com.example.stocks.utils.network.StockApiStatus
-import com.google.android.material.bottomappbar.BottomAppBar
+import com.example.stocks.utils.network.StockStatus
 
 class StockSearchFragment() : Fragment(), OnItemClick {
 
@@ -91,9 +90,9 @@ class StockSearchFragment() : Fragment(), OnItemClick {
 
         viewModel.status.observe(this.viewLifecycleOwner) {
             when (it) {
-                StockApiStatus.LOADING -> binding.progressBar.show()
-                StockApiStatus.DONE -> binding.progressBar.hide()
-                StockApiStatus.ERROR -> {
+                StockStatus.LOADING -> binding.progressBar.show()
+                StockStatus.DONE -> binding.progressBar.hide()
+                StockStatus.ERROR -> {
                     binding.progressBar.hide()
                     binding.statusImage.setImageResource(R.drawable.ic_connection_error)
                 }

@@ -11,7 +11,8 @@ import com.example.stocks.models.remote.StockDividends
 class StockDividendsAdapter : ListAdapter<StockDividends, StockDividendsAdapter.ViewHolder>(DiffCallBack) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(ItemDividendsBinding.inflate(LayoutInflater.from(parent.context)))
+        val binding = ItemDividendsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

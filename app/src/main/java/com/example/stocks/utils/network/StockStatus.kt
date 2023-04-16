@@ -1,5 +1,5 @@
 package com.example.stocks.utils.network
 
-enum class StockApiStatus {
+enum class StockStatus {
     LOADING, ERROR, DONE
 }

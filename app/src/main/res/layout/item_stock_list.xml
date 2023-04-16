@@ -28,7 +28,7 @@
             app:layout_constraintTop_toTopOf="@id/item" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/comp_name"
+            android:id="@+id/short_comp_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -44,7 +44,7 @@
             tools:text="aapl" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/short_comp_name"
+            android:id="@+id/comp_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -54,8 +54,8 @@
             android:textColor="@color/text_color"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="@id/item"
-            app:layout_constraintStart_toStartOf="@id/comp_name"
-            app:layout_constraintTop_toBottomOf="@id/comp_name"
+            app:layout_constraintStart_toStartOf="@id/short_comp_name"
+            app:layout_constraintTop_toBottomOf="@id/short_comp_name"
             tools:ignore="SmallSp"
             tools:text="Apple Inc." />
 

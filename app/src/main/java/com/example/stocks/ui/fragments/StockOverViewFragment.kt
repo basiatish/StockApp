@@ -13,7 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.NavigationUI
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.stocks.*
@@ -21,11 +21,10 @@ import com.example.stocks.adapters.StockDividendsAdapter
 import com.example.stocks.databinding.FragmentStockOverviewBinding
 import com.example.stocks.models.remote.CompanyProfile
 import com.example.stocks.models.remote.CompanyQuote
-import com.example.stocks.utils.network.StockApiStatus
+import com.example.stocks.utils.network.StockStatus
 import com.example.stocks.viewmodels.SharedViewModel
 import com.example.stocks.viewmodels.StockOverViewViewModel
 import com.example.stocks.viewmodels.StockOverViewViewModelFactory
-import kotlin.math.roundToInt
 
 class StockOverViewFragment: Fragment() {
 
@@ -41,12 +40,10 @@ class StockOverViewFragment: Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var adapter: StockDividendsAdapter
-    private lateinit var layoutManager: GridLayoutManager
+    private lateinit var layoutManager: LinearLayoutManager
 
     private lateinit var compName: String
     private lateinit var shortName: String
-    private var week52Low: String = ""
-    private var week52High: String = ""
 
     private var isFavourite = false
     private var isExist = false
@@ -57,7 +54,7 @@ class StockOverViewFragment: Fragment() {
         compName = navArgs.name
         shortName = navArgs.shortName
         sharedViewModel.saveCompanyName(compName, shortName)
-        viewModel.getComp(shortName)
+        viewModel.getCompanyProfile(shortName)
         viewModel.getCompanyQuote(shortName)
         viewModel.getCompanyDividends(shortName)
         viewModel.isStockFavourite(shortName)
@@ -78,48 +75,39 @@ class StockOverViewFragment: Fragment() {
 
         adapter = StockDividendsAdapter()
         binding.dividendsView.adapter = adapter
-        layoutManager = GridLayoutManager(this.context, 1)
+        layoutManager = LinearLayoutManager(context)
         binding.dividendsView.layoutManager = layoutManager
 
         setupObservers()
         setupListeners()
     }
 
-    override fun onStop() {
-        super.onStop()
-        if (isExist) {
-            viewModel.updateStock(shortName, compName, 150.0, 2.0, 4.0)
-        } else {
-            viewModel.saveStock(shortName, compName, 150.0, 2.0, 4.0)
-        }
-    }
-
     private fun setupObservers() {
 
         viewModel.profileStatus.observe(this.viewLifecycleOwner) {
-            if (it == StockApiStatus.DONE && viewModel.compProf.isNotEmpty()) {
-                week52High = ""
-                week52Low = ""
-                loadCompanyLogo(viewModel.compProf)
-                rangeBetaBind(viewModel.compProf)
+            if (it == StockStatus.DONE) {
+                loadCompanyLogo(viewModel.companyProfile)
+                rangeBetaBind(viewModel.companyProfile)
                 topBarBind()
-                aboutBind(viewModel.compProf)
+                aboutBind(viewModel.companyProfile)
+                binding.favoriteBtn.isClickable = true
             }
         }
-        viewModel.companyQuote.observe(this.viewLifecycleOwner) {
-            if (!it.isNullOrEmpty()) {
-                statBind(it)
+        viewModel.quoteStatus.observe(this.viewLifecycleOwner) {
+            if (it == StockStatus.DONE) {
+                statBind(viewModel.companyQuote)
             }
         }
-        viewModel.companyDividends.observe(this.viewLifecycleOwner) {
-            if (!it.isNullOrEmpty()) {
+        viewModel.dividendsStatus.observe(this.viewLifecycleOwner) {
+            if (it == StockStatus.DONE) {
                 viewModel.getDividendsList()
             }
         }
-        viewModel.companyDividendsList.observe(this.viewLifecycleOwner) {
-            if (!it.isNullOrEmpty() && it[0].dividend != 0.0) {
-                adapter.submitList(it)
-            } else {
+        viewModel.divListStatus.observe(this.viewLifecycleOwner) {
+            if (it == StockStatus.DONE) {
+                adapter.submitList(viewModel.companyDividendsList)
+            }
+            else {
                 deleteDividendsView()
             }
         }
@@ -139,8 +127,9 @@ class StockOverViewFragment: Fragment() {
             viewModel.apply {
                 getCompanyProfile(shortName)
                 getCompanyQuote(shortName)
+                binding.favoriteBtn.isClickable = false
                 viewModel.quoteStatus.observe(viewLifecycleOwner) { status ->
-                    if (status == StockApiStatus.DONE) {
+                    if (status == StockStatus.DONE) {
                         binding.refresh.isRefreshing = false
                     }
                 }
@@ -150,26 +139,25 @@ class StockOverViewFragment: Fragment() {
         binding.favoriteBtn.setOnClickListener {
             isFavourite = !isFavourite
             favouriteButtonView()
+            manageStockSaving()
         }
 
         binding.moreBtn.setOnClickListener {
             it.isClickable = false
-            if (!viewModel.companyDividends.value.isNullOrEmpty()) {
+            if (viewModel.companyDividends.isNotEmpty()) {
                 viewModel.getDividendsList()
                 if (!isMoreButtonClicked) {
                     binding.moreBtn.setImageResource(R.drawable.avd_anim_more)
                     val less = binding.moreBtn.drawable
                     if (less is AnimatedVectorDrawable) {
-                        val anim = less as AnimatedVectorDrawable
-                        anim.start()
+                        less.start()
                     }
                     isMoreButtonClicked = true
                 } else {
                     binding.moreBtn.setImageResource(R.drawable.avd_anim_less)
                     val more = binding.moreBtn.drawable
                     if (more is AnimatedVectorDrawable) {
-                        val anim = more as AnimatedVectorDrawable
-                        anim.start()
+                        more.start()
                     }
                     binding.scrollView.smoothScrollTo(binding.keyDividendDivider.x.toInt(),
                         binding.keyDividendDivider.y.toInt(), 800)
@@ -201,40 +189,58 @@ class StockOverViewFragment: Fragment() {
         }
     }
 
-    private fun statBind(quote: MutableList<CompanyQuote>) {
+    private fun manageStockSaving() {
+        when (isExist) {
+            true -> {
+                if (isFavourite) viewModel.updateStock(shortName, compName)
+                else {
+                    viewModel.deleteStock(shortName)
+                    isExist = false
+                }
+            }
+            false -> {
+                if (isFavourite) {
+                    viewModel.saveStock(shortName, compName)
+                    isExist = true
+                }
+            }
+        }
+    }
+
+    private fun statBind(quote: List<CompanyQuote>) {
         binding.apply {
-            stockPrice.text = "$ ${cutValueZeros(quote[0].price ?: 0.0)}"
+            stockPrice.text = resources.getString(R.string.price, viewModel.cutValueZeros(quote[0].price ?: 0.0))
             priceChange.apply {
                 val change = quote[0].change ?: 0.0
-                text = if(change < 0) cutValueZeros(change) else "+${cutValueZeros(change)}"
+                text = if(change < 0) viewModel.cutValueZeros(change) else "+${viewModel.cutValueZeros(change)}"
                 if (change >= 0) setTextColor(resources.getColor(R.color.green, context.theme))
                 else setTextColor(resources.getColor(R.color.red, context.theme))
             }
             pricePercent.apply {
                 val changesPercentage = quote[0].changesPercentage ?: 0.0
-                text = "(${cutValueZeros(changesPercentage)}%)"
-                if (changesPercentage > 0) setTextColor(resources.getColor(R.color.green, context.theme))
+                text = resources.getString(R.string.price_percent, viewModel.cutValueZeros(changesPercentage))
+                if (changesPercentage >= 0) setTextColor(resources.getColor(R.color.green, context.theme))
                 else setTextColor(resources.getColor(R.color.red, context.theme))
             }
-            highPrice.text = cutValueZeros(quote[0].dayHigh ?: 0.0)
-            lowPrice.text = cutValueZeros(quote[0].dayLow ?: 0.0)
-            volValue.text = formattedValue(quote[0].volume ?: 0.0)
-            marketCapValue.text = formattedValue(quote[0].marketCap ?: 0.0)
-            avgVolumeValue.text = formattedValue(quote[0].avgVolume ?: 0.0)
-            peValue.text = cutValueZeros(quote[0].pe ?: 0.0)
+            highPrice.text = viewModel.cutValueZeros(quote[0].dayHigh ?: 0.0)
+            lowPrice.text = viewModel.cutValueZeros(quote[0].dayLow ?: 0.0)
+            volValue.text = viewModel.formatValue(quote[0].volume ?: 0.0)
+            marketCapValue.text = viewModel.formatValue(quote[0].marketCap ?: 0.0)
+            avgVolumeValue.text = viewModel.formatValue(quote[0].avgVolume ?: 0.0)
+            peValue.text = viewModel.cutValueZeros(quote[0].pe ?: 0.0)
         }
     }
 
-    private fun rangeBetaBind(profile: MutableList<CompanyProfile>) {
-        formattedRange(profile[0].range ?: "")
+    private fun rangeBetaBind(profile: List<CompanyProfile>) {
+        val range = viewModel.formatRange(profile[0].range ?: "")
         binding.apply {
-            high52w.text = cutValueZeros(week52High.toDouble() ?: 0.0)
-            low52w.text = cutValueZeros(week52Low.toDouble() ?: 0.0)
-            betaValue.text = cutValueZeros(profile[0].beta ?: 0.0)
+            high52w.text = viewModel.cutValueZeros(range[1].toDouble() ?: 0.0)
+            low52w.text = viewModel.cutValueZeros(range[0].toDouble() ?: 0.0)
+            betaValue.text = viewModel.cutValueZeros(profile[0].beta ?: 0.0)
         }
     }
 
-    private fun aboutBind(value: MutableList<CompanyProfile>) {
+    private fun aboutBind(value: List<CompanyProfile>) {
         val profile = value[0]
         binding.apply {
             symbol.text = profile.symbol
@@ -247,9 +253,10 @@ class StockOverViewFragment: Fragment() {
         }
     }
 
-    private fun loadCompanyLogo(profile: MutableList<CompanyProfile>) {
+    private fun loadCompanyLogo(profile: List<CompanyProfile>) {
         Glide.with(requireContext()).load(profile[0].image).diskCacheStrategy(DiskCacheStrategy.ALL)
             .diskCacheStrategy(DiskCacheStrategy.DATA)
+            .skipMemoryCache(true)
             .error(R.drawable.ic_warning)
             .centerCrop().into(binding.compLogo)
     }
@@ -260,36 +267,5 @@ class StockOverViewFragment: Fragment() {
         binding.moreBtn.visibility = View.GONE
         val constraint = binding.keyAboutDivider.layoutParams as ConstraintLayout.LayoutParams
         constraint.topToBottom = binding.volumeStat.id
-    }
-
-    private fun formattedValue(value: Double): String {
-        return when (value) {
-            in 1000.0..999999.0 -> "${(value / 10.0).roundToInt() / 100.0}K"
-            in 1000000.0..999999999.0 -> "${(value / 10000.0).roundToInt() / 100.0}M"
-            in 1000000000.0..999999999999.0 -> "${(value / 10000000.0).roundToInt() / 100.0}B"
-            in 1000000000000.0..999999999999999.0 -> "${(value / 10000000000.0).roundToInt() / 100.0}T"
-            0.0 -> "—"
-            else -> "$value"
-        }
-    }
-
-    private fun cutValueZeros(value: Double): String {
-        return when (value) {
-            0.0 -> "—"
-            else -> "${(value * 100.0).roundToInt() / 100.0}"
-        }
-    }
-
-    private fun formattedRange(range: String) {
-        var i = 0
-        var flag = false
-        while (i <= range.length - 1) {
-            if (range[i] == '-') {
-                flag = true
-                i++
-            }
-            if (!flag) week52Low += range[i] else week52High += range[i]
-            i++
-        }
     }
 }

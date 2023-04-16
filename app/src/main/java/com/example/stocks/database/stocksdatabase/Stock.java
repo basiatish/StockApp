@@ -25,6 +25,9 @@ public class Stock {
     @ColumnInfo(name = "Price_change_percent")
     public double priceChangePercent;
 
+    @ColumnInfo(name = "Image_URL")
+    public String url;
+
     public void setShortName(String shortName) {
         this.shortName = shortName;
     }
@@ -43,5 +46,9 @@ public class Stock {
 
     public void setPriceChangePercent(double priceChangePercent) {
         this.priceChangePercent = priceChangePercent;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

@@ -6,9 +6,10 @@ import com.example.stocks.*
 import com.example.stocks.database.stocksdatabase.Stock
 import com.example.stocks.database.stocksdatabase.StockDao
 import com.example.stocks.models.remote.*
-import com.example.stocks.utils.network.StockApiStatus
+import com.example.stocks.utils.formatters.Formatter
+import com.example.stocks.utils.network.StockStatus
+import kotlinx.coroutines.Dispatchers.Default
 import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -16,45 +17,47 @@ class StockOverViewViewModel(private val stockDao: StockDao): ViewModel() {
 
     private val apiKey = BuildConfig.API_KEY
 
-    private val _status = MutableLiveData<StockApiStatus>()
-    val status: MutableLiveData<StockApiStatus> get() = _status
+    private val _status = MutableLiveData<StockStatus>()
+    val status: MutableLiveData<StockStatus> = _status
 
-    private val _profileStatus = MutableLiveData<StockApiStatus>()
-    val profileStatus: LiveData<StockApiStatus> = _profileStatus
+    private val _profileStatus = MutableLiveData<StockStatus>()
+    val profileStatus: LiveData<StockStatus> = _profileStatus
 
-    private val _quoteStatus = MutableLiveData<StockApiStatus>()
-    val quoteStatus: LiveData<StockApiStatus> get() = _quoteStatus
+    private val _quoteStatus = MutableLiveData<StockStatus>()
+    val quoteStatus: LiveData<StockStatus> = _quoteStatus
 
-    private val _dividendsStatus = MutableLiveData<StockApiStatus>()
-    val dividendsStatus: LiveData<StockApiStatus> get() = _dividendsStatus
+    private val _dividendsStatus = MutableLiveData<StockStatus>()
+    val dividendsStatus: LiveData<StockStatus> = _dividendsStatus
 
-    private val _divListStatus = MutableLiveData<Boolean>(false)
-    val divListStatus: LiveData<Boolean> get() = _divListStatus
+    private val _divListStatus = MutableLiveData<StockStatus>()
+    val divListStatus: LiveData<StockStatus> = _divListStatus
 
-    private var _companyProfile = MutableLiveData<MutableList<CompanyProfile>>()
-    val companyProfile: LiveData<MutableList<CompanyProfile>> = _companyProfile
+    private lateinit var _companyProfile: MutableList<CompanyProfile>
+    val companyProfile: List<CompanyProfile> get() = _companyProfile
 
-    private var _companyQuote = MutableLiveData<MutableList<CompanyQuote>>()
-    val companyQuote: LiveData<MutableList<CompanyQuote>> = _companyQuote
+    private var _companyQuote: MutableList<CompanyQuote> = mutableListOf()
+    val companyQuote: List<CompanyQuote> get() = _companyQuote
 
-    private var _companyDividends = MutableLiveData<MutableList<StockDividendsHeader>>()
-    val companyDividends: LiveData<MutableList<StockDividendsHeader>> = _companyDividends
+    private var _companyDividends: MutableList<StockDividendsHeader> = mutableListOf()
+    val companyDividends: List<StockDividendsHeader> get() = _companyDividends
 
-    private var _companyDividendsList = MutableLiveData<MutableList<StockDividends>>()
-    val companyDividendsList: LiveData<MutableList<StockDividends>> = _companyDividendsList
+    private var _companyDividendsList: MutableList<StockDividends> = mutableListOf()
+    val companyDividendsList: List<StockDividends> get() = _companyDividendsList
+
+    private var dividendsListState = false
 
     private var _isFavourite = MutableLiveData<String?>()
     val isFavourite: LiveData<String?> get() = _isFavourite
 
-    fun saveStock(shortName: String, name: String, price: Double, priceChange: Double, priceChangePercent: Double) {
-        val stock = createStockObject(shortName, name, price, priceChange, priceChangePercent)
+    fun saveStock(shortName: String, name: String) {
+        val stock = createStockObject(shortName, name)
         viewModelScope.launch(IO) {
             stockDao.insert(stock)
         }
     }
 
-    fun updateStock(shortName: String, name: String, price: Double, priceChange: Double, priceChangePercent: Double) {
-        val stock = createStockObject(shortName, name, price, priceChange, priceChangePercent)
+    fun updateStock(shortName: String, name: String) {
+        val stock = createStockObject(shortName, name)
         viewModelScope.launch(IO) {
             stockDao.update(stock)
         }
@@ -72,97 +75,129 @@ class StockOverViewViewModel(private val stockDao: StockDao): ViewModel() {
         }
     }
 
-    private fun createStockObject(
-        shortName: String,
-        name: String,
-        price: Double,
-        priceChange: Double,
-        priceChangePercent: Double
-    ): Stock {
+    private fun createStockObject(shortName: String, name: String): Stock {
         return Stock().apply {
             setShortName(shortName)
             setName(name)
-            setPrice(price)
-            setPriceChange(priceChange)
-            setPriceChangePercent(priceChangePercent)
+            if (_companyQuote.isNotEmpty()) {
+                setPrice(cutValueZeros(_companyQuote[0].price ?: 0.0).toDouble())
+                setPriceChange(cutValueZeros(_companyQuote[0].change ?: 0.0).toDouble())
+                setPriceChangePercent(cutValueZeros(
+                    _companyQuote[0].changesPercentage ?: 0.0).toDouble())
+                setUrl(_companyProfile[0].image)
+            } else {
+                setPrice(0.0)
+                setPriceChange(0.0)
+                setPriceChangePercent(0.0)
+                setUrl("")
+            }
         }
     }
 
-    fun getComp(compName: String) {
-        getCompanyProfile(compName)
-    }
-
-    fun complist() {
-        _companyProfile.value = compProf
-    }
-
-    var compProf: MutableList<CompanyProfile> = mutableListOf()
-
     fun getCompanyProfile(compName: String) {
-        viewModelScope.launch(IO) {
+        _companyProfile = mutableListOf()
+        viewModelScope.launch {
+            _profileStatus.value = StockStatus.LOADING
             try {
-                compProf = StockApi.retrofitService.
-                getCompanyProfile(compName, apiKey)
-                withContext(Main) {
-                    _profileStatus.value = StockApiStatus.DONE
-                    Log.d("Status", "Profile status ${_profileStatus.value}")
-                }
+            withContext(IO) {
+                _companyProfile = StockApi.retrofitService.getCompanyProfile(compName, apiKey)
+            }
+                _profileStatus.value = StockStatus.DONE
+                Log.i("Status", "Profile status ${_profileStatus.value}")
             } catch (e: Exception) {
-                compProf = mutableListOf()
+                _profileStatus.value = StockStatus.ERROR
                 println("Loading profile error ${e.message}")
             }
         }
     }
 
     fun getCompanyQuote(compName: String) {
-        viewModelScope.launch {
-            _quoteStatus.value = StockApiStatus.LOADING
+        _companyQuote = mutableListOf()
+        viewModelScope.launch() {
+            _quoteStatus.value = StockStatus.LOADING
             try {
-                _companyQuote.value = StockApi.retrofitService.getCompanyQuote(compName, apiKey)
-                _quoteStatus.value = StockApiStatus.DONE
+                withContext(IO) {
+                    _companyQuote = StockApi.retrofitService.getCompanyQuote(compName, apiKey)
+                }
+                _quoteStatus.value = StockStatus.DONE
+                Log.e("Status", "Quote status ${_quoteStatus.value}")
             } catch (e: Exception) {
-                _companyQuote.value = mutableListOf()
-                _quoteStatus.value = StockApiStatus.ERROR
+                _quoteStatus.value = StockStatus.ERROR
+                Log.e("Status", "Quote status ${_quoteStatus.value}, ${e.message}")
                 println(e.message)
             }
         }
     }
 
     fun getCompanyDividends(compName: String) {
+        _companyDividends = mutableListOf()
         viewModelScope.launch {
-            _dividendsStatus.value = StockApiStatus.LOADING
+            _dividendsStatus.value = StockStatus.LOADING
             try {
-                _companyDividends.value = mutableListOf(
-                    StockApi.retrofitService.getCompanyDividends(compName, apiKey))
-                _dividendsStatus.value = StockApiStatus.DONE
+                withContext(IO) {
+                    _companyDividends = mutableListOf(
+                        StockApi.retrofitService.getCompanyDividends(compName, apiKey))
+                }
+                _dividendsStatus.value = StockStatus.DONE
             } catch (e: Exception) {
-                _companyDividends.value = mutableListOf()
-                _dividendsStatus.value = StockApiStatus.ERROR
+                _dividendsStatus.value = StockStatus.ERROR
                 println(e.message)
             }
         }
     }
 
     fun getDividendsList() {
+        _companyDividendsList = mutableListOf()
         viewModelScope.launch {
-            var status = _divListStatus.value!!
-            val size = _companyDividends.value!![0].historical.size
-            if (!status) {
-                if (size < 5) {
-                    _companyDividendsList.value = _companyDividends.value!![0].
-                    historical.toMutableList().subList(0,size)
-                } else {
-                    _companyDividendsList.value = _companyDividends.value!![0].
-                    historical.toMutableList().subList(0, 5)
+            try {
+                withContext(Default) {
+                    var status = dividendsListState
+                    val size = _companyDividends[0].historical.size
+                    if (!status) {
+                        if (size < 5) {
+                            _companyDividendsList =
+                                _companyDividends[0].historical.toMutableList().subList(0, size)
+                        } else {
+                            _companyDividendsList =
+                                _companyDividends[0].historical.toMutableList().subList(0, 5)
+                        }
+                        status = true
+                    } else {
+                        _companyDividendsList = _companyDividends[0].historical.toMutableList()
+                        status = false
+                    }
+                    dividendsListState = status
                 }
-                status = true
-            } else {
-                _companyDividendsList.value = _companyDividends.value!![0].
-                historical.toMutableList()
-                status = false
+                if (_companyDividendsList.isEmpty()) {
+                    _divListStatus.value = StockStatus.ERROR
+                } else {
+                    _divListStatus.value = StockStatus.DONE
+                }
+                Log.e("Status", "DivListStatus ${_divListStatus.value}")
+                _companyDividendsList.forEach {
+                    Log.e("Status", "DivList ${it.dividend}")
+                }
+            } catch (e: Exception) {
+                _divListStatus.value = StockStatus.ERROR
+                Log.e("Status", "DivListStatus ${_divListStatus.value}")
             }
-            _divListStatus.value = status
+
         }
+    }
+
+    fun formatValue(value: Double): String {
+        val formatter = Formatter()
+        return formatter.formattedValue(value)
+    }
+
+    fun formatRange(range: String): Array<String> {
+        val formatter = Formatter()
+        return formatter.formattedRange(range)
+    }
+
+    fun cutValueZeros(value: Double): String {
+        val formatter = Formatter()
+        return formatter.cutZeros(value)
     }
 }
 

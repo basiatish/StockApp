@@ -1,6 +1,5 @@
 package com.example.stocks.viewmodels
 
-import android.annotation.SuppressLint
 import android.graphics.Color
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -8,10 +7,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.stocks.BuildConfig
-import com.example.stocks.R
 import com.example.stocks.StockApi
 import com.example.stocks.models.remote.*
-import com.example.stocks.utils.network.StockApiStatus
+import com.example.stocks.utils.network.StockStatus
 import com.tradingview.lightweightcharts.api.chart.models.color.toIntColor
 import com.tradingview.lightweightcharts.api.series.common.SeriesData
 import com.tradingview.lightweightcharts.api.series.models.*
@@ -19,43 +17,26 @@ import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.sql.Timestamp
-import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.LocalDateTime
-import java.time.ZoneId
 import java.time.ZoneOffset
-import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeFormatter.ofPattern
-import java.util.*
 import kotlin.math.roundToInt
 
 class StockChartViewModel: ViewModel() {
 
     private val apiKey = BuildConfig.API_KEY
 
-    private val _status = MutableLiveData<StockApiStatus>()
+    private val _status = MutableLiveData<StockStatus>()
+    val status: LiveData<StockStatus> = _status
 
-    val status: LiveData<StockApiStatus> = _status
-
-    private val _dataStatus = MutableLiveData<StockApiStatus>()
-
-    val dataStatus: LiveData<StockApiStatus> = _dataStatus
+    private val _dataStatus = MutableLiveData<StockStatus>()
+    val dataStatus: LiveData<StockStatus> = _dataStatus
 
     private var _priceChartMH: MutableList<StockChart> = mutableListOf()
-
     val priceChartMH: MutableList<StockChart> = _priceChartMH
 
-    private val _priceChartDaily = MutableLiveData<MutableList<StockDailyPriceHeader>>()
-
-    val priceChartDaily: LiveData<MutableList<StockDailyPriceHeader>> = _priceChartDaily
-
-    private var _priceChartYearly: MutableList<StockYearlyPriceHeader> = mutableListOf()
-
-    val priceChartYearly: List<StockYearlyPriceHeader> = _priceChartYearly
-
     private var _priceDaily: MutableList<StockDailyPriceHeader> = mutableListOf()
-
     val priceDaily: List<StockDailyPriceHeader> = _priceDaily
 
     var data: MutableList<SeriesData> = mutableListOf()
@@ -63,7 +44,7 @@ class StockChartViewModel: ViewModel() {
     fun loadChartData(time: String, compName: String) {
         viewModelScope.launch(IO) {
             withContext(Main) {
-                _status.value = StockApiStatus.LOADING
+                _status.value = StockStatus.LOADING
             }
             try {
                 if (time == "all") {
@@ -75,11 +56,11 @@ class StockChartViewModel: ViewModel() {
                         .getChart(time, compName, apiKey)
                 }
                 withContext(Main) {
-                    _status.value = StockApiStatus.DONE
+                    _status.value = StockStatus.DONE
                 }
             } catch (e: Exception) {
                 withContext(Main) {
-                _status.value = StockApiStatus.ERROR
+                    _status.value = StockStatus.ERROR
                 }
                 _priceDaily = mutableListOf()
                 println(e.message)
@@ -136,17 +117,6 @@ class StockChartViewModel: ViewModel() {
         }
     }
 
-    fun formattedValue(value: Double): String {
-        return when (value) {
-            in 1000.0..999999.0 -> "${(value / 10.0).roundToInt() / 100.0}K"
-            in 1000000.0..999999999.0 -> "${(value / 10000.0).roundToInt() / 100.0}M"
-            in 1000000000.0..999999999999.0 -> "${(value / 10000000.0).roundToInt() / 100.0}B"
-            in 1000000000000.0..999999999999999.0 -> "${(value / 10000000000.0).roundToInt() / 100.0}T"
-            0.0 -> "—"
-            else -> "$value"
-        }
-    }
-
     fun createData(type: String, time: String) {
         data = mutableListOf()
         when (type) {
@@ -179,11 +149,11 @@ class StockChartViewModel: ViewModel() {
                     }
                 }
                 withContext(Main) {
-                    _dataStatus.value = StockApiStatus.DONE
+                    _dataStatus.value = StockStatus.DONE
                 }
             } catch (e: Exception) {
                 withContext(Main) {
-                    _dataStatus.value = StockApiStatus.ERROR
+                    _dataStatus.value = StockStatus.ERROR
                 }
                 Log.e("Data Error", "Failed to create line data!, ${e.message}")
             }
@@ -244,11 +214,11 @@ class StockChartViewModel: ViewModel() {
                     }
                 }
                 withContext(Main) {
-                    _dataStatus.value = StockApiStatus.DONE
+                    _dataStatus.value = StockStatus.DONE
                 }
             } catch (e: Exception) {
                 withContext(Main) {
-                    _dataStatus.value = StockApiStatus.ERROR
+                    _dataStatus.value = StockStatus.ERROR
                 }
                 Log.e("Data Error", "Failed to create volume data!, ${e.message}")
             }
@@ -281,11 +251,11 @@ class StockChartViewModel: ViewModel() {
                     }
                 }
                 withContext(Main) {
-                    _dataStatus.value = StockApiStatus.DONE
+                    _dataStatus.value = StockStatus.DONE
                 }
             } catch (e: Exception) {
                 withContext(Main) {
-                    _dataStatus.value = StockApiStatus.ERROR
+                    _dataStatus.value = StockStatus.ERROR
                 }
                 Log.e("Data Error", "Failed to create candle stick data!")
             }
@@ -316,11 +286,11 @@ class StockChartViewModel: ViewModel() {
                     }
                 }
                 withContext(Main) {
-                    _dataStatus.value = StockApiStatus.DONE
+                    _dataStatus.value = StockStatus.DONE
                 }
             } catch (e: Exception) {
                 withContext(Main) {
-                    _dataStatus.value = StockApiStatus.ERROR
+                    _dataStatus.value = StockStatus.ERROR
                 }
                 Log.e("Data Error", "Failed to create candle stick data!")
             }
@@ -347,11 +317,11 @@ class StockChartViewModel: ViewModel() {
                     }
                 }
                 withContext(Main) {
-                    _dataStatus.value = StockApiStatus.DONE
+                    _dataStatus.value = StockStatus.DONE
                 }
             } catch (e: Exception) {
                 withContext(Main) {
-                    _dataStatus.value = StockApiStatus.ERROR
+                    _dataStatus.value = StockStatus.ERROR
                 }
                 Log.e("Data Error", "Failed to create area data!, ${e.message}")
             }

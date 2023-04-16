@@ -21,7 +21,7 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.stocks.R
 import com.example.stocks.databinding.FragmentStockChartBinding
-import com.example.stocks.utils.network.StockApiStatus
+import com.example.stocks.utils.network.StockStatus
 import com.example.stocks.viewmodels.SharedViewModel
 import com.example.stocks.viewmodels.StockChartViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -550,14 +550,14 @@ class StockChartFragment : Fragment() {
 
     private fun setupObservers() {
         viewModel.status.observe(this.viewLifecycleOwner) { status ->
-            if (status == StockApiStatus.DONE) {
+            if (status == StockStatus.DONE) {
                 viewModel.createData(chartType, chartRange)
-            } else if (status == StockApiStatus.ERROR) {
+            } else if (status == StockStatus.ERROR) {
                 Toast.makeText(requireContext(), "No chart data", Toast.LENGTH_SHORT).show()
             }
         }
         viewModel.dataStatus.observe(this.viewLifecycleOwner) { status ->
-            if (status == StockApiStatus.DONE) {
+            if (status == StockStatus.DONE) {
                 bindLegend()
                 bindChartData()
             }

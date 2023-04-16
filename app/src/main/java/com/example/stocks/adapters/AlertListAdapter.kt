@@ -36,7 +36,7 @@ class AlertListAdapter(private val onClick: OnItemClickListener) : ListAdapter<A
             }
         }
 
-        fun selectAlert(alert: Alert, context: Context) {
+        fun selectAlert(alert: Alert) {
             val isSelected = binding.alertContainer.isSelected
             if (isSelected) {
                 Log.i("Remove", "Selected before")
@@ -63,12 +63,12 @@ class AlertListAdapter(private val onClick: OnItemClickListener) : ListAdapter<A
         val current = getItem(position)
         holder.bind(current, holder.itemView.context)
         holder.itemView.setOnClickListener {
-            if (selection) holder.selectAlert(current, holder.itemView.context)
+            if (selection) holder.selectAlert(current)
             else onClick.onItemClick(current)
         }
         holder.itemView.setOnLongClickListener {
             selection = true
-            holder.selectAlert(current, holder.itemView.context)
+            holder.selectAlert(current)
             true
         }
     }

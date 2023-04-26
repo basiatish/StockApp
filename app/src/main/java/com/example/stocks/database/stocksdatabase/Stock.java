@@ -28,6 +28,10 @@ public class Stock {
     @ColumnInfo(name = "Image_URL")
     public String url;
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public void setShortName(String shortName) {
         this.shortName = shortName;
     }

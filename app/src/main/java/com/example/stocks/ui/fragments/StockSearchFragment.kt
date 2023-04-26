@@ -41,9 +41,6 @@ class StockSearchFragment() : Fragment(), OnItemClick {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        val navbar = requireActivity().findViewById<BottomAppBar>(R.id.btm_bar)
-//        navbar.hideOnScroll = false
-
         val adapter = StockSearchAdapter(this)
         binding.recycler.adapter = adapter
 
@@ -56,8 +53,7 @@ class StockSearchFragment() : Fragment(), OnItemClick {
 
         binding.cancelButton.setOnClickListener {
             hideKeyBoard()
-            val action = StockSearchFragmentDirections.actionStockSearchFragmentToStockListFragment()
-            findNavController().navigate(action)
+            findNavController().navigateUp()
         }
 
         binding.searchBar.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
@@ -88,8 +84,8 @@ class StockSearchFragment() : Fragment(), OnItemClick {
             binding.searchBar.isFocused
         }
 
-        viewModel.status.observe(this.viewLifecycleOwner) {
-            when (it) {
+        viewModel.status.observe(this.viewLifecycleOwner) { status ->
+            when (status) {
                 StockStatus.LOADING -> binding.progressBar.show()
                 StockStatus.DONE -> binding.progressBar.hide()
                 StockStatus.ERROR -> {

@@ -9,6 +9,7 @@ import com.example.stocks.R
 import com.example.stocks.databinding.ActivityMainBinding
 import com.example.stocks.ui.fragments.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import androidx.navigation.ui.setupWithNavController
 
 class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
@@ -28,27 +29,10 @@ class MainActivity : AppCompatActivity() {
         navController = navHostFragment.navController
 
         nav = binding.nav
+        nav.setupWithNavController(navController)
 
         binding.nav.background = null
         binding.fragmentNav.background = null
-
-        binding.nav.setOnItemSelectedListener {
-            when(it.itemId) {
-                R.id.favorite -> {
-                    if (!it.isChecked) {
-                        val action = StockSearchFragmentDirections.actionStockSearchFragmentToStockListFragment()
-                        navController.navigate(action)
-                    }
-                }
-                R.id.search -> {
-                    if (!it.isChecked) {
-                        val action = StockListFragmentDirections.actionStockListFragmentToStockSearchFragment()
-                        navController.navigate(action)
-                    }
-                }
-            }
-            true
-        }
 
         binding.fragmentNav.setOnItemSelectedListener {
             when(it.itemId) {
@@ -71,6 +55,8 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.stockListFragment -> {
+                    binding.nav.visibility = View.VISIBLE
+                    binding.fragmentNav.visibility = View.GONE
                     nav.menu.getItem(0).isChecked = true
                 }
                 R.id.stockSearchFragment -> {

@@ -45,10 +45,6 @@
         <item name="cornerSize">10%</item>
     </style>
 
-    <style name="ImageLogo.Background" parent="">
-        <item name="android:background">@color/white</item>
-    </style>
-
     <style name="CancelBtn" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="shapeAppearance">?attr/shapeAppearanceSmallComponent</item>
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Small</item>
@@ -63,6 +59,11 @@
 
     <style name="MediumTextApp" parent="Widget.AppCompat.TextView">
         <item name="fontFamily">@font/roboto_medium</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="WatchListText" parent="Widget.AppCompat.TextView">
+        <item name="fontFamily">@font/roboto</item>
         <item name="android:textColor">@color/black</item>
     </style>
 

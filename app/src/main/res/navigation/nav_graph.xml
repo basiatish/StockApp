@@ -11,9 +11,9 @@
         android:label="StockListFragment"
         tools:layout="@layout/fragment_stock_list">
         <action
-            android:id="@+id/action_stockListFragment_to_stockSearchFragment"
-            app:destination="@id/stockSearchFragment"
-            app:popUpToInclusive="true"/>
+            android:id="@+id/action_stockListFragment_to_stockOverViewFragment"
+            app:destination="@id/stockOverViewFragment"
+            app:popUpTo="@id/stockListFragment" />
     </fragment>
 
     <fragment
@@ -21,11 +21,11 @@
         android:name="com.example.stocks.ui.fragments.StockSearchFragment"
         android:label="StockSearchFragment"
         tools:layout="@layout/fragment_stock_search">
-        <action
-            android:id="@+id/action_stockSearchFragment_to_stockListFragment"
-            app:destination="@id/stockListFragment"
-            app:popUpToInclusive="true"
-            app:popUpTo="@id/stockListFragment"/>
+<!--        <action-->
+<!--            android:id="@+id/action_stockSearchFragment_to_stockListFragment"-->
+<!--            app:destination="@id/stockListFragment"-->
+<!--            app:popUpTo="@id/stockListFragment"-->
+<!--            app:popUpToInclusive="true" />-->
         <action
             android:id="@+id/action_stockSearchFragment_to_stockOverViewFragment"
             app:destination="@id/stockOverViewFragment" />

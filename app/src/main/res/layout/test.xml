@@ -1,88 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/test"
-    style="@style/BottomSheetTest"
+    android:id="@+id/refresh"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+    android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:id="@+id/container"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="24dp">
+        android:orientation="vertical"
+        android:padding="8dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/header"
+            android:id="@+id/top_bar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <View
-                android:layout_width="30dp"
-                android:layout_height="5dp"
-                android:background="@drawable/bottom_sheet_line"
-                android:backgroundTint="@color/nav_button_inactive"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/title"
+            <TextSwitcher
+                android:id="@+id/top_bar_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:fontFamily="@font/roboto_medium"
-                android:text="Alerts"
-                android:textAppearance="?attr/textAppearanceHeadline5"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_marginStart="16dp"
+                android:inAnimation="@anim/nav_default_enter_anim"
+                android:outAnimation="@anim/nav_default_exit_anim"
+                app:layout_constraintLeft_toLeftOf="@id/top_bar"
+                app:layout_constraintTop_toTopOf="@id/top_bar"
+                tools:minHeight="30dp" />
 
             <ImageButton
-                android:id="@+id/close_btn"
+                android:id="@+id/delete_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
                 android:background="@null"
-                android:src="@drawable/ic_close"
-                app:layout_constraintBottom_toBottomOf="@+id/title"
+                android:contentDescription="@string/delete"
+                android:src="@drawable/ic_delete"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/top_bar_text"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/title" />
+                app:layout_constraintTop_toTopOf="@+id/top_bar_text" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <ScrollView
-            android:id="@+id/list_container"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@id/add_button"
-            android:layout_below="@id/header"
-            android:layout_marginBottom="16dp"
-            android:scrollbars="none">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:nestedScrollingEnabled="true"
-                tools:itemCount="10"
-                tools:listitem="@layout/item_alert_list" />
-
-        </ScrollView>
-
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/add_button"
-            style="@style/AlertButton"
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="8dp"
-            android:text="Alert"
-            app:icon="@drawable/ic_add_alert" />
+            android:orientation="vertical"
+            app:shimmer_duration="800"
+            app:layout_constraintTop_toBottomOf="@+id/top_bar">
 
-    </RelativeLayout>
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+                <include layout="@layout/list_shimmer_item"/>
+                <include layout="@layout/list_shimmer_item"/>
+                <include layout="@layout/list_shimmer_item"/>
+                <include layout="@layout/list_shimmer_item"/>
+                <include layout="@layout/list_shimmer_item"/>
+                <include layout="@layout/list_shimmer_item"/>
+                <include layout="@layout/list_shimmer_item"/>
+                <include layout="@layout/list_shimmer_item"/>
+                <include layout="@layout/list_shimmer_item"/>
+                <include layout="@layout/list_shimmer_item"/>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/top_bar"
+            tools:itemCount="20"
+            tools:listitem="@layout/item_stock_list" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

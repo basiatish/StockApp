@@ -39,7 +39,6 @@
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/comp_logo"
-                    style="@style/ImageLogo.Background"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     app:layout_constraintBottom_toBottomOf="parent"

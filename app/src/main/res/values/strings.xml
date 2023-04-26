@@ -49,4 +49,7 @@
     <string name="close">Close</string>
     <string name="alert_price">$ %.2f</string>
     <string name="price_percent">(%s%%)</string>
+    <string name="your_watchlist">Your WatchList</string>
+    <string name="delete_stocks">Delete stocks</string>
+    <string name="delete">Delete</string>
 </resources>

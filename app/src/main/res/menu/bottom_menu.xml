@@ -3,12 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/favorite"
+        android:id="@+id/stockListFragment"
         android:icon="@drawable/ic_favorite"
         android:title=""/>
 
     <item
-        android:id="@+id/search"
+        android:id="@+id/stockSearchFragment"
         android:icon="@drawable/ic_loupe"
         android:title="" />
 

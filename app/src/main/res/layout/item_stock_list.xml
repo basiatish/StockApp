@@ -12,17 +12,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:background="@drawable/key_stat_background"
+        android:background="@drawable/custom_item_list_background"
         android:padding="4dp">
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/comp_logo"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
             android:src="@drawable/appl"
+            app:shapeAppearanceOverlay="@style/ImageLogo"
             app:layout_constraintBottom_toBottomOf="@id/item"
             app:layout_constraintLeft_toLeftOf="@id/item"
             app:layout_constraintTop_toTopOf="@id/item" />
@@ -33,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="8dp"
-            android:fontFamily="@font/roboto"
+            android:fontFamily="@font/roboto_medium"
             android:gravity="bottom|start"
             android:text="aapl"
             android:textAllCaps="true"
@@ -65,7 +66,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="14dp"
-            android:fontFamily="@font/roboto"
+            android:fontFamily="@font/roboto_medium"
             android:text="$ 150.48"
             android:textColor="@color/black"
             android:textSize="18sp"
@@ -85,7 +86,6 @@
             android:textSize="14sp"
             app:layout_constraintRight_toLeftOf="@+id/percent_change"
             app:layout_constraintTop_toBottomOf="@id/comp_price"
-            tools:ignore="SmallSp"
             tools:text="+2.05" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -99,7 +99,6 @@
             android:textSize="14sp"
             app:layout_constraintRight_toRightOf="@+id/comp_price"
             app:layout_constraintTop_toBottomOf="@id/comp_price"
-            tools:ignore="SmallSp"
             tools:text="(2.16%)" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

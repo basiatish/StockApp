@@ -1,12 +1,20 @@
 package com.example.stocks.ui.fragments
 
+import android.graphics.BlendMode
+import android.graphics.BlendModeColorFilter
+import android.graphics.Color
+import android.graphics.PorterDuff
 import android.graphics.drawable.AnimatedVectorDrawable
+import android.graphics.drawable.Drawable
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.graphics.drawable.toBitmap
+import androidx.core.graphics.toColor
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -15,7 +23,11 @@ import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.example.stocks.*
 import com.example.stocks.adapters.StockDividendsAdapter
 import com.example.stocks.databinding.FragmentStockOverviewBinding
@@ -96,6 +108,7 @@ class StockOverViewFragment: Fragment() {
         viewModel.quoteStatus.observe(this.viewLifecycleOwner) {
             if (it == StockStatus.DONE) {
                 statBind(viewModel.companyQuote)
+                if (binding.refresh.isRefreshing) binding.refresh.isRefreshing = false
             }
         }
         viewModel.dividendsStatus.observe(this.viewLifecycleOwner) {
@@ -128,11 +141,6 @@ class StockOverViewFragment: Fragment() {
                 getCompanyProfile(shortName)
                 getCompanyQuote(shortName)
                 binding.favoriteBtn.isClickable = false
-                viewModel.quoteStatus.observe(viewLifecycleOwner) { status ->
-                    if (status == StockStatus.DONE) {
-                        binding.refresh.isRefreshing = false
-                    }
-                }
             }
         }
 
@@ -254,11 +262,44 @@ class StockOverViewFragment: Fragment() {
     }
 
     private fun loadCompanyLogo(profile: List<CompanyProfile>) {
-        Glide.with(requireContext()).load(profile[0].image).diskCacheStrategy(DiskCacheStrategy.ALL)
+        Glide.with(requireContext()).load(profile[0].image)
             .diskCacheStrategy(DiskCacheStrategy.DATA)
             .skipMemoryCache(true)
             .error(R.drawable.ic_warning)
-            .centerCrop().into(binding.compLogo)
+            .centerCrop()
+            .listener(object : RequestListener<Drawable> {
+                override fun onLoadFailed(
+                    e: GlideException?,
+                    model: Any?,
+                    target: Target<Drawable>?,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    return false
+                }
+
+                override fun onResourceReady(
+                    resource: Drawable?,
+                    model: Any?,
+                    target: Target<Drawable>?,
+                    dataSource: DataSource?,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    val image = resource?.toBitmap()
+                    val color = image?.getPixel(image.width / 2, image.height / 2)?.toColor()?.toArgb()
+                    if (color != null) {
+                        if (color < Color.argb(100, 225, 225, 225))
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                                resource.colorFilter = BlendModeColorFilter(
+                                    Color.BLACK, BlendMode.SRC_IN
+                                )
+                            } else {
+                                resource.setColorFilter(Color.BLACK, PorterDuff.Mode.SRC_IN)
+                            }
+                    }
+                    return false
+                }
+            })
+            .into(binding.compLogo)
     }
     
     private fun deleteDividendsView() {

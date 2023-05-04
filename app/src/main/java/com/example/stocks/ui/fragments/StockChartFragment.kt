@@ -355,48 +355,48 @@ class StockChartFragment : Fragment() {
     private fun setupChartTypeButtons() {
         val bottomSh = binding.bottomSheet
         bottomSh.lineChart.setOnClickListener {
-            binding.chartSetting.isClickable = false
-            bottomSheetBehavior!!.state = BottomSheetBehavior.STATE_HIDDEN
+            //binding.chartSetting.isClickable = false
+            //bottomSheetBehavior!!.state = BottomSheetBehavior.STATE_HIDDEN
             chartTypeButtonState(it as AppCompatButton)
             chart.api.removeSeries(dataSeries)
             chartStateChange(it)
             viewModel.createData(chartType, chartRange)
         }
         bottomSh.candlestickChart.setOnClickListener {
-            binding.chartSetting.isClickable = false
-            bottomSheetBehavior!!.state = BottomSheetBehavior.STATE_HIDDEN
+            //binding.chartSetting.isClickable = false
+            //bottomSheetBehavior!!.state = BottomSheetBehavior.STATE_HIDDEN
             chartTypeButtonState(it as AppCompatButton)
             chartStateChange(it)
             chart.api.removeSeries(dataSeries)
             viewModel.createData(chartType, chartRange)
         }
         bottomSh.barChart.setOnClickListener {
-            binding.chartSetting.isClickable = false
-            bottomSheetBehavior!!.state = BottomSheetBehavior.STATE_HIDDEN
+            //binding.chartSetting.isClickable = false
+            //bottomSheetBehavior!!.state = BottomSheetBehavior.STATE_HIDDEN
             chartTypeButtonState(it as AppCompatButton)
             chartStateChange(it)
             chart.api.removeSeries(dataSeries)
             viewModel.createData(chartType, chartRange)
         }
         bottomSh.baselineChart.setOnClickListener {
-            binding.chartSetting.isClickable = false
-            bottomSheetBehavior!!.state = BottomSheetBehavior.STATE_HIDDEN
+            //binding.chartSetting.isClickable = false
+            //bottomSheetBehavior!!.state = BottomSheetBehavior.STATE_HIDDEN
             chartTypeButtonState(it as AppCompatButton)
             chartStateChange(it)
             chart.api.removeSeries(dataSeries)
             viewModel.createData(chartType, chartRange)
         }
         bottomSh.areaChart.setOnClickListener {
-            binding.chartSetting.isClickable = false
-            bottomSheetBehavior!!.state = BottomSheetBehavior.STATE_HIDDEN
+            //binding.chartSetting.isClickable = false
+            //bottomSheetBehavior!!.state = BottomSheetBehavior.STATE_HIDDEN
             chartTypeButtonState(it as AppCompatButton)
             chartStateChange(it)
             chart.api.removeSeries(dataSeries)
             viewModel.createData(chartType, chartRange)
         }
         bottomSh.volumeChart.setOnClickListener {
-            binding.chartSetting.isClickable = false
-            bottomSheetBehavior!!.state = BottomSheetBehavior.STATE_HIDDEN
+            //binding.chartSetting.isClickable = false
+            //bottomSheetBehavior!!.state = BottomSheetBehavior.STATE_HIDDEN
             volumeButtonState(it as AppCompatButton)
             if (volumeClickFlag) {
                 chartStateChange(it)

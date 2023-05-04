@@ -1,7 +1,9 @@
 package com.example.stocks.viewmodels
 
+import android.app.Application
 import android.util.Log
 import androidx.lifecycle.*
+import com.example.stocks.App
 import com.example.stocks.database.alertdatabase.Alert
 import com.example.stocks.database.alertdatabase.AlertDao
 import kotlinx.coroutines.Dispatchers.IO
@@ -9,7 +11,7 @@ import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class AlertListViewModel(private val alertDao: AlertDao) : ViewModel() {
+class AlertListViewModel(private val alertDao: AlertDao, app: Application) : AndroidViewModel(app) {
 
     private var _alertList = MutableLiveData<List<Alert>>()
     val alertList: LiveData<List<Alert>> = _alertList
@@ -33,7 +35,7 @@ class AlertListViewModel(private val alertDao: AlertDao) : ViewModel() {
 
     fun updateAlert(alert: Alert, active: Boolean) {
         val updatedAlert = Alert(id = alert.id, compName = alert.compName, price = alert.price,
-            time = alert.time, above = alert.above, status = active)
+            time = System.currentTimeMillis(), above = alert.above, status = active)
 
         if (active) {
             activeAlerts.add(alert)
@@ -84,12 +86,43 @@ class AlertListViewModel(private val alertDao: AlertDao) : ViewModel() {
             }
         }
     }
+
+    fun activateAlert() {
+        viewModelScope.launch(IO) {
+            if (activeAlerts.isNotEmpty()) {
+                Log.e("Alert", "Activate fun")
+                activeAlerts.forEach { alert ->
+                    val tag = "${alert.id} ${alert.compName}"
+                    getApplication<App>().scheduleWork(
+                        alert.id,
+                        tag,
+                        alert.compName,
+                        alert.price,
+                        alert.time,
+                        alert.above
+                    )
+                }
+            }
+        }
+    }
+
+    fun deactivateAlert() {
+        viewModelScope.launch(IO) {
+            if (deactivatedAlerts.isNotEmpty()) {
+                Log.e("Alert", "Deactivate fun")
+                deactivatedAlerts.forEach { alert ->
+                    val tag = "${alert.id} ${alert.compName}"
+                    getApplication<App>().destroyWork(tag)
+                }
+            }
+        }
+    }
 }
 
-class AlertListViewModelFactory(private val alertDao: AlertDao) : ViewModelProvider.Factory {
+class AlertListViewModelFactory(private val alertDao: AlertDao, private val app: Application) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(AlertListViewModel::class.java)) {
-            return AlertListViewModel(alertDao) as T
+            return AlertListViewModel(alertDao, app) as T
         }
         throw IllegalArgumentException("Unknown ViewModel Class")
     }

@@ -15,27 +15,27 @@
         android:background="@drawable/key_stat_background"
         android:padding="4dp">
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/comp_logo"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
             android:src="@drawable/appl"
+            app:shapeAppearanceOverlay="@style/ImageLogo"
             app:layout_constraintBottom_toBottomOf="@id/item"
             app:layout_constraintLeft_toLeftOf="@id/item"
             app:layout_constraintTop_toTopOf="@id/item" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/comp_name"
+            android:id="@+id/short_comp_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="8dp"
-            android:fontFamily="@font/roboto"
+            android:fontFamily="@font/roboto_medium"
             android:gravity="bottom|start"
-            android:text="aapl"
             android:textAllCaps="true"
             android:textColor="@color/black"
             android:textSize="18sp"
@@ -43,9 +43,23 @@
             app:layout_constraintTop_toTopOf="@id/item"
             tools:text="aapl" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/short_comp_name"
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/favorite"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:background="@null"
+            android:src="@drawable/ic_star_small"
+            android:layout_marginStart="8dp"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/short_comp_name"
+            app:layout_constraintBottom_toBottomOf="@+id/short_comp_name"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/comp_name"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
@@ -54,53 +68,36 @@
             android:textColor="@color/text_color"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="@id/item"
-            app:layout_constraintStart_toStartOf="@id/comp_name"
-            app:layout_constraintTop_toBottomOf="@id/comp_name"
-            tools:ignore="SmallSp"
+            app:layout_constraintStart_toStartOf="@id/short_comp_name"
+            app:layout_constraintTop_toBottomOf="@id/short_comp_name"
             tools:text="Apple Inc." />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/comp_price"
+            android:id="@+id/exchange_short_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="14dp"
             android:fontFamily="@font/roboto"
-            android:text="$ 150.48"
+            android:text="NYSE"
             android:textColor="@color/black"
             android:textSize="18sp"
             app:layout_constraintRight_toRightOf="@id/item"
             app:layout_constraintTop_toTopOf="@id/item"
-            tools:text="$ 150.48" />
+            tools:text="NYSE" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/price_change"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="2dp"
-            android:fontFamily="@font/roboto"
-            android:text="+2.05"
-            android:textColor="@color/change_price_color"
-            android:textSize="14sp"
-            app:layout_constraintRight_toLeftOf="@+id/percent_change"
-            app:layout_constraintTop_toBottomOf="@id/comp_price"
-            tools:ignore="SmallSp"
-            tools:text="+2.05" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/percent_change"
-            android:layout_width="wrap_content"
+            android:id="@+id/exchange_name"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/roboto"
-            android:text="(2.16%)"
-            android:textColor="@color/change_price_color"
+            android:text="New York Stock Exchange"
+            android:textColor="@color/text_color"
             android:textSize="14sp"
-            app:layout_constraintRight_toRightOf="@+id/comp_price"
-            app:layout_constraintTop_toBottomOf="@id/comp_price"
-            tools:ignore="SmallSp"
-            tools:text="(2.16%)" />
+            app:layout_constraintRight_toRightOf="@+id/exchange_short_name"
+            app:layout_constraintTop_toBottomOf="@id/exchange_short_name"
+            tools:text="New York Stock Exchange"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

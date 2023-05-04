@@ -1,6 +1,7 @@
 package com.example.stocks.ui.fragments
 
 import android.content.Context
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.LayoutInflater
@@ -11,22 +12,27 @@ import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.stocks.*
+import com.example.stocks.adapters.OnItemClick
+import com.example.stocks.adapters.StockSearchAdapter
 import com.example.stocks.databinding.FragmentStockSearchBinding
 import com.example.stocks.models.remote.StockSearch
 import com.example.stocks.utils.network.StockStatus
+import com.example.stocks.viewmodels.StockSearchViewModel
+import com.example.stocks.viewmodels.StockSearchViewModelFactory
 
 class StockSearchFragment() : Fragment(), OnItemClick {
 
-    private val viewModel: StockSearchViewModel by viewModels()
+    private val viewModel: StockSearchViewModel by viewModels {
+        StockSearchViewModelFactory((requireContext().applicationContext as App).stockDataBase.stockDao())
+    }
 
     private var _binding: FragmentStockSearchBinding? = null
     private val binding get() = _binding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    private lateinit var adapter: StockSearchAdapter
+    private lateinit var layoutManager: LinearLayoutManager
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,16 +47,60 @@ class StockSearchFragment() : Fragment(), OnItemClick {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = StockSearchAdapter(this)
+        adapter = StockSearchAdapter(this, false)
         binding.recycler.adapter = adapter
 
-        val layoutManager = GridLayoutManager(requireContext(), 1)
+        layoutManager = LinearLayoutManager(context)
         binding.recycler.layoutManager = layoutManager
 
-        viewModel.companies.observe(this.viewLifecycleOwner) {
-            adapter.submitList(it)
+        setupObservers()
+        setupListeners()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        if (viewModel.companies.isNotEmpty()) {
+            viewModel.createCompaniesList()
+        }
+    }
+
+    private fun setupObservers() {
+
+        viewModel.requestStatus.observe(this.viewLifecycleOwner) { status ->
+            when (status) {
+                StockStatus.LOADING -> {
+                    adapter.submitList(listOf())
+                    binding.apply {
+                        shimmer.visibility = View.VISIBLE
+                        shimmer.startShimmer()
+                    }
+                }
+                StockStatus.DONE -> {
+                    viewModel.createCompaniesList()
+                }
+                StockStatus.ERROR -> {
+                    adapter.submitList(listOf())
+                    binding.apply {
+                        shimmer.stopShimmer()
+                        shimmer.visibility = View.GONE
+                    }
+                    binding.statusImage.setImageResource(R.drawable.ic_connection_error)
+                }
+            }
         }
 
+        viewModel.listStatus.observe(this.viewLifecycleOwner) { status ->
+            if (status == StockStatus.DONE) {
+                binding.apply {
+                    shimmer.stopShimmer()
+                    shimmer.visibility = View.GONE
+                }
+                adapter.submitList(viewModel.companiesList)
+            }
+        }
+    }
+
+    private fun setupListeners() {
         binding.cancelButton.setOnClickListener {
             hideKeyBoard()
             findNavController().navigateUp()
@@ -61,9 +111,6 @@ class StockSearchFragment() : Fragment(), OnItemClick {
                 if (binding.searchBar.text.toString() != "") {
                     hideKeyBoard()
                     viewModel.findCompany(binding.searchBar.text.toString())
-                        .observe(this.viewLifecycleOwner) {
-                            adapter.submitList(it)
-                        }
                     binding.searchBar.clearFocus()
                 }
                 return@OnKeyListener true
@@ -83,17 +130,6 @@ class StockSearchFragment() : Fragment(), OnItemClick {
             binding.searchBar.text?.clear()
             binding.searchBar.isFocused
         }
-
-        viewModel.status.observe(this.viewLifecycleOwner) { status ->
-            when (status) {
-                StockStatus.LOADING -> binding.progressBar.show()
-                StockStatus.DONE -> binding.progressBar.hide()
-                StockStatus.ERROR -> {
-                    binding.progressBar.hide()
-                    binding.statusImage.setImageResource(R.drawable.ic_connection_error)
-                }
-            }
-        }
     }
 
     private fun hideKeyBoard() {
@@ -102,6 +138,19 @@ class StockSearchFragment() : Fragment(), OnItemClick {
                 InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(requireActivity()
             .currentFocus?.windowToken, 0)
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            adapter = StockSearchAdapter(this, true)
+            binding.recycler.adapter = adapter
+            adapter.submitList(viewModel.companies)
+        } else {
+            adapter = StockSearchAdapter(this, false)
+            binding.recycler.adapter = adapter
+            adapter.submitList(viewModel.companies)
+        }
     }
 
     override fun onClick(item: StockSearch) {

@@ -39,7 +39,7 @@ class AddAlertBottomSheetFragment : BottomSheetDialogFragment() {
 
     private val viewModel: AddAlertViewModel by viewModels {
         AddAlertViewModelFactory((requireContext().applicationContext as App).alertDataBase.alertDao(),
-        requireContext().applicationContext as App)
+            requireContext().applicationContext as App)
     }
 
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<*>

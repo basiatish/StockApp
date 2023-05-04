@@ -33,6 +33,7 @@ import com.example.stocks.adapters.StockDividendsAdapter
 import com.example.stocks.databinding.FragmentStockOverviewBinding
 import com.example.stocks.models.remote.CompanyProfile
 import com.example.stocks.models.remote.CompanyQuote
+import com.example.stocks.utils.images.loadLogo
 import com.example.stocks.utils.network.StockStatus
 import com.example.stocks.viewmodels.SharedViewModel
 import com.example.stocks.viewmodels.StockOverViewViewModel
@@ -181,10 +182,8 @@ class StockOverViewFragment: Fragment() {
     }
 
     private fun topBarBind() {
-        if (compName.length > 22) {
-            compName = compName.substring(0, 19).trim() + "..."
-        }
-        binding.compName.text = compName
+        if (compName.length > 22) binding.compName.text = compName.substring(0, 19).trim() + "..."
+        else binding.compName.text = compName
     }
 
     private fun favouriteButtonView() {
@@ -262,44 +261,12 @@ class StockOverViewFragment: Fragment() {
     }
 
     private fun loadCompanyLogo(profile: List<CompanyProfile>) {
-        Glide.with(requireContext()).load(profile[0].image)
-            .diskCacheStrategy(DiskCacheStrategy.DATA)
-            .skipMemoryCache(true)
-            .error(R.drawable.ic_warning)
-            .centerCrop()
-            .listener(object : RequestListener<Drawable> {
-                override fun onLoadFailed(
-                    e: GlideException?,
-                    model: Any?,
-                    target: Target<Drawable>?,
-                    isFirstResource: Boolean
-                ): Boolean {
-                    return false
-                }
-
-                override fun onResourceReady(
-                    resource: Drawable?,
-                    model: Any?,
-                    target: Target<Drawable>?,
-                    dataSource: DataSource?,
-                    isFirstResource: Boolean
-                ): Boolean {
-                    val image = resource?.toBitmap()
-                    val color = image?.getPixel(image.width / 2, image.height / 2)?.toColor()?.toArgb()
-                    if (color != null) {
-                        if (color < Color.argb(100, 225, 225, 225))
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                                resource.colorFilter = BlendModeColorFilter(
-                                    Color.BLACK, BlendMode.SRC_IN
-                                )
-                            } else {
-                                resource.setColorFilter(Color.BLACK, PorterDuff.Mode.SRC_IN)
-                            }
-                    }
-                    return false
-                }
-            })
-            .into(binding.compLogo)
+        loadLogo(
+            requireContext(),
+            profile[0].image ?: "",
+            profile[0].symbol ?: "",
+            binding.compLogo
+        )
     }
     
     private fun deleteDividendsView() {

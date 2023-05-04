@@ -7,5 +7,6 @@ data class StockSearch(
     @SerializedName("name") var name: String? = null,
     @SerializedName("currency") var currency: String? = null,
     @SerializedName("stockExchange") var stockExchange: String? = null,
-    @SerializedName("exchangeShortName") var exchangeShortName: String? = null
+    @SerializedName("exchangeShortName") var exchangeShortName: String? = null,
+    @SerializedName("favorite") var favorite: Boolean = false
 )

@@ -11,14 +11,14 @@ import androidx.work.CoroutineWorker
 import androidx.work.ForegroundInfo
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
+import com.example.stocks.App
 import com.example.stocks.BuildConfig
 import com.example.stocks.R
 import com.example.stocks.StockApi
+import com.example.stocks.database.alertdatabase.Alert
 import com.example.stocks.models.remote.StockChart
 import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
-import java.sql.Timestamp
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter.ofPattern
@@ -30,10 +30,15 @@ class PriceAlarmWork(appContext: Context, params: WorkerParameters) : CoroutineW
     params
 ) {
 
+    private val notificationChannelName: CharSequence =
+        "StockApp Notification Manager"
+    private val notificationChannelDescription =
+        "Shows notifications whenever target price reached"
     private lateinit var builder: Notification
 
     private val apiKey = BuildConfig.API_KEY
     private var priceChartMH: MutableList<StockChart> = mutableListOf()
+    private var id : Int = 0
     private var targetPrice: Double? = null
     private var timeCreated: Long? = null
     private var compName: String? = null
@@ -45,89 +50,84 @@ class PriceAlarmWork(appContext: Context, params: WorkerParameters) : CoroutineW
     private val notificationManager =
         appContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-    override suspend fun doWork(): Result {
+    override suspend fun doWork(): Result = withContext(IO) {
 
-        compName = inputData.getString("name")
-        targetPrice = inputData.getDouble("price", 150.0)
-        timeCreated = inputData.getLong("time", System.currentTimeMillis())
-        above = inputData.getBoolean("above", false)
+        return@withContext try {
+            id = inputData.getInt("id", 1)
+            compName = inputData.getString("name")
+            targetPrice = inputData.getDouble("price", 150.0)
+            timeCreated = inputData.getLong("time", System.currentTimeMillis())
+            above = inputData.getBoolean("above", false)
 
+            priceChartMH = StockApi.retrofitService
+                .getChart("1hour", compName!!, apiKey)
 
-        message = "Worker Started"
-//        with(NotificationManagerCompat.from(applicationContext)) {
-//            notify(1, builder)
-//        }
-        setForegroundAsync(createForegroundInfo())
-        setForeground(createForegroundInfo())
-        notificationManager.notify(1, builder)
-        delay(10000)
-//        return withContext(IO) {
-//            return@withContext try {
-////                priceChartMH = StockApi.retrofitService
-////                    .getChart("1hour", compName!!, apiKey)
-//
-//                for (item in priceChartMH.reversed()) {
-//                    val strDate = LocalDateTime.parse(
-//                        item.date!!,
-//                        ofPattern("yyyy-MM-dd HH:mm:ss")
-//                    )
-//                    val timestamp = LocalDateTime.of(
-//                        strDate.year, strDate.monthValue,
-//                        strDate.dayOfMonth, strDate.hour, strDate.minute, strDate.second
-//                    ).toEpochSecond(ZoneOffset.UTC)
-//                    if (timestamp > timeCreated!!) {
-//                        if (above) {
-//                            if (item.close!! > targetPrice!!) {
-//                                message = "Price is above $targetPrice\n" +
-//                                        "Time: ${item.date}\n" +
-//                                        "Current price is ${item.close}"
-//                                setForeground(createForegroundInfo())
-////                                with(NotificationManagerCompat.from(applicationContext)) {
-////                                    notify(1, createForegroundInfo())
-////                                }
-//                                WorkManager.getInstance(applicationContext).cancelAllWorkByTag(tag)
-//                                break
-//                            }
-//                        } else {
-//                            if (item.close!! < targetPrice!!) {
-//                                message = "Price is below $targetPrice\n" +
-//                                        "Time: ${item.date}\n" +
-//                                        "Current price is ${item.close}"
-//                                setForeground(createForegroundInfo())
-////                                with(NotificationManagerCompat.from(applicationContext)) {
-////                                    notify(1, createForegroundInfo())
-////                                }
-//                                WorkManager.getInstance(applicationContext).cancelAllWorkByTag(tag)
-//                                break
-//                            }
-//                        }
-//                    }
-//                }
-                Log.e(TAG, "Success")
-                 return Result.success()
-//            } catch (th: Throwable) {
-//                Log.e(TAG, "Error $th")
-//                Result.failure()
-//            }
-        //}
+            val lastPrice = priceChartMH.reversed().last().close
 
+            for (item in priceChartMH.reversed()) {
+                val strDate = LocalDateTime.parse(
+                    item.date!!,
+                    ofPattern("yyyy-MM-dd HH:mm:ss")
+                )
+                val timestamp = LocalDateTime.of(
+                    strDate.year, strDate.monthValue,
+                    strDate.dayOfMonth, strDate.hour, strDate.minute, strDate.second
+                ).toEpochSecond(ZoneOffset.UTC)
+                if (timestamp > timeCreated!!) {
+                    if (above) {
+                        if (item.close!! > targetPrice!!) {
+                            message = "Price is above $targetPrice! " +
+                                    "Time: ${item.date}. " +
+                                    "Current price is $lastPrice"
+                            with(NotificationManagerCompat.from(applicationContext)) {
+                                notify(id, createNotification())
+                            }
+                            WorkManager.getInstance(applicationContext).cancelAllWorkByTag(tag)
+                            deactivateAlert()
+                            break
+                        }
+                    } else {
+                        if (item.close!! < targetPrice!!) {
+                            message = "Price is below $targetPrice! " +
+                                    "Time: ${item.date}. " +
+                                    "Current price is $lastPrice"
+                            with(NotificationManagerCompat.from(applicationContext)) {
+                                notify(id, createNotification())
+                            }
+                            WorkManager.getInstance(applicationContext).cancelAllWorkByTag(tag)
+                            deactivateAlert()
+                            break
+                        }
+                    }
+                }
+            }
+            Log.e(TAG, "Success")
+            Result.success()
+        } catch (th: Throwable) {
+            Log.e(TAG, "Error $th")
+            Result.failure()
+        }
     }
 
-//    override suspend fun getForegroundInfo(): ForegroundInfo {
-//        return ForegroundInfo(1, createForegroundInfo())
-//    }
+    private suspend fun deactivateAlert() {
+        (applicationContext as App).alertDataBase.alertDao().update(createAlertObject())
+    }
 
-    private fun createForegroundInfo(): ForegroundInfo {
+    private fun createAlertObject() : Alert {
+        return Alert(id = id, compName = compName!!, price = targetPrice!!, time = timeCreated!!,
+            above = above, status = false)
+    }
+
+    private fun createNotification(): Notification {
         val id = "1225"
-        val title = "WorkRequest Starting"
+        val title = "Price Alert"
 
-        val name = VERBOSE_NOTIFICATION_CHANNEL_NAME
-        val description = VERBOSE_NOTIFICATION_CHANNEL_DESCRIPTION
+        val name = notificationChannelName
+        val description = notificationChannelDescription
         val importance = NotificationManager.IMPORTANCE_HIGH
         val channel = NotificationChannel(id, name, importance)
         channel.description = description
 
-        // Add the channel
         notificationManager.createNotificationChannel(channel)
 
         builder = NotificationCompat.Builder(applicationContext, id)
@@ -138,32 +138,10 @@ class PriceAlarmWork(appContext: Context, params: WorkerParameters) : CoroutineW
             .setVibrate(LongArray(0))
             .build()
 
-        //notificationManager.notify(1, builder.build())
-        return ForegroundInfo(1, builder)
+        return builder
     }
 
-//    private fun createForegroundInfo(): Notification {
-//        val id = "1225"
-//        val title = "WorkRequest Starting"
-//
-//        val name = VERBOSE_NOTIFICATION_CHANNEL_NAME
-//        val description = VERBOSE_NOTIFICATION_CHANNEL_DESCRIPTION
-//        val importance = NotificationManager.IMPORTANCE_HIGH
-//        val channel = NotificationChannel(id, name, importance)
-//        channel.description = description
-//
-//        // Add the channel
-//        notificationManager.createNotificationChannel(channel)
-//
-//        val builder = NotificationCompat.Builder(applicationContext, id)
-//            .setSmallIcon(R.drawable.ic_launcher_foreground)
-//            .setContentTitle(title)
-//            .setContentText(message)
-//            .setPriority(NotificationCompat.PRIORITY_HIGH)
-//            .setVibrate(LongArray(0))
-//
-//        //notificationManager.notify(1, builder.build())
-//        return builder.build()
-//    }
-
+    override suspend fun getForegroundInfo(): ForegroundInfo {
+        return ForegroundInfo(id, createNotification())
+    }
 }

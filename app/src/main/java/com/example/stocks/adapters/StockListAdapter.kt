@@ -26,14 +26,21 @@ import com.bumptech.glide.signature.ObjectKey
 import com.example.stocks.R
 import com.example.stocks.database.stocksdatabase.Stock
 import com.example.stocks.databinding.ItemStockListBinding
+import com.example.stocks.utils.images.loadLogo
 
-class StockListAdapter(private val onClick: OnClickListener) : ListAdapter<Stock, StockListAdapter.ViewHolder>(DiffCallBack) {
+class StockListAdapter(
+    private val onClick: OnClickListener,
+    private val landscape: Boolean,
+    private val reselectList: List<Stock>
+) :
+    ListAdapter<Stock, StockListAdapter.ViewHolder>(DiffCallBack) {
 
     private var selection: Boolean = false
     private var numSelected: Int = 0
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemStockListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        numSelected = reselectList.size
         return ViewHolder(binding)
     }
 
@@ -59,8 +66,12 @@ class StockListAdapter(private val onClick: OnClickListener) : ListAdapter<Stock
         fun bind(stock: Stock, context: Context) {
             binding.apply {
                 shortCompName.text = stock.shortName
-                compName.text = stock.name
                 compPrice.text = context.getString(R.string.price, stock.price.toString())
+                if (!landscape && stock.name?.length!! > 22) {
+                    compName.text = "${stock.name?.subSequence(0, 22)?.trim()}..."
+                } else {
+                    compName.text = stock.name
+                }
                 priceChange.apply {
                     text = if(stock.priceChange < 0) stock.priceChange.toString() else "+${stock.priceChange}"
                     if (stock.priceChange >= 0) setTextColor(resources.getColor(R.color.green, context.theme))
@@ -71,44 +82,10 @@ class StockListAdapter(private val onClick: OnClickListener) : ListAdapter<Stock
                     if (stock.priceChangePercent >= 0) setTextColor(resources.getColor(R.color.green, context.theme))
                     else setTextColor(resources.getColor(R.color.red, context.theme))
                 }
-                Glide.with(context).load(stock.url)
-                    .diskCacheStrategy(DiskCacheStrategy.DATA)
-                    .skipMemoryCache(true)
-                    .error(R.drawable.ic_warning)
-                    .centerCrop()
-                    .listener(object : RequestListener<Drawable> {
-                        override fun onLoadFailed(
-                            e: GlideException?,
-                            model: Any?,
-                            target: Target<Drawable>?,
-                            isFirstResource: Boolean
-                        ): Boolean {
-                            return false
-                        }
-
-                        override fun onResourceReady(
-                            resource: Drawable?,
-                            model: Any?,
-                            target: Target<Drawable>?,
-                            dataSource: DataSource?,
-                            isFirstResource: Boolean
-                        ): Boolean {
-                            val image = resource?.toBitmap()
-                            val color = image?.getPixel(image.width / 2, image.height / 2)?.toColor()?.toArgb()
-                            if (color != null) {
-                                if (color < Color.argb(100, 225, 225, 225))
-                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                                        resource.colorFilter = BlendModeColorFilter(
-                                            Color.BLACK, BlendMode.SRC_IN
-                                        )
-                                    } else {
-                                        resource.setColorFilter(Color.BLACK, PorterDuff.Mode.SRC_IN)
-                                    }
-                            }
-                            return false
-                        }
-                    })
-                    .into(binding.compLogo)
+                loadLogo(context, stock.url, stock.shortName, binding.compLogo)
+                if (reselectList.contains(stock)) {
+                    item.isSelected = true
+                }
             }
         }
 

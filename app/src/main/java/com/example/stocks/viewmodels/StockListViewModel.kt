@@ -26,6 +26,7 @@ class StockListViewModel(private val stockDao: StockDao) : ViewModel() {
     val stockListStatus: LiveData<StockStatus> get() = _stockListStatus
 
     private var _removeStockList: MutableList<Stock> = mutableListOf()
+    val removeStockList: List<Stock> get() = _removeStockList
 
     private val _isRemoveListEmpty = MutableLiveData<Boolean>()
     val isRemoveListEmpty: LiveData<Boolean> = _isRemoveListEmpty
@@ -54,13 +55,17 @@ class StockListViewModel(private val stockDao: StockDao) : ViewModel() {
 
     fun updateStock() {
         viewModelScope.launch(IO) {
-            var count = 0
-            _companiesQuote.forEach { quote ->
-                val stock = createStockObject(quote, count)
-                stockDao.update(stock)
-                count++
+            try {
+                var count = 0
+                _companiesQuote.forEach { quote ->
+                    val stock = createStockObject(quote, count)
+                    stockDao.update(stock)
+                    count++
+                }
+                getStocks()
+            } catch (e: Exception) {
+                Log.e("Update DataBase", "${e.message}")
             }
-            getStocks()
         }
     }
 

@@ -166,7 +166,7 @@
                         android:text="141.91"
                         android:textColor="@color/grey_700"
                         app:layout_constraintBottom_toBottomOf="@+id/high"
-                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintLeft_toLeftOf="@+id/low_price"
                         tools:text="141.91" />
 
                     <TextView
@@ -189,7 +189,7 @@
                         android:layout_marginEnd="16dp"
                         android:text="136.58"
                         android:textColor="@color/grey_700"
-                        app:layout_constraintLeft_toLeftOf="@id/high_price"
+                        app:layout_constraintLeft_toLeftOf="@id/vol_value"
                         app:layout_constraintTop_toBottomOf="@id/high_price"
                         tools:text="136.58" />
 
@@ -212,7 +212,7 @@
                         android:layout_marginEnd="16dp"
                         android:text="100.18M"
                         android:textColor="@color/grey_700"
-                        app:layout_constraintLeft_toLeftOf="@id/low_price"
+                        app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/low_price"
                         tools:text="100.18M" />
 

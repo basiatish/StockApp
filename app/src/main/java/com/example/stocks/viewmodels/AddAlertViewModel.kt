@@ -1,6 +1,7 @@
 package com.example.stocks.viewmodels
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.*
 import androidx.work.WorkManager
 import com.example.stocks.App
@@ -15,8 +16,6 @@ class AddAlertViewModel(private val alertDao: AlertDao, app: Application) : Andr
 
     val alert: LiveData<Alert> = _alert
 
-    private var alertId: Long? = null
-
     fun createAlert(update: Boolean, id: Int, compName: String, price: Double, above: Boolean) {
         val time = System.currentTimeMillis()
         val alert =
@@ -28,17 +27,25 @@ class AddAlertViewModel(private val alertDao: AlertDao, app: Application) : Andr
 
     private fun addAlert(alert: Alert) {
         viewModelScope.launch(IO) {
-            alertId = alertDao.insert(alert)
-            val tag = "$alertId ${alert.compName}"
-            getApplication<App>().scheduleWork(tag, alert.compName, alert.price, alert.time, alert.above)
+            try {
+                val alertId = alertDao.insert(alert)
+                val tag = "$alertId ${alert.compName}"
+                getApplication<App>().scheduleWork(alertId.toInt(), tag, alert.compName, alert.price, alert.time, alert.above)
+            } catch (e: Exception) {
+                Log.e("Alert", "Error with worker ${e.message}")
+            }
         }
     }
 
     private fun updateAlert(alert: Alert) {
         viewModelScope.launch(IO) {
-            alertDao.update(alert)
-            val tag = "${alert.id} ${alert.compName}"
-            getApplication<App>().scheduleWork(tag, alert.compName, alert.price, alert.time, alert.above)
+            try {
+                alertDao.update(alert)
+                val tag = "${alert.id} ${alert.compName}"
+                getApplication<App>().scheduleWork(alert.id, tag, alert.compName, alert.price, alert.time, alert.above)
+            } catch (e: Exception) {
+                Log.e("Alert", "Error with worker ${e.message}")
+            }
         }
     }
 

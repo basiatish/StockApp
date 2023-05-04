@@ -35,7 +35,8 @@ class AlertListBottomSheetFragment : BottomSheetDialogFragment(), OnItemClickLis
     private val sharedViewModel: SharedViewModel by activityViewModels()
 
     private val viewModel: AlertListViewModel by viewModels {
-        AlertListViewModelFactory((requireContext().applicationContext as App).alertDataBase.alertDao())
+        AlertListViewModelFactory((requireContext().applicationContext as App).alertDataBase.alertDao(),
+            requireContext().applicationContext as App)
     }
 
     private lateinit var app: App
@@ -170,19 +171,12 @@ class AlertListBottomSheetFragment : BottomSheetDialogFragment(), OnItemClickLis
         binding.closeBtn.alpha = 1f
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.i("destroy", "Active: ${viewModel.activeAlerts.size}")
-        Log.i("destroy", "Deactivated: ${viewModel.deactivatedAlerts.size}")
-        for (alert in viewModel.activeAlerts) {
-            val tag = "${alert.id} ${alert.compName}"
-            app.scheduleWork(tag, alert.compName, alert.price, alert.time, alert.above)
-        }
-        for (alert in viewModel.deactivatedAlerts) {
-            val tag = "${alert.id} ${alert.compName}"
-            app.destroyWork(tag)
-        }
-
+    override fun onStop() {
+        super.onStop()
+        Log.i("alert", "Active: ${viewModel.activeAlerts.size}")
+        Log.i("alert", "Deactivated: ${viewModel.deactivatedAlerts.size}")
+        viewModel.activateAlert()
+        viewModel.deactivateAlert()
     }
 
     override fun onItemClick(alert: Alert) {

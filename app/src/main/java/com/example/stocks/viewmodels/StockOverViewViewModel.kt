@@ -50,16 +50,24 @@ class StockOverViewViewModel(private val stockDao: StockDao): ViewModel() {
     val isFavourite: LiveData<String?> get() = _isFavourite
 
     fun saveStock(shortName: String, name: String) {
-        val stock = createStockObject(shortName, name)
         viewModelScope.launch(IO) {
-            stockDao.insert(stock)
+            try {
+                val stock = createStockObject(shortName, name)
+                stockDao.insert(stock)
+            } catch (e: Exception) {
+                Log.e("Error", "${e.message}")
+            }
         }
     }
 
     fun updateStock(shortName: String, name: String) {
-        val stock = createStockObject(shortName, name)
         viewModelScope.launch(IO) {
-            stockDao.update(stock)
+            try {
+                val stock = createStockObject(shortName, name)
+                stockDao.update(stock)
+            } catch (e: Exception) {
+                Log.e("Error", "${e.message}")
+            }
         }
     }
 
@@ -82,8 +90,11 @@ class StockOverViewViewModel(private val stockDao: StockDao): ViewModel() {
             if (_companyQuote.isNotEmpty()) {
                 setPrice(cutValueZeros(_companyQuote[0].price ?: 0.0).toDouble())
                 setPriceChange(cutValueZeros(_companyQuote[0].change ?: 0.0).toDouble())
-                setPriceChangePercent(cutValueZeros(
-                    _companyQuote[0].changesPercentage ?: 0.0).toDouble())
+                setPriceChangePercent(
+                    cutValueZeros(
+                        _companyQuote[0].changesPercentage ?: 0.0
+                    ).toDouble()
+                )
                 setUrl(_companyProfile[0].image)
             } else {
                 setPrice(0.0)

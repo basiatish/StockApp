@@ -1,5 +1,6 @@
 package com.example.stocks.ui.fragments
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
@@ -8,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -55,7 +55,7 @@ class StockListFragment() : Fragment(), OnClickListener {
         super.onViewCreated(view, savedInstanceState)
         setupTextView()
         binding.topBarText.setText(getString(R.string.your_watchlist))
-        adapter = StockListAdapter(this)
+        adapter = StockListAdapter(this, false, viewModel.removeStockList)
         binding.recycler.adapter = adapter
         layoutManager = LinearLayoutManager(context)
         binding.recycler.layoutManager = layoutManager
@@ -126,6 +126,19 @@ class StockListFragment() : Fragment(), OnClickListener {
                 setTextColor(resources.getColor(R.color.black, context?.theme))
                 typeface = ResourcesCompat.getFont(context, R.font.roboto)
             }
+        }
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            adapter = StockListAdapter(this, true, viewModel.removeStockList)
+            binding.recycler.adapter = adapter
+            adapter.submitList(viewModel.stockList)
+        } else {
+            adapter = StockListAdapter(this, false, viewModel.removeStockList)
+            binding.recycler.adapter = adapter
+            adapter.submitList(viewModel.stockList)
         }
     }
 

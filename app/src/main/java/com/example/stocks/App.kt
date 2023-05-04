@@ -16,10 +16,11 @@ class App : Application() {
         StockRoomDataBase.getDataBase(this)
     }
 
-    fun scheduleWork(tag: String, compName: String, price: Double, time: Long, above: Boolean) {
+    fun scheduleWork(id: Int, tag: String, compName: String, price: Double, time: Long, above: Boolean) {
         val workManager = WorkManager.getInstance(this)
         val constraints = Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
         val data = Data.Builder()
+            .putInt("id", id)
             .putString("name", compName)
             .putDouble("price", price)
             .putLong("time", time)

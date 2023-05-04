@@ -28,6 +28,7 @@ interface StocksApiService {
     suspend fun getCompanies(
         @Query("query", encoded = true) compName: String,
         @Query("limit", encoded = true) limit: String,
+        @Query("exchange", encoded = true) exchange: String,
         @Query("apikey", encoded = true) apiKey: String
     ): List<StockSearch>
 

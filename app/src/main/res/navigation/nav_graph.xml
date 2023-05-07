@@ -21,11 +21,6 @@
         android:name="com.example.stocks.ui.fragments.StockSearchFragment"
         android:label="StockSearchFragment"
         tools:layout="@layout/fragment_stock_search">
-<!--        <action-->
-<!--            android:id="@+id/action_stockSearchFragment_to_stockListFragment"-->
-<!--            app:destination="@id/stockListFragment"-->
-<!--            app:popUpTo="@id/stockListFragment"-->
-<!--            app:popUpToInclusive="true" />-->
         <action
             android:id="@+id/action_stockSearchFragment_to_stockOverViewFragment"
             app:destination="@id/stockOverViewFragment" />
@@ -77,4 +72,22 @@
             app:argType="integer"
             android:defaultValue="-1" />
     </dialog>
+    <fragment
+        android:id="@+id/newsListFragment"
+        android:name="com.example.stocks.ui.fragments.NewsListFragment"
+        android:label="NewsListFragment"
+        tools:layout="@layout/fragment_news_list" >
+        <action
+            android:id="@+id/action_newsListFragment_to_newsFragment"
+            app:destination="@id/newsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/newsFragment"
+        android:name="com.example.stocks.ui.fragments.NewsFragment"
+        android:label="NewsFragment"
+        tools:layout="@layout/fragment_news">
+        <argument
+            android:name="id"
+            app:argType="integer" />
+    </fragment>
 </navigation>

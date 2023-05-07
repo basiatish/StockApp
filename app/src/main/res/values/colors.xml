@@ -24,6 +24,8 @@
     <color name="red">#CC2121</color>
     <color name="greyL">#D1D0D0</color>
     <color name="grey_700">#B4B4B4</color>
+    <color name="news_text_placeholder">#66B4B4B4</color>
+    <color name="pager_placeholder">#33B4B4B4</color>
 
     <color name="overviewFragment">#D5D5D5</color>
     <color name="red_60">#99E10808</color>

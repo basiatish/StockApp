@@ -52,4 +52,9 @@
     <string name="your_watchlist">Your WatchList</string>
     <string name="delete_stocks">Delete stocks</string>
     <string name="delete">Delete</string>
+    <string name="latest_news">Latest News</string>
+    <string name="page_text">%d Page</string>
+    <string name="chart_type">Chart Type</string>
+    <string name="chart_range">Chart Range</string>
+    <string name="author">By %s</string>
 </resources>

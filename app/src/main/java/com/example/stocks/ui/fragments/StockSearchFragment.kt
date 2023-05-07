@@ -106,7 +106,7 @@ class StockSearchFragment() : Fragment(), OnItemClick {
             findNavController().navigateUp()
         }
 
-        binding.searchBar.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
+        binding.searchBar.setOnKeyListener(View.OnKeyListener { _, keyCode, event ->
             if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
                 if (binding.searchBar.text.toString() != "") {
                     hideKeyBoard()

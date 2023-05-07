@@ -69,12 +69,8 @@ class MainActivity : AppCompatActivity() {
                     binding.btmBar.visibility = View.VISIBLE
                     binding.fragmentNav.menu.getItem(0).isChecked = true
                 }
-                R.id.stockChartFragment -> {
-                }
                 R.id.alertListDialog -> {
                     binding.fragmentNav.selectedItemId = R.id.home
-                }
-                R.id.addAlertDialog -> {
                 }
                 else -> {
                 }

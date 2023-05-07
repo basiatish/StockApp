@@ -13,10 +13,9 @@
         android:title="" />
 
     <item
-        android:id="@+id/news"
+        android:id="@+id/newsListFragment"
         android:icon="@drawable/ic_newspaper"
-        android:title=""
-        android:enabled="false"/>
+        android:title="" />
 
     <item
         android:id="@+id/settings"

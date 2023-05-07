@@ -76,8 +76,7 @@ class StockChartViewModel: ViewModel() {
         val lastBar = mutableMapOf<String, String>()
         if (range == "all") {
             val format = ofPattern("yyyy-MM-dd")
-            val date = LocalDate.
-            parse(_priceDaily[0].historical.reversed().last().date.toString(), format)
+            val date = LocalDate.parse(_priceDaily[0].historical.reversed().last().date.toString(), format)
             val day = convertDate(date.dayOfMonth)
             val month = convertDate(date.monthValue)
             lastBar["date"] = "$day - $month - ${date.year}"

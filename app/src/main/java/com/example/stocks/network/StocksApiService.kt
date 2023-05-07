@@ -1,6 +1,7 @@
 package com.example.stocks
 
 import com.example.stocks.models.remote.*
+import com.example.stocks.models.remote.news.NewsContentHeader
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -45,13 +46,6 @@ interface StocksApiService {
         @Query(value = "apikey", encoded = true) apiKey: String
     ): StockDailyPriceHeader
 
-    @GET("v3/historical-price-full/{name}")
-    suspend fun getFullHistoryPrice(
-        @Path(value = "name", encoded = true) compName: String,
-        @Query(value = "serietype", encoded = true) time: String,
-        @Query(value = "apikey", encoded = true) apiKey: String
-    ): StockYearlyPriceHeader
-
     @GET("v3/profile/{name}")
     suspend fun getCompanyProfile(
         @Path(value = "name", encoded = true) compName: String,
@@ -69,6 +63,13 @@ interface StocksApiService {
         @Path(value = "name", encoded = true) compName: String,
         @Query(value = "apikey", encoded = true) apiKey: String
     ): StockDividendsHeader
+
+    @GET("v3/fmp/articles")
+    suspend fun getNews(
+        @Query(value = "page", encoded = true) page: Int,
+        @Query(value = "size", encoded = true) size: Int,
+        @Query(value = "apikey", encoded = true) apiKey: String
+    ) : NewsContentHeader
 }
 
 object StockApi {

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/news_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
+        app:shapeAppearanceOverlay="@style/NewsImage"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:src="@drawable/test_image"/>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/back_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:src="@drawable/ic_arrow_left"
+        android:tint="@color/white"
+        android:background="@drawable/news_text_background"
+        android:padding="4dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@id/news_image" />
+
+    <TextView
+        style="@style/NewsTextStyle"
+        android:id="@+id/news_ticker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAllCaps="true"
+        android:layout_alignBottom="@id/news_image"
+        android:layout_alignParentStart="true"
+        tools:text="AER"/>
+
+    <TextView
+        style="@style/NewsTextStyle"
+        android:id="@+id/news_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignBottom="@id/news_image"
+        tools:text="4 Hours Ago"/>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:scrollbars="none"
+        android:layout_below="@id/news_image"
+        android:layout_marginBottom="16dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp">
+
+            <TextView
+                android:id="@+id/title"
+                style="@style/MediumTextApp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:breakStrategy="high_quality"
+                android:textSize="18sp"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="AerCap Reports Q1 EPS &amp; Revenue Beat" />
+
+            <TextView
+                android:id="@+id/news_content"
+                style="@style/DefaultTextApp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:breakStrategy="high_quality"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/title"
+                tools:text="AerCap Holdings (NYSE:AER) reported its Q1 earnings results on Tuesday, with EPS of $2.34 coming in better than the Street estimate of $1.95. Revenue was $1.87 billion, beating the Street estimate of $1.76 billion.\n\n
+The company affirmed its 2023 adjusted EPS guide ($7.00 - $7.50 excluding gains on sale) at the higher end, reflecting its confidence in the outlook for 2023. Furthermore, AER’s Board has approved a new share repurchase authorization of up to $500 million.\n\n
+According to the analysts at Deutsche Bank, the current weakness in shares represents a good buying opportunity as fundamentals remain very favorable and valuation remains attractive." />
+
+            <TextView
+                android:id="@+id/author"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/news_content"
+                tools:text="By Davit Kirakosyan" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</RelativeLayout>

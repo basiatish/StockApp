@@ -162,6 +162,6 @@
 
     <include
         android:id="@+id/bottom_sheet"
-        layout="@layout/bottom_sheet"/>
+        layout="@layout/chart_buttons_bottom_sheet"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

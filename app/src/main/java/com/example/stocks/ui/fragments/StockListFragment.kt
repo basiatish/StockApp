@@ -44,10 +44,10 @@ class StockListFragment() : Fragment(), OnClickListener {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentStockListBinding.inflate(inflater, container, false)
-//        binding.shimmer.apply {
-//            startShimmer()
-//        }
-//        viewModel.getStocks()
+        binding.shimmer.apply {
+            startShimmer()
+        }
+        viewModel.getStocks()
         return binding.root
     }
 

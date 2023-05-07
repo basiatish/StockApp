@@ -72,6 +72,14 @@ class MainActivity : AppCompatActivity() {
                 R.id.alertListDialog -> {
                     binding.fragmentNav.selectedItemId = R.id.home
                 }
+                R.id.newsFragment -> {
+                    binding.nav.visibility = View.GONE
+                    binding.btmBar.visibility = View.GONE
+                }
+                R.id.newsListFragment -> {
+                    binding.nav.visibility = View.VISIBLE
+                    binding.btmBar.visibility = View.VISIBLE
+                }
                 else -> {
                 }
             }

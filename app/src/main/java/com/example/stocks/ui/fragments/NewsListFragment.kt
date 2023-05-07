@@ -45,9 +45,13 @@ class NewsListFragment : Fragment(), OnNewsClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         binding.pageInput.text = Editable.Factory.getInstance().newEditable("$page Page")
+        hideKeyBoard()
         if (viewModel.newsList.isEmpty()) {
+            binding.apply {
+                shimmer.visibility = View.VISIBLE
+                shimmer.startShimmer()
+            }
             viewModel.getNews(0)
         }
 
@@ -63,6 +67,11 @@ class NewsListFragment : Fragment(), OnNewsClickListener {
     private fun setupObservers() {
         viewModel.newsStatus.observe(this.viewLifecycleOwner) { status ->
             if (status == StockStatus.DONE) {
+                binding.apply {
+                    refresh.isRefreshing = false
+                    shimmer.stopShimmer()
+                    shimmer.visibility = View.GONE
+                }
                 adapter.submitList(viewModel.newsList[0].content)
             }
         }
@@ -101,7 +110,7 @@ class NewsListFragment : Fragment(), OnNewsClickListener {
             }
         }
 
-        binding.pageInput.setOnKeyListener(View.OnKeyListener { _, keyCode, event ->
+        binding.pageInput.setOnKeyListener(View.OnKeyListener { _, keyCode, _ ->
             if (keyCode == KeyEvent.KEYCODE_BACK) {
                 hideKeyBoard()
                 return@OnKeyListener true
@@ -121,6 +130,10 @@ class NewsListFragment : Fragment(), OnNewsClickListener {
                 hideKeyBoard()
             }
             true
+        }
+
+        binding.refresh.setOnRefreshListener {
+            viewModel.getNews(page - 1)
         }
 
     }

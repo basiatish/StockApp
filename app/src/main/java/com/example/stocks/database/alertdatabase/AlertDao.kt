@@ -23,4 +23,7 @@ interface AlertDao {
 
     @Delete
     suspend fun delete(alert: Alert)
+
+    @Query("Delete from alert")
+    suspend fun clearDataBase()
 }

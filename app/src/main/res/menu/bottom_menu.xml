@@ -18,8 +18,7 @@
         android:title="" />
 
     <item
-        android:id="@+id/settings"
+        android:id="@+id/settingsFragment"
         android:icon="@drawable/ic_settings"
-        android:title=""
-        android:enabled="false"/>
+        android:title="" />
 </menu>

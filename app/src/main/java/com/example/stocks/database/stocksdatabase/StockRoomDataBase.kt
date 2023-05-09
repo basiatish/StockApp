@@ -16,7 +16,7 @@ abstract class StockRoomDataBase : RoomDatabase() {
 
         fun getDataBase(context: Context): StockRoomDataBase {
             return database ?: synchronized(this) {
-                var dataBase = Room.databaseBuilder(
+                val dataBase = Room.databaseBuilder(
                     context.applicationContext,
                     StockRoomDataBase::class.java,
                     "Stock_database"

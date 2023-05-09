@@ -1,8 +1,12 @@
 package com.example.stocks.ui.activities
 
+import android.content.Context
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.example.stocks.R
@@ -10,6 +14,7 @@ import com.example.stocks.databinding.ActivityMainBinding
 import com.example.stocks.ui.fragments.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.navigation.ui.setupWithNavController
+import com.example.stocks.App
 
 class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
@@ -18,15 +23,28 @@ class MainActivity : AppCompatActivity() {
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
 
+    private lateinit var sharedPreferences: SharedPreferences
+    private var isThemeLight = true
+
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        isThemeLight = (applicationContext as App).getValue()
+        if (isThemeLight) AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        else AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+
         super.onCreate(savedInstanceState)
-
         _binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setNavigationGraph()
 
-        val navHostFragment = supportFragmentManager
-            .findFragmentById(R.id.fragment_container) as NavHostFragment
-        navController = navHostFragment.navController
+//        val navHostFragment = supportFragmentManager
+//            .findFragmentById(R.id.fragment_container) as NavHostFragment
+//
+////        val graph = navController.navInflater.inflate(R.navigation.nav_graph)
+//
+//        navController = navHostFragment.navController
+        setContentView(binding.root)
+//        graph.setStartDestination(R.id.stockListFragment)
+//        navController.setGraph(graph.parent.id)
 
         nav = binding.nav
         nav.setupWithNavController(navController)
@@ -84,6 +102,17 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun setNavigationGraph() {
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.fragment_container) as NavHostFragment
+        navController = navHostFragment.navController
+
+        val navGraph = navController.navInflater.inflate(R.navigation.nav_graph)
+        navGraph.setStartDestination(R.id.stockSearchFragment)
+
+        navController.graph = navGraph
     }
 
     override fun onSupportNavigateUp(): Boolean {

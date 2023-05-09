@@ -47,7 +47,7 @@ class StockListFragment() : Fragment(), OnClickListener {
         binding.shimmer.apply {
             startShimmer()
         }
-        viewModel.getStocks()
+        //viewModel.getStocks()
         return binding.root
     }
 

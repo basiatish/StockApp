@@ -79,7 +79,8 @@
         tools:layout="@layout/fragment_news_list" >
         <action
             android:id="@+id/action_newsListFragment_to_newsFragment"
-            app:destination="@id/newsFragment" />
+            app:destination="@id/newsFragment"
+            app:popUpTo="@id/newsListFragment" />
     </fragment>
     <fragment
         android:id="@+id/newsFragment"
@@ -90,4 +91,9 @@
             android:name="id"
             app:argType="integer" />
     </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.stocks.ui.fragments.SettingsFragment"
+        android:label="SettingsFragment"
+        tools:layout="@layout/fragment_settings"/>
 </navigation>

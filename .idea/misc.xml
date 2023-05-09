@@ -5,6 +5,7 @@
       <map>
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/add_alert_button_background.xml" value="0.2105" />
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/add_alert_edit_text_cursor.xml" value="0.2105" />
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/check_circle.xml" value="0.2105" />
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/custom_item_list_background.xml" value="0.2105" />
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/edittext_background.xml" value="0.2105" />
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/ic_arrow_above_to_below.xml" value="0.2105" />
@@ -12,6 +13,7 @@
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/ic_arrow_below_to_above.xml" value="0.2105" />
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/ic_arrow_left.xml" value="0.2105" />
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/ic_arrow_right.xml" value="0.2105" />
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/ic_check.xml" value="0.2105" />
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/ic_close.xml" value="0.2105" />
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/ic_delete.xml" value="0.1" />
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/ic_star.xml" value="0.2105" />
@@ -24,6 +26,7 @@
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/news_text_background.xml" value="0.2105" />
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/pager_placeholder_background.xml" value="0.2105" />
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/shimmer_background.xml" value="0.2105" />
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/textview_background_container.xml" value="0.2105" />
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/layout/activity_main.xml" value="0.12807377049180327" />
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/layout/add_alert_bottom_sheet.xml" value="0.264" />
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/layout/alert_bottom_sheet_button.xml" value="0.15592105263157896" />
@@ -32,6 +35,7 @@
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/layout/chart_buttons_bottom_sheet.xml" value="0.1493421052631579" />
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/layout/fragment_news.xml" value="0.176" />
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/layout/fragment_news_list.xml" value="0.264" />
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/layout/fragment_settings.xml" value="0.4" />
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/layout/fragment_stock_about.xml" value="0.1493421052631579" />
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/layout/fragment_stock_chart.xml" value="0.1493421052631579" />
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/layout/fragment_stock_key_statistic.xml" value="0.1493421052631579" />

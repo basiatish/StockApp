@@ -24,7 +24,10 @@ class StockListAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemStockListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        numSelected = reselectList.size
+        if (reselectList.isNotEmpty()) {
+            numSelected = reselectList.size
+            selection = true
+        }
         return ViewHolder(binding)
     }
 

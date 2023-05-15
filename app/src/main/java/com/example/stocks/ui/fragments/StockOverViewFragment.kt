@@ -57,11 +57,11 @@ class StockOverViewFragment: Fragment() {
         compName = navArgs.name
         shortName = navArgs.shortName
         sharedViewModel.saveCompanyName(compName, shortName)
+        viewModel.isStockFavourite(shortName)
         if (viewModel.quoteStatus.value != StockStatus.DONE) {
             viewModel.getCompanyProfile(shortName, apiKey ?: "")
             viewModel.getCompanyQuote(shortName, apiKey ?: "")
             viewModel.getCompanyDividends(shortName, apiKey ?: "")
-            viewModel.isStockFavourite(shortName)
         }
     }
 

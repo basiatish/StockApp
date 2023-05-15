@@ -22,13 +22,14 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
-            android:src="@drawable/appl"
+            android:src="@drawable/image_outline"
             app:shapeAppearanceOverlay="@style/ImageLogo"
             app:layout_constraintBottom_toBottomOf="@id/item"
             app:layout_constraintLeft_toLeftOf="@id/item"
             app:layout_constraintTop_toTopOf="@id/item" />
 
         <androidx.appcompat.widget.AppCompatTextView
+            style="@style/MediumTextApp"
             android:id="@+id/short_comp_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -37,7 +38,6 @@
             android:fontFamily="@font/roboto_medium"
             android:gravity="bottom|start"
             android:textAllCaps="true"
-            android:textColor="@color/black"
             android:textSize="18sp"
             app:layout_constraintLeft_toRightOf="@id/comp_logo"
             app:layout_constraintTop_toTopOf="@id/item"
@@ -64,7 +64,6 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:fontFamily="@font/roboto"
-            android:text="Apple Inc."
             android:textColor="@color/text_color"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="@id/item"
@@ -73,14 +72,12 @@
             tools:text="Apple Inc." />
 
         <androidx.appcompat.widget.AppCompatTextView
+            style="@style/DefaultTextApp"
             android:id="@+id/exchange_short_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="14dp"
-            android:fontFamily="@font/roboto"
-            android:text="NYSE"
-            android:textColor="@color/black"
             android:textSize="18sp"
             app:layout_constraintRight_toRightOf="@id/item"
             app:layout_constraintTop_toTopOf="@id/item"
@@ -92,7 +89,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/roboto"
-            android:text="New York Stock Exchange"
             android:textColor="@color/text_color"
             android:textSize="14sp"
             app:layout_constraintRight_toRightOf="@+id/exchange_short_name"

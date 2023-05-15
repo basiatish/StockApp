@@ -1,19 +1,16 @@
 package com.example.stocks.ui.fragments
 
 
-import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Bundle
+import android.text.method.LinkMovementMethod
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
 import android.widget.TextSwitcher
 import android.widget.TextView
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
@@ -23,6 +20,7 @@ import com.example.stocks.R
 import com.example.stocks.databinding.FragmentSettingsBinding
 import com.example.stocks.viewmodels.SettingsViewModel
 import com.example.stocks.viewmodels.SettingsViewModelFactory
+
 
 class SettingsFragment : Fragment() {
 
@@ -47,7 +45,7 @@ class SettingsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentSettingsBinding.inflate(inflater, container, false)
-        isThemeLight = (activity?.applicationContext as App).getValue()
+        isThemeLight = (activity?.applicationContext as App).getUiMode()
         return binding.root
     }
 
@@ -61,6 +59,7 @@ class SettingsFragment : Fragment() {
             setupTextView(stockStatus)
             setupTextView(alertStatus)
             setupTextView(imagesStatus)
+            textLink.movementMethod = LinkMovementMethod.getInstance()
         }
         setupListeners()
     }
@@ -71,27 +70,27 @@ class SettingsFragment : Fragment() {
             binding.apply {
                 stocks.isSelected = true
                 deleteStocks.isClickable = false
-                actionOnClick(stockStatus, deleteStocks, "Deleted")
+                actionOnClick(stockStatus, deleteStocks, resources.getString(R.string.deleted))
             }
-            //viewModel.deleteStocks()
+            viewModel.deleteStocks()
         }
 
         binding.deleteAlerts.setOnClickListener {
             binding.apply {
                 alerts.isSelected = true
                 deleteAlerts.isClickable = false
-                actionOnClick(alertStatus, deleteAlerts, "Deleted")
+                actionOnClick(alertStatus, deleteAlerts, resources.getString(R.string.deleted))
             }
-            //viewModel.deleteAlerts()
+            viewModel.deleteAlerts()
         }
 
         binding.deleteImages.setOnClickListener {
             binding.apply {
                 images.isSelected = true
                 deleteImages.isClickable = false
-                actionOnClick(imagesStatus, deleteImages, "Cleared")
+                actionOnClick(imagesStatus, deleteImages, resources.getString(R.string.deleted))
             }
-            //viewModel.clearImagesCache()
+            viewModel.clearImagesCache()
         }
 
         binding.lightTheme.setOnClickListener {
@@ -99,9 +98,8 @@ class SettingsFragment : Fragment() {
                 isThemeLight = !isThemeLight
                 makeButtonActive(binding.lightTheme, binding.lightCheck)
                 makeButtonNormal(binding.darkTheme, binding.darkCheck)
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                (requireContext().applicationContext as App).save(isThemeLight)
-                Toast.makeText(requireContext(), "Restart to apply", Toast.LENGTH_SHORT).show()
+                (requireContext().applicationContext as App).setUI(isThemeLight)
+                activity?.recreate()
             }
         }
 
@@ -110,9 +108,8 @@ class SettingsFragment : Fragment() {
                 isThemeLight = !isThemeLight
                 makeButtonActive(binding.darkTheme, binding.darkCheck)
                 makeButtonNormal(binding.lightTheme, binding.lightCheck)
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                (requireContext().applicationContext as App).save(isThemeLight)
-                Toast.makeText(requireContext(), "Restart to apply", Toast.LENGTH_SHORT).show()
+                (requireContext().applicationContext as App).setUI(isThemeLight)
+                activity?.recreate()
             }
         }
     }

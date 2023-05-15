@@ -3,6 +3,7 @@ package com.example.stocks
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.work.*
 import com.example.stocks.database.alertdatabase.AlertRoomDataBase
 import com.example.stocks.database.stocksdatabase.StockRoomDataBase
@@ -10,6 +11,13 @@ import com.example.stocks.workers.PriceAlarmWork
 import java.util.concurrent.TimeUnit
 
 class App : Application() {
+
+    override fun onCreate() {
+        super.onCreate()
+        val isThemeLight = (applicationContext as App).getUiMode()
+        if (isThemeLight) AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        else AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+    }
 
     val alertDataBase: AlertRoomDataBase by lazy {
         AlertRoomDataBase.getDataBase(this)
@@ -20,14 +28,28 @@ class App : Application() {
     }
 
     private val preferences: SharedPreferences by lazy {
-        getSharedPreferences("UI", Context.MODE_PRIVATE)
+        getSharedPreferences("App Settings", Context.MODE_PRIVATE)
     }
 
-    fun save(value: Boolean) {
+    fun saveApiKey(apiKey: String) {
+        preferences.edit().putString("apiKey", apiKey).apply()
+    }
+
+    fun getApiKey(): String? {
+        return preferences.getString("apiKey", null)
+    }
+
+    fun setUI(isLightMode: Boolean) {
+        if (isLightMode) AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        else AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        saveUiMode(isLightMode)
+    }
+
+    private fun saveUiMode(value: Boolean) {
         preferences.edit().putBoolean("uiMode", value).apply()
     }
 
-    fun getValue(): Boolean {
+    fun getUiMode(): Boolean {
         return preferences.getBoolean("uiMode", true)
     }
 

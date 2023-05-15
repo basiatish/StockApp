@@ -5,10 +5,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.stocks.BuildConfig
-import com.example.stocks.StockApi
 import com.example.stocks.models.remote.news.NewsContent
 import com.example.stocks.models.remote.news.NewsContentHeader
+import com.example.stocks.network.StockApi
 import com.example.stocks.utils.formatters.Formatter
 import com.example.stocks.utils.network.StockStatus
 import kotlinx.coroutines.Dispatchers.IO
@@ -16,8 +15,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class NewsViewModel: ViewModel() {
-
-    private val apiKey = BuildConfig.API_KEY
 
     private var _newsList: MutableList<NewsContentHeader> = mutableListOf()
     val newsList: List<NewsContentHeader> get() = _newsList
@@ -28,7 +25,7 @@ class NewsViewModel: ViewModel() {
     private var _newsStatus = MutableLiveData<StockStatus>()
     val newsStatus: LiveData<StockStatus> get() = _newsStatus
 
-    fun getNews(page: Int) {
+    fun getNews(page: Int, apiKey: String) {
         viewModelScope.launch {
             _newsStatus.value = StockStatus.LOADING
             try {
@@ -37,6 +34,7 @@ class NewsViewModel: ViewModel() {
                 }
                 _newsStatus.value = StockStatus.DONE
             } catch (e: Exception) {
+                _newsStatus.value = StockStatus.ERROR
                 _newsList = mutableListOf()
                 Log.e("News", "${e.message}")
             }

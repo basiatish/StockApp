@@ -1,4 +1,4 @@
-package com.example.stocks
+package com.example.stocks.network
 
 import com.example.stocks.models.remote.*
 import com.example.stocks.models.remote.news.NewsContentHeader
@@ -6,7 +6,9 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.*
+import retrofit2.http.GET
+import retrofit2.http.Path
+import retrofit2.http.Query
 
 private const val BASE_URL = "https://financialmodelingprep.com/api/"
 

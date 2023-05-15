@@ -3,10 +3,9 @@ package com.example.stocks.viewmodels
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.*
-import androidx.work.WorkManager
 import com.example.stocks.App
-import com.example.stocks.database.alertdatabase.AlertDao
 import com.example.stocks.database.alertdatabase.Alert
+import com.example.stocks.database.alertdatabase.AlertDao
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 

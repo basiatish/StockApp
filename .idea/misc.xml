@@ -3,46 +3,72 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable-night/item_list_background.xml" value="0.2105" />
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/add_alert_button_background.xml" value="0.2105" />
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/add_alert_edit_text_cursor.xml" value="0.2105" />
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/alert_bottom_sheet_background.xml" value="0.2105" />
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/avd_anim_less.xml" value="0.2105" />
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/avd_anim_more.xml" value="0.2105" />
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/bottom_menu.xml" value="0.2105" />
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/chart_button_default.xml" value="0.2105" />
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/chart_button_pressed.xml" value="0.2105" />
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/chart_button_transition.xml" value="0.2105" />
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/check_circle.xml" value="0.2105" />
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/custom_item_list_background.xml" value="0.2105" />
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/custom_item_search.xml" value="0.2105" />
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/custom_search.xml" value="0.2105" />
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/custom_textview.xml" value="0.2105" />
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/edittext_background.xml" value="0.2105" />
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/ic_add_alert.xml" value="0.2105" />
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/ic_arrow_above_to_below.xml" value="0.2105" />
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/ic_arrow_back.xml" value="0.2105" />
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/ic_arrow_below_to_above.xml" value="0.2105" />
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/ic_arrow_left.xml" value="0.2105" />
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/ic_arrow_right.xml" value="0.2105" />
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/ic_bell.xml" value="0.2105" />
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/ic_chart.xml" value="0.2105" />
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/ic_check.xml" value="0.2105" />
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/ic_close.xml" value="0.2105" />
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/ic_delete.xml" value="0.1" />
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/ic_favorite.xml" value="0.2105" />
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/ic_loupe.xml" value="0.2105" />
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/ic_more.xml" value="0.2105" />
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/ic_newspaper.xml" value="0.2105" />
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/ic_no_image_news.xml" value="0.2105" />
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/ic_settings.xml" value="0.2105" />
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/ic_star.xml" value="0.2105" />
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/ic_star_3.xml" value="0.2105" />
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/ic_star_outlined.xml" value="0.2105" />
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/ic_unchoosed_stock.xml" value="0.2105" />
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/image_outline.xml" value="0.2105" />
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/item_list_background_night.xml" value="0.2105" />
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/item_news_list_background.xml" value="0.2105" />
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/key_stat_background.xml" value="0.2105" />
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/more_button_background.xml" value="0.2105" />
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/nav_bar_background.xml" value="0.1" />
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/news_text_background.xml" value="0.2105" />
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/pager_placeholder_background.xml" value="0.2105" />
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/shimmer_background.xml" value="0.2105" />
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/tab_background.xml" value="0.2105" />
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/drawable/textview_background_container.xml" value="0.2105" />
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/layout/activity_main.xml" value="0.12807377049180327" />
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/layout/add_alert_bottom_sheet.xml" value="0.264" />
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/layout/alert_bottom_sheet_button.xml" value="0.15592105263157896" />
-        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/layout/alert_list_bottom_sheet.xml" value="0.1493421052631579" />
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/layout/alert_list_bottom_sheet.xml" value="0.136" />
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/layout/api_key_bottom_sheet.xml" value="0.264" />
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/layout/bottom_sheet.xml" value="0.1493421052631579" />
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/layout/chart_buttons_bottom_sheet.xml" value="0.1493421052631579" />
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/layout/fragment_news.xml" value="0.176" />
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/layout/fragment_news_list.xml" value="0.264" />
-        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/layout/fragment_settings.xml" value="0.4" />
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/layout/fragment_settings.xml" value="0.264" />
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/layout/fragment_stock_about.xml" value="0.1493421052631579" />
-        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/layout/fragment_stock_chart.xml" value="0.1493421052631579" />
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/layout/fragment_stock_chart.xml" value="0.2" />
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/layout/fragment_stock_key_statistic.xml" value="0.1493421052631579" />
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/layout/fragment_stock_list.xml" value="0.264" />
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/layout/fragment_stock_overview.xml" value="0.264" />
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/layout/fragment_stock_search.xml" value="0.1493421052631579" />
-        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/layout/item_alert_list.xml" value="0.1493421052631579" />
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/layout/item_alert_list.xml" value="0.264" />
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/layout/item_dividends.xml" value="0.6" />
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/layout/item_news_list.xml" value="0.264" />
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/layout/item_stock_list.xml" value="0.176" />
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/layout/item_stock_search.xml" value="0.2" />
@@ -51,7 +77,13 @@
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/layout/stock_list_shimmer_item.xml" value="0.1493421052631579" />
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/layout/test.xml" value="0.2" />
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/layout/test2.xml" value="0.16983695652173914" />
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/layout/viewpager_first_page.xml" value="0.19324497648567765" />
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/layout/viewpager_manager_fragment.xml" value="0.176" />
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/layout/viewpager_second_page.xml" value="0.19410004275331338" />
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/layout/viewpager_third_page.xml" value="0.264" />
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/layout/webview_bottom_sheet.xml" value="0.19324497648567765" />
         <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/menu/bottom_menu.xml" value="0.1493421052631579" />
+        <entry key="..\:/Android Projects/My_Projects/StockApp/app/src/main/res/menu/fragment_bottom_menu.xml" value="0.19410004275331338" />
         <entry key="..\:/Android Projects/My_projects/Stocks/app/src/main/res/drawable/avd_anim_less.xml" value="0.2365" />
         <entry key="..\:/Android Projects/My_projects/Stocks/app/src/main/res/drawable/avd_anim_more.xml" value="0.2365" />
         <entry key="..\:/Android Projects/My_projects/Stocks/app/src/main/res/drawable/bottom_menu.xml" value="0.1195" />
@@ -109,6 +141,45 @@
         <entry key="..\:/Android Projects/My_projects/Stocks/app/src/main/res/menu/bottom_menu.xml" value="0.3489583333333333" />
         <entry key="..\:/Android Projects/My_projects/Stocks/app/src/main/res/menu/fragment_bottom_menu.xml" value="0.26171875" />
       </map>
+    </option>
+  </component>
+  <component name="NullableNotNullManager">
+    <option name="myDefaultNullable" value="androidx.annotation.Nullable" />
+    <option name="myDefaultNotNull" value="androidx.annotation.NonNull" />
+    <option name="myNullables">
+      <value>
+        <list size="12">
+          <item index="0" class="java.lang.String" itemvalue="org.checkerframework.checker.nullness.compatqual.NullableDecl" />
+          <item index="1" class="java.lang.String" itemvalue="org.jetbrains.annotations.Nullable" />
+          <item index="2" class="java.lang.String" itemvalue="androidx.annotation.Nullable" />
+          <item index="3" class="java.lang.String" itemvalue="org.eclipse.jdt.annotation.Nullable" />
+          <item index="4" class="java.lang.String" itemvalue="com.android.annotations.Nullable" />
+          <item index="5" class="java.lang.String" itemvalue="edu.umd.cs.findbugs.annotations.Nullable" />
+          <item index="6" class="java.lang.String" itemvalue="androidx.annotation.RecentlyNullable" />
+          <item index="7" class="java.lang.String" itemvalue="android.support.annotation.Nullable" />
+          <item index="8" class="java.lang.String" itemvalue="javax.annotation.CheckForNull" />
+          <item index="9" class="java.lang.String" itemvalue="javax.annotation.Nullable" />
+          <item index="10" class="java.lang.String" itemvalue="org.checkerframework.checker.nullness.qual.Nullable" />
+          <item index="11" class="java.lang.String" itemvalue="org.checkerframework.checker.nullness.compatqual.NullableType" />
+        </list>
+      </value>
+    </option>
+    <option name="myNotNulls">
+      <value>
+        <list size="11">
+          <item index="0" class="java.lang.String" itemvalue="androidx.annotation.RecentlyNonNull" />
+          <item index="1" class="java.lang.String" itemvalue="org.checkerframework.checker.nullness.qual.NonNull" />
+          <item index="2" class="java.lang.String" itemvalue="com.android.annotations.NonNull" />
+          <item index="3" class="java.lang.String" itemvalue="androidx.annotation.NonNull" />
+          <item index="4" class="java.lang.String" itemvalue="org.checkerframework.checker.nullness.compatqual.NonNullType" />
+          <item index="5" class="java.lang.String" itemvalue="edu.umd.cs.findbugs.annotations.NonNull" />
+          <item index="6" class="java.lang.String" itemvalue="org.checkerframework.checker.nullness.compatqual.NonNullDecl" />
+          <item index="7" class="java.lang.String" itemvalue="android.support.annotation.NonNull" />
+          <item index="8" class="java.lang.String" itemvalue="org.jetbrains.annotations.NotNull" />
+          <item index="9" class="java.lang.String" itemvalue="javax.annotation.Nonnull" />
+          <item index="10" class="java.lang.String" itemvalue="org.eclipse.jdt.annotation.NonNull" />
+        </list>
+      </value>
     </option>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">

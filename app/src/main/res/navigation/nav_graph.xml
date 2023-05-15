@@ -14,6 +14,10 @@
             android:id="@+id/action_stockListFragment_to_stockOverViewFragment"
             app:destination="@id/stockOverViewFragment"
             app:popUpTo="@id/stockListFragment" />
+        <argument
+            android:name="apiKey"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
 
     <fragment
@@ -96,4 +100,23 @@
         android:name="com.example.stocks.ui.fragments.SettingsFragment"
         android:label="SettingsFragment"
         tools:layout="@layout/fragment_settings"/>
+    <fragment
+        android:id="@+id/viewPagerManagerFragment"
+        android:name="com.example.stocks.ui.fragments.authentication.ViewPagerManagerFragment"
+        android:label="ViewPagerManagerFragment"
+        tools:layout="@layout/viewpager_manager_fragment">
+        <action
+            android:id="@+id/action_viewPagerManagerFragment_to_apiKeyDialog"
+            app:destination="@id/apiKeyDialog" />
+    </fragment>
+    <dialog
+        android:id="@+id/apiKeyDialog"
+        android:name="com.example.stocks.ui.fragments.authentication.ApiKeyBottomSheetFragment"
+        android:label="ApiKeyBottomSheetFragment"
+        tools:layout="@layout/api_key_bottom_sheet">
+        <action
+            android:id="@+id/action_apiKeyDialog_to_stockListFragment"
+            app:destination="@id/stockListFragment"
+            app:popUpTo="@id/nav_graph" />
+    </dialog>
 </navigation>

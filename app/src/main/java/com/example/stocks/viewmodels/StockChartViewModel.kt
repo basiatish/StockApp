@@ -6,9 +6,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.stocks.BuildConfig
-import com.example.stocks.StockApi
-import com.example.stocks.models.remote.*
+import com.example.stocks.models.remote.StockChart
+import com.example.stocks.models.remote.StockDailyPriceHeader
+import com.example.stocks.network.StockApi
 import com.example.stocks.utils.network.StockStatus
 import com.tradingview.lightweightcharts.api.chart.models.color.toIntColor
 import com.tradingview.lightweightcharts.api.series.common.SeriesData
@@ -25,10 +25,11 @@ import kotlin.math.roundToInt
 
 class StockChartViewModel: ViewModel() {
 
-    private val apiKey = BuildConfig.API_KEY
-
     private val _status = MutableLiveData<StockStatus>()
     val status: LiveData<StockStatus> = _status
+
+    private val _volumeDataStatus = MutableLiveData<StockStatus>()
+    val volumeDataStatus: LiveData<StockStatus> = _volumeDataStatus
 
     private val _dataStatus = MutableLiveData<StockStatus>()
     val dataStatus: LiveData<StockStatus> = _dataStatus
@@ -41,7 +42,7 @@ class StockChartViewModel: ViewModel() {
 
     var data: MutableList<SeriesData> = mutableListOf()
 
-    fun loadChartData(time: String, compName: String) {
+    fun loadChartData(time: String, compName: String, apiKey: String) {
         viewModelScope.launch(IO) {
             withContext(Main) {
                 _status.value = StockStatus.LOADING
@@ -213,11 +214,11 @@ class StockChartViewModel: ViewModel() {
                     }
                 }
                 withContext(Main) {
-                    _dataStatus.value = StockStatus.DONE
+                    _volumeDataStatus.value = StockStatus.DONE
                 }
             } catch (e: Exception) {
                 withContext(Main) {
-                    _dataStatus.value = StockStatus.ERROR
+                    _volumeDataStatus.value = StockStatus.ERROR
                 }
                 Log.e("Data Error", "Failed to create volume data!, ${e.message}")
             }

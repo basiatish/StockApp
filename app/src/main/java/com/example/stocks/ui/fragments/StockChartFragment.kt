@@ -1,7 +1,9 @@
 package com.example.stocks.ui.fragments
 
 import android.graphics.Color
-import android.graphics.drawable.*
+import android.graphics.drawable.AnimatedVectorDrawable
+import android.graphics.drawable.Drawable
+import android.graphics.drawable.TransitionDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,16 +13,16 @@ import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.AppCompatButton
-import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.bumptech.glide.Glide
+import com.example.stocks.App
 import com.example.stocks.R
 import com.example.stocks.databinding.FragmentStockChartBinding
+import com.example.stocks.utils.images.loadLogo
 import com.example.stocks.utils.network.StockStatus
 import com.example.stocks.viewmodels.SharedViewModel
 import com.example.stocks.viewmodels.StockChartViewModel
@@ -30,7 +32,10 @@ import com.tradingview.lightweightcharts.api.interfaces.SeriesApi
 import com.tradingview.lightweightcharts.api.options.models.*
 import com.tradingview.lightweightcharts.api.series.enums.CrosshairMode
 import com.tradingview.lightweightcharts.api.series.enums.LastPriceAnimationMode
-import com.tradingview.lightweightcharts.api.series.models.*
+import com.tradingview.lightweightcharts.api.series.models.BaseValuePrice
+import com.tradingview.lightweightcharts.api.series.models.PriceFormat
+import com.tradingview.lightweightcharts.api.series.models.PriceScaleId
+import com.tradingview.lightweightcharts.api.series.models.Time
 import com.tradingview.lightweightcharts.runtime.plugins.DateTimeFormat
 import com.tradingview.lightweightcharts.runtime.plugins.TimeFormatter
 import com.tradingview.lightweightcharts.view.ChartsView
@@ -67,6 +72,12 @@ class StockChartFragment : Fragment() {
     private var prefChartType = "Line"
     private var chartRange = "1min"
     private var volumeClickFlag = false
+    private var apiKey: String? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        apiKey = (activity?.applicationContext as App).getApiKey()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -78,10 +89,8 @@ class StockChartFragment : Fragment() {
         compName = sharedViewModel.companyName.value.toString()
 
         if (viewModel.priceDaily.isEmpty() || viewModel.priceChartMH.isEmpty()) {
-            viewModel.loadChartData(chartRange, compShortName)
+            viewModel.loadChartData(chartRange, compShortName, apiKey ?: "")
         }
-
-        activity?.findViewById<LinearLayoutCompat>(R.id.btm_bar)?.visibility = View.GONE
 
         onBackPressed()
 
@@ -112,7 +121,7 @@ class StockChartFragment : Fragment() {
 
         chart = binding.chartView
         setupChart()
-
+        binding.chartSetting.isEnabled = false
         binding.chartSetting.setOnClickListener {
             bottomSheetBehavior?.state = BottomSheetBehavior.STATE_COLLAPSED
         }
@@ -250,7 +259,7 @@ class StockChartFragment : Fragment() {
                 rangeButtonState(it as AppCompatButton)
                 chartRangeChange(it)
                 resetChart()
-                viewModel.loadChartData("1min", compShortName)
+                viewModel.loadChartData("1min", compShortName, apiKey ?: "")
             }
             btn5m.setOnClickListener {
                 binding.chartSetting.isClickable = false
@@ -259,7 +268,7 @@ class StockChartFragment : Fragment() {
                 rangeButtonState(it as AppCompatButton)
                 chartRangeChange(it)
                 resetChart()
-                viewModel.loadChartData("5min", compShortName)
+                viewModel.loadChartData("5min", compShortName, apiKey ?: "")
             }
             btn30m.setOnClickListener {
                 binding.chartSetting.isClickable = false
@@ -268,7 +277,7 @@ class StockChartFragment : Fragment() {
                 rangeButtonState(it as AppCompatButton)
                 chartRangeChange(it)
                 resetChart()
-                viewModel.loadChartData("30min", compShortName)
+                viewModel.loadChartData("30min", compShortName, apiKey ?: "")
             }
             btn1h.setOnClickListener {
                 binding.chartSetting.isClickable = false
@@ -277,7 +286,7 @@ class StockChartFragment : Fragment() {
                 rangeButtonState(it as AppCompatButton)
                 chartRangeChange(it)
                 resetChart()
-                viewModel.loadChartData("1hour", compShortName)
+                viewModel.loadChartData("1hour", compShortName, apiKey ?: "")
             }
             btn4h.setOnClickListener {
                 binding.chartSetting.isClickable = false
@@ -286,7 +295,7 @@ class StockChartFragment : Fragment() {
                 rangeButtonState(it as AppCompatButton)
                 chartRangeChange(it)
                 resetChart()
-                viewModel.loadChartData("4hour", compShortName)
+                viewModel.loadChartData("4hour", compShortName, apiKey ?: "")
             }
             btnAll.setOnClickListener {
                 binding.chartSetting.isClickable = false
@@ -295,7 +304,7 @@ class StockChartFragment : Fragment() {
                 rangeButtonState(it as AppCompatButton)
                 chartRangeChange(it)
                 resetChart()
-                viewModel.loadChartData("all", compShortName)
+                viewModel.loadChartData("all", compShortName, apiKey ?: "")
             }
         }
     }
@@ -335,10 +344,6 @@ class StockChartFragment : Fragment() {
                 val volume = binding.bottomSheet.volumeChart
                 startButtonAnimation(volume, false)
             }
-            chartStateChange(binding.bottomSheet.lineChart)
-            if (lastPressedChartTypeButton != binding.bottomSheet.lineChart) {
-                chartTypeButtonState(binding.bottomSheet.lineChart)
-            }
         } catch (e: Exception) {
             Log.e("Chart error", "Delete dataSeries error!")
         }
@@ -355,50 +360,39 @@ class StockChartFragment : Fragment() {
     private fun setupChartTypeButtons() {
         val bottomSh = binding.bottomSheet
         bottomSh.lineChart.setOnClickListener {
-            //binding.chartSetting.isClickable = false
-            //bottomSheetBehavior!!.state = BottomSheetBehavior.STATE_HIDDEN
-            chartTypeButtonState(it as AppCompatButton)
             chart.api.removeSeries(dataSeries)
+            chartTypeButtonState(it as AppCompatButton)
             chartStateChange(it)
             viewModel.createData(chartType, chartRange)
         }
         bottomSh.candlestickChart.setOnClickListener {
-            //binding.chartSetting.isClickable = false
-            //bottomSheetBehavior!!.state = BottomSheetBehavior.STATE_HIDDEN
+            chart.api.removeSeries(dataSeries)
             chartTypeButtonState(it as AppCompatButton)
             chartStateChange(it)
-            chart.api.removeSeries(dataSeries)
             viewModel.createData(chartType, chartRange)
         }
         bottomSh.barChart.setOnClickListener {
-            //binding.chartSetting.isClickable = false
-            //bottomSheetBehavior!!.state = BottomSheetBehavior.STATE_HIDDEN
+            chart.api.removeSeries(dataSeries)
             chartTypeButtonState(it as AppCompatButton)
             chartStateChange(it)
-            chart.api.removeSeries(dataSeries)
             viewModel.createData(chartType, chartRange)
         }
         bottomSh.baselineChart.setOnClickListener {
-            //binding.chartSetting.isClickable = false
-            //bottomSheetBehavior!!.state = BottomSheetBehavior.STATE_HIDDEN
+            chart.api.removeSeries(dataSeries)
             chartTypeButtonState(it as AppCompatButton)
             chartStateChange(it)
-            chart.api.removeSeries(dataSeries)
             viewModel.createData(chartType, chartRange)
         }
         bottomSh.areaChart.setOnClickListener {
-            //binding.chartSetting.isClickable = false
-            //bottomSheetBehavior!!.state = BottomSheetBehavior.STATE_HIDDEN
+            chart.api.removeSeries(dataSeries)
             chartTypeButtonState(it as AppCompatButton)
             chartStateChange(it)
-            chart.api.removeSeries(dataSeries)
             viewModel.createData(chartType, chartRange)
         }
         bottomSh.volumeChart.setOnClickListener {
-            //binding.chartSetting.isClickable = false
-            //bottomSheetBehavior!!.state = BottomSheetBehavior.STATE_HIDDEN
             volumeButtonState(it as AppCompatButton)
             if (volumeClickFlag) {
+                prefChartType = chartType
                 chartStateChange(it)
                 viewModel.createData(chartType, chartRange)
             } else {
@@ -452,7 +446,6 @@ class StockChartFragment : Fragment() {
     }
 
     private fun chartStateChange(button: AppCompatButton) {
-        prefChartType = chartType
         chartType = when (button) {
             binding.bottomSheet.lineChart -> "Line"
             binding.bottomSheet.candlestickChart -> "Candle"
@@ -522,6 +515,19 @@ class StockChartFragment : Fragment() {
 
     private fun setupChart() {
         chart.api.applyOptions {
+            layout = layoutOptions {
+                textColor = resources.getColor(R.color.main_text_color, requireActivity().theme).toIntColor()
+                grid = gridOptions {
+                    vertLines = GridLineOptions(
+                        color = resources.getColor(R.color.chart_grid_color, requireActivity().theme).toIntColor(),
+                        visible = true
+                    )
+                    horzLines = GridLineOptions(
+                        color = resources.getColor(R.color.chart_grid_color, requireActivity().theme).toIntColor(),
+                        visible = true
+                    )
+                }
+            }
             rightPriceScale = PriceScaleOptions(borderVisible = false)
             timeScale = TimeScaleOptions(borderVisible = false)
             crosshair = crosshairOptions {
@@ -553,12 +559,18 @@ class StockChartFragment : Fragment() {
             if (status == StockStatus.DONE) {
                 viewModel.createData(chartType, chartRange)
             } else if (status == StockStatus.ERROR) {
-                Toast.makeText(requireContext(), "No chart data", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), resources.getText(R.string.something_went_wrong), Toast.LENGTH_SHORT).show()
             }
         }
         viewModel.dataStatus.observe(this.viewLifecycleOwner) { status ->
             if (status == StockStatus.DONE) {
+                binding.chartSetting.isEnabled = true
                 bindLegend()
+                bindChartData()
+            }
+        }
+        viewModel.volumeDataStatus.observe(this.viewLifecycleOwner) { status ->
+            if (status == StockStatus.DONE) {
                 bindChartData()
             }
         }
@@ -568,10 +580,8 @@ class StockChartFragment : Fragment() {
         when (chartType) {
             "Line" -> {
                 chart.api.addLineSeries(LineSeriesOptions(
-                    priceLineColor = resources.getColor(R.color.orange, requireContext().theme).
-                    toIntColor(),
-                    color = resources.getColor(R.color.orange, requireContext().theme).
-                    toIntColor(),
+                    priceLineColor = resources.getColor(R.color.chart_color, requireActivity().theme).toIntColor(),
+                    color = resources.getColor(R.color.chart_color, requireActivity().theme).toIntColor(),
                     lastPriceAnimation = LastPriceAnimationMode.CONTINUOUS),
                     onSeriesCreated = { series ->
                         dataSeries = series
@@ -613,10 +623,10 @@ class StockChartFragment : Fragment() {
                 chartType = prefChartType
             }
             "Area" -> {
-                chart.api.addAreaSeries(AreaSeriesOptions(lineColor =
-                resources.getColor(R.color.orange, requireContext().theme).toIntColor(), topColor =
-                resources.getColor(R.color.orange, requireContext().theme).toIntColor(), bottomColor =
-                Color.argb(10, 252, 163, 17).toIntColor()),
+                chart.api.addAreaSeries(AreaSeriesOptions(
+                    lineColor = resources.getColor(R.color.chart_color, requireActivity().theme).toIntColor(),
+                    topColor = resources.getColor(R.color.chart_color, requireActivity().theme).toIntColor(),
+                    bottomColor = Color.argb(10, 252, 163, 17).toIntColor()),
                     onSeriesCreated = { series ->
                         dataSeries = series
                         dataSeries.setData(viewModel.getChartData())
@@ -629,10 +639,8 @@ class StockChartFragment : Fragment() {
     }
 
     private fun loadCompanyLogo() {
-        Glide.with(requireContext()).
-        load("https://financialmodelingprep.com/image-stock/${compShortName}.png").
-        error(R.drawable.ic_warning)
-            .centerCrop().into(binding.logo)
+        loadLogo(requireContext(), "https://financialmodelingprep.com/image-stock/${compShortName}.png",
+            compShortName, binding.logo)
     }
 
     private fun onBackPressed() {
@@ -647,6 +655,4 @@ class StockChartFragment : Fragment() {
         }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
-
-
 }

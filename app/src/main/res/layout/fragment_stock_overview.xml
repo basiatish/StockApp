@@ -150,23 +150,22 @@
                         style="@style/DefaultTextApp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
-                        android:text="High:"
+                        android:layout_marginEnd="16dp"
+                        android:text="@string/high"
                         android:textColor="@color/grey_700"
                         app:layout_constraintRight_toLeftOf="@+id/high_price"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:text="High:" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/high_price"
                         style="@style/DefaultTextApp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="20dp"
-                        android:text="141.91"
+                        android:text="@string/no_value"
+                        android:layout_marginEnd="16dp"
                         android:textColor="@color/grey_700"
+                        app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintBottom_toBottomOf="@+id/high"
-                        app:layout_constraintLeft_toLeftOf="@+id/low_price"
                         tools:text="141.91" />
 
                     <TextView
@@ -174,22 +173,21 @@
                         style="@style/DefaultTextApp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
-                        android:text="Low:"
+                        android:text="@string/low"
                         android:textColor="@color/grey_700"
                         app:layout_constraintLeft_toLeftOf="@id/high"
-                        app:layout_constraintTop_toBottomOf="@+id/high"
-                        tools:text="Low:" />
+                        app:layout_constraintTop_toBottomOf="@+id/high" />
 
                     <TextView
                         android:id="@+id/low_price"
                         style="@style/DefaultTextApp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
-                        android:text="136.58"
+                        android:text="@string/no_value"
                         android:textColor="@color/grey_700"
-                        app:layout_constraintLeft_toLeftOf="@id/vol_value"
+                        android:layout_marginStart="16dp"
+                        app:layout_constraintLeft_toRightOf="@id/low"
+                        app:layout_constraintRight_toRightOf="@id/high_price"
                         app:layout_constraintTop_toBottomOf="@id/high_price"
                         tools:text="136.58" />
 
@@ -198,21 +196,21 @@
                         style="@style/DefaultTextApp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Vol:"
+                        android:text="@string/vol"
                         android:textColor="@color/grey_700"
                         app:layout_constraintLeft_toLeftOf="@+id/low"
-                        app:layout_constraintTop_toBottomOf="@id/low"
-                        tools:text="Vol:" />
+                        app:layout_constraintTop_toBottomOf="@id/low" />
 
                     <TextView
                         android:id="@+id/vol_value"
                         style="@style/DefaultTextApp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
-                        android:text="100.18M"
+                        android:text="@string/no_value"
+                        android:layout_marginStart="16dp"
                         android:textColor="@color/grey_700"
-                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintLeft_toRightOf="@id/vol"
+                        app:layout_constraintRight_toRightOf="@id/high_price"
                         app:layout_constraintTop_toBottomOf="@id/low_price"
                         tools:text="100.18M" />
 
@@ -240,8 +238,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="20"
-                        android:text="Key Statistics"
-                        tools:text="Key Statistics" />
+                        android:text="@string/key_statistics" />
 
                     <View
                         android:layout_width="0dp"
@@ -282,11 +279,10 @@
                         style="@style/StatisticText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="52w High"
+                        android:text="@string/_52w_high"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/image_green_bar"
-                        tools:text="52w High" />
+                        app:layout_constraintTop_toBottomOf="@+id/image_green_bar" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/high_52w"
@@ -297,7 +293,7 @@
                         android:layout_marginTop="8dp"
                         android:layout_marginEnd="30dp"
                         android:paddingBottom="16dp"
-                        android:text="152.37"
+                        android:text="@string/no_value"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/text_high"
@@ -334,11 +330,10 @@
                         style="@style/StatisticText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="52w Low"
+                        android:text="@string/_52w_low"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/image_red_bar"
-                        tools:text="52w Low" />
+                        app:layout_constraintTop_toBottomOf="@+id/image_red_bar" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/low_52w"
@@ -349,7 +344,7 @@
                         android:layout_marginTop="8dp"
                         android:layout_marginEnd="30dp"
                         android:paddingBottom="16dp"
-                        android:text="135.68"
+                        android:text="@string/no_value"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/text_low"
@@ -387,11 +382,10 @@
                         style="@style/StatisticText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Market Cap"
+                        android:text="@string/market_cap"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/image_market_cap"
-                        tools:text="Market Cap" />
+                        app:layout_constraintTop_toBottomOf="@+id/image_market_cap" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/market_cap_value"
@@ -400,7 +394,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:paddingBottom="16dp"
-                        android:text="2.8T"
+                        android:text="@string/no_value"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/text_market_cap"
@@ -438,11 +432,10 @@
                         style="@style/StatisticText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Avg. Volume"
+                        android:text="@string/avg_volume"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/image_bars"
-                        tools:text="Avg. Volume" />
+                        app:layout_constraintTop_toBottomOf="@+id/image_bars" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/avg_volume_value"
@@ -451,7 +444,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:paddingBottom="16dp"
-                        android:text="111.8M"
+                        android:text="@string/no_value"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/text_volume"
@@ -487,11 +480,10 @@
                         style="@style/StatisticText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="P/E Ratio"
+                        android:text="@string/p_e_ratio"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/image_pe"
-                        tools:text="P/E Ratio" />
+                        app:layout_constraintTop_toBottomOf="@+id/image_pe" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/pe_value"
@@ -500,7 +492,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:paddingBottom="16dp"
-                        android:text="40.05"
+                        android:text="@string/no_value"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/text_pe_ratio"
@@ -537,11 +529,10 @@
                         style="@style/StatisticText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Beta"
+                        android:text="@string/beta"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/image_beta"
-                        tools:text="Beta" />
+                        app:layout_constraintTop_toBottomOf="@+id/image_beta" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/beta_value"
@@ -550,7 +541,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:paddingBottom="16dp"
-                        android:text="1.20"
+                        android:text="-"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/text_beta"
@@ -581,8 +572,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="20"
-                        android:text="Dividends"
-                        tools:text="Dividends" />
+                        android:text="@string/dividends" />
 
                     <View
                         android:layout_width="0dp"
@@ -642,8 +632,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="20"
-                        android:text="About"
-                        tools:text="About" />
+                        android:text="@string/about" />
 
                     <View
                         android:layout_width="0dp"
@@ -671,11 +660,10 @@
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="10dp"
-                        android:text="Symbol"
+                        android:text="@string/symbol"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:text="Symbol" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/symbol"
@@ -685,7 +673,7 @@
                         android:layout_marginTop="10dp"
                         android:layout_marginEnd="16dp"
                         android:layout_marginBottom="10dp"
-                        android:text="APPL"
+                        android:text="@string/no_value"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
@@ -710,11 +698,10 @@
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="10dp"
-                        android:text="Exchange"
+                        android:text="@string/exchange"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:text="Exchange" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/exchange"
@@ -724,7 +711,7 @@
                         android:layout_marginTop="10dp"
                         android:layout_marginEnd="16dp"
                         android:layout_marginBottom="10dp"
-                        android:text="NASDAQ"
+                        android:text="@string/no_value"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
@@ -749,11 +736,10 @@
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="10dp"
-                        android:text="Industry"
+                        android:text="@string/industry"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:text="Industry" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/industry"
@@ -763,7 +749,7 @@
                         android:layout_marginTop="10dp"
                         android:layout_marginEnd="16dp"
                         android:layout_marginBottom="10dp"
-                        android:text="Consumer Electronics"
+                        android:text="@string/no_value"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
@@ -788,11 +774,10 @@
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="10dp"
-                        android:text="Sector"
+                        android:text="@string/sector"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:text="Sector" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/sector"
@@ -802,11 +787,10 @@
                         android:layout_marginTop="10dp"
                         android:layout_marginEnd="16dp"
                         android:layout_marginBottom="10dp"
-                        android:text="Technology"
+                        android:text="@string/no_value"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:text="Technology" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -827,11 +811,10 @@
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="10dp"
-                        android:text="Country"
+                        android:text="@string/country"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:text="Country" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/country"
@@ -841,7 +824,7 @@
                         android:layout_marginTop="10dp"
                         android:layout_marginEnd="16dp"
                         android:layout_marginBottom="10dp"
-                        android:text="US"
+                        android:text="@string/no_value"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
@@ -866,11 +849,10 @@
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="10dp"
-                        android:text="CEO"
+                        android:text="@string/ceo"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:text="CEO" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/ceo"
@@ -880,7 +862,7 @@
                         android:layout_marginTop="10dp"
                         android:layout_marginEnd="16dp"
                         android:layout_marginBottom="10dp"
-                        android:text="Mr. Timothy Cook"
+                        android:text="@string/no_value"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
@@ -912,7 +894,7 @@
                         android:hyphenationFrequency="none"
                         android:inputType="textMultiLine"
                         android:scrollHorizontally="false"
-                        android:text="Apple Inc. designs, manufactures, and markets smartphones, personal computers, tablets, wearables, and accessories worldwide. It also sells various related services. The company offers..."
+                        android:text="@string/no_value"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"

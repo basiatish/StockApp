@@ -4,14 +4,12 @@ import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.CompoundButton
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.stocks.R
 import com.example.stocks.database.alertdatabase.Alert
 import com.example.stocks.databinding.ItemAlertListBinding
-import com.example.stocks.ui.fragments.AlertListBottomSheetFragment
 
 class AlertListAdapter(private val onClick: OnItemClickListener) : ListAdapter<Alert, AlertListAdapter.ViewHolder>(DiffCallBack) {
 

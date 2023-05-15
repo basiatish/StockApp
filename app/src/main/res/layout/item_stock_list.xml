@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:background="@drawable/custom_item_list_background"
+        android:background="@drawable/item_list_background"
         android:padding="4dp">
 
         <com.google.android.material.imageview.ShapeableImageView
@@ -22,23 +22,21 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
-            android:src="@drawable/appl"
+            android:src="@drawable/image_outline"
             app:shapeAppearanceOverlay="@style/ImageLogo"
             app:layout_constraintBottom_toBottomOf="@id/item"
             app:layout_constraintLeft_toLeftOf="@id/item"
             app:layout_constraintTop_toTopOf="@id/item" />
 
         <androidx.appcompat.widget.AppCompatTextView
+            style="@style/MediumTextApp"
             android:id="@+id/short_comp_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="8dp"
-            android:fontFamily="@font/roboto_medium"
             android:gravity="bottom|start"
-            android:text="aapl"
             android:textAllCaps="true"
-            android:textColor="@color/black"
             android:textSize="18sp"
             app:layout_constraintLeft_toRightOf="@id/comp_logo"
             app:layout_constraintTop_toTopOf="@id/item"
@@ -64,7 +62,6 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:fontFamily="@font/roboto"
-            android:text="Apple Inc."
             android:textColor="@color/text_color"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="@id/item"
@@ -74,14 +71,12 @@
             tools:text="Apple Inc." />
 
         <androidx.appcompat.widget.AppCompatTextView
+            style="@style/MediumTextApp"
             android:id="@+id/comp_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="14dp"
-            android:fontFamily="@font/roboto_medium"
-            android:text="$ 150.48"
-            android:textColor="@color/black"
             android:textSize="18sp"
             app:layout_constraintRight_toRightOf="@id/item"
             app:layout_constraintTop_toTopOf="@id/item"
@@ -94,7 +89,6 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="2dp"
             android:fontFamily="@font/roboto"
-            android:text="+2.05"
             android:textColor="@color/change_price_color"
             android:textSize="14sp"
             app:layout_constraintRight_toLeftOf="@+id/percent_change"
@@ -107,7 +101,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/roboto"
-            android:text="(2.16%)"
             android:textColor="@color/change_price_color"
             android:textSize="14sp"
             app:layout_constraintRight_toRightOf="@+id/comp_price"

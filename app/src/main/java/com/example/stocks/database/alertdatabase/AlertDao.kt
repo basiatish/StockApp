@@ -1,6 +1,5 @@
 package com.example.stocks.database.alertdatabase
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 
 @Dao

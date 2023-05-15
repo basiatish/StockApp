@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/test"
-    style="@style/BottomSheetTest"
+    style="@style/BottomSheetDialog"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
@@ -23,7 +23,7 @@
                 android:layout_width="30dp"
                 android:layout_height="5dp"
                 android:background="@drawable/bottom_sheet_line"
-                android:backgroundTint="@color/nav_button_inactive"
+                android:backgroundTint="@color/b4_100"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

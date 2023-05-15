@@ -18,7 +18,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.example.stocks.App
 import com.example.stocks.R
-import com.example.stocks.database.alertdatabase.Alert
 import com.example.stocks.databinding.AddAlertBottomSheetBinding
 import com.example.stocks.viewmodels.AddAlertViewModel
 import com.example.stocks.viewmodels.AddAlertViewModelFactory
@@ -34,8 +33,6 @@ class AddAlertBottomSheetFragment : BottomSheetDialogFragment() {
     private val navArg: AddAlertBottomSheetFragmentArgs by navArgs()
 
     private lateinit var app: App
-
-    private var alert: Alert? = null
 
     private val viewModel: AddAlertViewModel by viewModels {
         AddAlertViewModelFactory((requireContext().applicationContext as App).alertDataBase.alertDao(),
@@ -120,7 +117,7 @@ class AddAlertBottomSheetFragment : BottomSheetDialogFragment() {
                 viewModel.createAlert(updateAlert, navArg.alertId, navArg.shortName, price, arrowFlag)
                 dismiss()
             } catch (e: Exception) {
-                Toast.makeText(context, "Invalid price", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, resources.getText(R.string.invalid_price), Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -180,7 +177,7 @@ class AddAlertBottomSheetFragment : BottomSheetDialogFragment() {
                 gravity = Gravity.CENTER_VERTICAL
                 textSize = 18F
                 typeface = ResourcesCompat.getFont(context, R.font.roboto_bold)
-                setTextColor(resources.getColor(R.color.black, context?.theme))
+                setTextColor(resources.getColor(R.color.main_text_color, context?.theme))
             }
         }
     }

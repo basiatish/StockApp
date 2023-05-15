@@ -1,49 +1,131 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Stocks.Dark" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/grey</item>
-        <item name="colorPrimaryVariant">#B4B4B4</item>
+    <style name="Theme.Stocks" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">#FCA311</item>
         <item name="colorOnPrimary">@color/light_grey</item>
-        <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_700</item>
-        <item name="colorOnSecondary">@color/white</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
+        <item name="colorPrimaryVariant">#484848</item>
+        <item name="android:statusBarColor">#484848</item>
+        <item name="android:windowBackground">#303030</item>
+        <item name="colorControlActivated">@color/orange_60</item>
+        <item name="bottomSheetDialogTheme">@style/BottomSheetDialog</item>
+    </style>
 
-        <item name="colorPrimaryContainer">@color/teal_700</item>
-        <item name="colorSurface">#B4B4B4</item>
-        <item name="colorOnSurface">#2E4052</item>
-        <item name="colorOnSurfaceVariant">@color/green</item>
-        <item name="colorOnSecondaryContainer">#2E4052</item>
+    <style name="DefaultTextApp" parent="Widget.AppCompat.TextView">
+        <item name="fontFamily">@font/roboto</item>
+        <item name="android:textColor">@color/main_text_color</item>
+    </style>
+
+    <style name="MediumTextApp" parent="Widget.AppCompat.TextView">
+        <item name="fontFamily">@font/roboto_medium</item>
+        <item name="android:textColor">@color/main_text_color</item>
+    </style>
+
+    <style name="ImageLogo" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">4dp</item>
+    </style>
+
+    <style name="NewsListImage" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
+    </style>
+
+    <style name="NewsImage" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeBottomLeft">16dp</item>
+        <item name="cornerSizeBottomRight">16dp</item>
     </style>
 
     <style name="CancelBtn" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="shapeAppearance">?attr/shapeAppearanceSmallComponent</item>
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Small</item>
         <item name="android:textColor">@color/light_grey</item>
-        <item name="rippleColor">@color/white</item>
     </style>
 
-    <style name="DefaultTextApp" parent="Widget.AppCompat.TextView">
-        <item name="fontFamily">@font/roboto</item>
-        <item name="android:textColor">@color/black</item>
+    <style name="ViewPagerButton" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+        <item name="android:layout_marginEnd">24dp</item>
+        <item name="android:layout_marginStart">24dp</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:layout_marginBottom">16dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/white_to_dd</item>
+        <item name="fontFamily">@font/roboto_medium</item>
+        <item name="rippleColor">@null</item>
+        <item name="android:background">@drawable/add_alert_button_background</item>
     </style>
 
-    <style name="CustomChipButton" parent="Widget.MaterialComponents.Chip.Choice">
-        <item name="chipMinTouchTargetSize">2dp</item>
-        <item name="textStartPadding">0dp</item>
-        <item name="textEndPadding">0dp</item>
-        <item name="chipCornerRadius">5dp</item>
-        <item name="chipBackgroundColor">@color/chip_background_color</item>
+    <style name="NewsTitleStyle" parent="NewsTextStyle">
+        <item name="fontFamily">@font/roboto_medium</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="NewsTextStyle" parent="Widget.AppCompat.TextView">
         <item name="fontFamily">@font/roboto</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/white_to_dd</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:layout_marginStart">16dp</item>
+        <item name="android:layout_marginEnd">16dp</item>
+        <item name="android:layout_marginBottom">16dp</item>
+        <item name="android:paddingTop">4dp</item>
+        <item name="android:paddingBottom">4dp</item>
+        <item name="android:paddingStart">16dp</item>
+        <item name="android:paddingEnd">16dp</item>
+        <item name="android:background">@drawable/news_text_background</item>
+    </style>
+
+    <style name="SettingsText" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">14sp</item>
+        <item name="fontFamily">@font/roboto_medium</item>
+        <item name="android:textColor">@color/grey_700</item>
+    </style>
+
+    <style name="ViewPagerTitle" parent="ViewPagerText">
+        <item name="android:textSize">24sp</item>
+        <item name="fontFamily">@font/roboto_bold</item>
+    </style>
+
+    <style name="ViewPagerText" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">16sp</item>
+        <item name="fontFamily">@font/roboto_medium</item>
+    </style>
+
+    <style name="StatisticText" parent="MediumTextApp">
+        <item name="android:singleLine">true</item>
+        <item name="android:layout_marginTop">8dp</item>
+    </style>
+
+    <style name="Divider" parent="MediumTextApp">
+        <item name="android:padding">2dp</item>
+        <item name="android:background">@drawable/textview_background_container</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <style name="AlertButton" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+        <item name="android:gravity">center</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textAppearance">?attr/textAppearanceHeadline6</item>
+        <item name="android:textColor">@color/main_text_color</item>
+        <item name="android:textSize">20sp</item>
+        <item name="iconGravity">textStart</item>
+        <item name="font">@font/roboto_medium</item>
+        <item name="iconTint">@color/main_text_color</item>
+        <item name="rippleColor">@null</item>
+        <item name="android:background">@drawable/add_alert_button_background</item>
+    </style>
+
+    <style name="Legend" parent="MediumTextApp">
+        <item name="android:textColor">#B4B4B4</item>
+        <item name="android:layout_marginTop">2dp</item>
     </style>
 
     <style name="BottomSheet" parent="Widget.MaterialComponents.BottomSheet.Modal">
-        <item name="backgroundTint">#2C2C2C</item>
+        <item name="backgroundTint">@color/white_to_30</item>
         <item name="shapeAppearanceOverlay">@style/SheetCorners</item>
     </style>
 
@@ -51,24 +133,16 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSizeTopLeft">16dp</item>
         <item name="cornerSizeTopRight">16dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
     </style>
 
-    <style name="ImageLogo" parent="">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">100%</item>
+    <style name="BottomSheetDialog" parent="ThemeOverlay.MaterialComponents.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/BottomSheet</item>
     </style>
 
-    <style name="ChartButton" parent="">
-        <item name="android:padding">12dp</item>
-        <item name="android:textSize">16sp</item>
-        <item name="fontFamily">@font/roboto_medium</item>
-        <item name="android:minWidth">100dp</item>
-        <item name="android:background">@drawable/chart_button_transition</item>
-        <item name="android:layout_margin">8dp</item>
-    </style>
-
-    <style name="ImageLogo.Background" parent="">
-        <item name="android:background">#59FFFFFF</item>
+    <style name="ChartBottomBar" parent="">
+        <item name="android:background">@color/light_grey_300</item>
     </style>
 
 </resources>

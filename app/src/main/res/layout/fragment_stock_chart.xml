@@ -21,7 +21,7 @@
             android:src="@drawable/ic_loading_line"/>
 
         <TextView
-            style="@style/DefaultTextApp"
+            style="@style/MediumTextApp"
             android:id="@+id/loading_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -53,61 +53,46 @@
                 android:padding="8dp">
 
                 <TextView
-                    style="@style/DefaultTextApp"
                     android:id="@+id/company_date"
+                    style="@style/Legend"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:textColor="#b4b4b4"
-                    android:fontFamily="@font/roboto_medium"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="21-03-2022" />
 
                 <TextView
                     android:id="@+id/company_open"
-                    style="@style/DefaultTextApp"
+                    style="@style/Legend"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:fontFamily="@font/roboto_medium"
-                    android:textColor="#b4b4b4"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/company_date"
                     tools:text="Open: 34.191" />
 
                 <TextView
                     android:id="@+id/company_price"
-                    style="@style/DefaultTextApp"
+                    style="@style/Legend"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:fontFamily="@font/roboto_medium"
-                    android:textColor="#b4b4b4"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/company_open"
                     tools:text="Close: 35.154" />
 
                 <TextView
                     android:id="@+id/company_high"
-                    style="@style/DefaultTextApp"
+                    style="@style/Legend"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:fontFamily="@font/roboto_medium"
-                    android:textColor="#b4b4b4"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/company_price"
                     tools:text="High: 36.91" />
 
                 <TextView
                     android:id="@+id/company_low"
-                    style="@style/DefaultTextApp"
+                    style="@style/Legend"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:fontFamily="@font/roboto_medium"
-                    android:textColor="#b4b4b4"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/company_high"
                     tools:text="Low: 32.21" />
@@ -118,31 +103,29 @@
 
         <RelativeLayout
             android:id="@+id/container"
+            style="@style/ChartBottomBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/light_grey_3"
             android:layout_alignParentBottom="true">
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/logo"
-                style="@style/ImageLogo.Background"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="20dp"
-                app:shapeAppearanceOverlay="@style/ImageLogo"
-                tools:src="@drawable/ic_apple_logo" />
+                android:layout_marginStart="16dp"
+                android:src="@drawable/image_outline"
+                app:shapeAppearanceOverlay="@style/ImageLogo" />
 
             <TextView
                 android:id="@+id/comp_short_name"
-                style="@style/DefaultTextApp"
+                style="@style/MediumTextApp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
                 android:textSize="16sp"
-                android:fontFamily="@font/roboto_medium"
                 tools:text="AAPL"/>
 
             <androidx.appcompat.widget.AppCompatImageButton

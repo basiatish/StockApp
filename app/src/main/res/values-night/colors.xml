@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="light_grey_300">#484848</color>
+    <color name="white_2">#484848</color>
+    <color name="tab_color">#484848</color>
+    <color name="white_to_dd">#DDDDDD</color>
+    <color name="b4_40">#303030</color>
+    <color name="orange_40">#99FCA311</color>
+    <color name="orange_60">#66FCA311</color>
+    <color name="main_text_color">#DDDDDD</color>
+    <color name="chart_color">#99FCA311</color>
+    <color name="white_to_30">#303030</color>
+    <color name="chart_grid_color">#484848</color>
+</resources>

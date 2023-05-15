@@ -16,11 +16,11 @@
         android:layout_height="wrap_content"
         android:scaleType="centerCrop"
         android:adjustViewBounds="true"
+        android:src="@drawable/ic_no_image_news"
         app:shapeAppearanceOverlay="@style/NewsListImage"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        tools:src="@drawable/test_image"/>
+        app:layout_constraintRight_toRightOf="parent" />
 
     <TextView
         style="@style/NewsTitleStyle"

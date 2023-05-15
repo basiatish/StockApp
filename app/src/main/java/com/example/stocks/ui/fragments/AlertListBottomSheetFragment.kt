@@ -2,7 +2,6 @@ package com.example.stocks.ui.fragments
 
 import android.app.Dialog
 import android.graphics.drawable.Drawable
-import android.os.Build.VERSION_CODES.P
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater

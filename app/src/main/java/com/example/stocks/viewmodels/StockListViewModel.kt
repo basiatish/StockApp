@@ -2,22 +2,18 @@ package com.example.stocks.viewmodels
 
 import android.util.Log
 import androidx.lifecycle.*
-import com.example.stocks.BuildConfig
-import com.example.stocks.StockApi
 import com.example.stocks.database.stocksdatabase.Stock
 import com.example.stocks.database.stocksdatabase.StockDao
 import com.example.stocks.models.remote.CompanyQuote
+import com.example.stocks.network.StockApi
 import com.example.stocks.utils.formatters.Formatter
 import com.example.stocks.utils.network.StockStatus
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class StockListViewModel(private val stockDao: StockDao) : ViewModel() {
-
-    private val apiKey = BuildConfig.API_KEY
 
     private var _stockList: List<Stock> = listOf()
     val stockList: List<Stock> get() = _stockList
@@ -32,7 +28,6 @@ class StockListViewModel(private val stockDao: StockDao) : ViewModel() {
     val isRemoveListEmpty: LiveData<Boolean> = _isRemoveListEmpty
 
     private var _companiesQuote: MutableList<CompanyQuote> = mutableListOf()
-    val companiesQuote: List<CompanyQuote> get() = _companiesQuote
 
     private val _quoteStatus = MutableLiveData<StockStatus>()
     val quoteStatus: LiveData<StockStatus> = _quoteStatus
@@ -113,7 +108,7 @@ class StockListViewModel(private val stockDao: StockDao) : ViewModel() {
         }
     }
 
-    fun getStockPrice() {
+    fun getStockPrice(apiKey: String) {
         Log.e("Update123", "API Request")
         viewModelScope.launch {
             _quoteStatus.value = StockStatus.LOADING

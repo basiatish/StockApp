@@ -12,11 +12,10 @@ import androidx.work.ForegroundInfo
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import com.example.stocks.App
-import com.example.stocks.BuildConfig
 import com.example.stocks.R
-import com.example.stocks.StockApi
 import com.example.stocks.database.alertdatabase.Alert
 import com.example.stocks.models.remote.StockChart
+import com.example.stocks.network.StockApi
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.withContext
 import java.time.LocalDateTime
@@ -36,7 +35,7 @@ class PriceAlarmWork(appContext: Context, params: WorkerParameters) : CoroutineW
         "Shows notifications whenever target price reached"
     private lateinit var builder: Notification
 
-    private val apiKey = BuildConfig.API_KEY
+    private val apiKey = (appContext.applicationContext as App).getApiKey()
     private var priceChartMH: MutableList<StockChart> = mutableListOf()
     private var id : Int = 0
     private var targetPrice: Double? = null
@@ -60,7 +59,7 @@ class PriceAlarmWork(appContext: Context, params: WorkerParameters) : CoroutineW
             above = inputData.getBoolean("above", false)
 
             priceChartMH = StockApi.retrofitService
-                .getChart("1hour", compName!!, apiKey)
+                .getChart("1hour", compName!!, apiKey ?: "")
 
             val lastPrice = priceChartMH.reversed().last().close
 

@@ -4,14 +4,21 @@
     <item android:state_enabled="true" android:state_pressed="false">
         <shape android:shape="rectangle">
             <corners android:radius="16dp"/>
-            <solid android:color="#66FCA311"/>
+            <solid android:color="@color/orange_40"/>
         </shape>
     </item>
 
     <item android:state_enabled="true" android:state_pressed="true">
         <shape android:shape="rectangle">
             <corners android:radius="16dp"/>
-            <solid android:color="#99FCA311"/>
+            <solid android:color="@color/orange_60"/>
+        </shape>
+    </item>
+
+    <item android:state_enabled="false">
+        <shape android:shape="rectangle">
+            <corners android:radius="16dp"/>
+            <solid android:color="@color/b4_40"/>
         </shape>
     </item>
 

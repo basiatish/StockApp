@@ -2,10 +2,9 @@ package com.example.stocks.viewmodels
 
 import android.util.Log
 import androidx.lifecycle.*
-import com.example.stocks.BuildConfig
-import com.example.stocks.StockApi
 import com.example.stocks.database.stocksdatabase.StockDao
 import com.example.stocks.models.remote.StockSearch
+import com.example.stocks.network.StockApi
 import com.example.stocks.utils.network.StockStatus
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
@@ -25,9 +24,7 @@ class StockSearchViewModel(private val stockDao: StockDao): ViewModel() {
     private var _companiesList: MutableList<StockSearch> = mutableListOf()
     val companiesList: List<StockSearch> get() = _companiesList
 
-    private val apiKey = BuildConfig.API_KEY
-
-    fun findCompany(name: String) {
+    fun findCompany(name: String, apiKey: String) {
         viewModelScope.launch {
             _companies = listOf()
             _requestStatus.value = StockStatus.LOADING

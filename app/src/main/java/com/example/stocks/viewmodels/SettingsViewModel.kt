@@ -32,6 +32,14 @@ class SettingsViewModel(
     fun deleteAlerts() {
         try {
             viewModelScope.launch(IO) {
+                val alertList = alertDao.getAlerts()
+                Log.e("Settings", "Deactivate fun")
+                alertList.forEach { alert ->
+                    if (alert.status) {
+                        val tag = "${alert.id} ${alert.compName}"
+                        getApplication<App>().destroyWork(tag)
+                    }
+                }
                 alertDao.clearDataBase()
             }
         } catch (e: Exception) {

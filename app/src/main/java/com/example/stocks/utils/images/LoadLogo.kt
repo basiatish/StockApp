@@ -12,8 +12,6 @@ import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.RequestOptions
-import com.bumptech.glide.request.RequestOptions.overrideOf
 import com.bumptech.glide.request.target.Target
 import com.example.stocks.R
 
@@ -21,8 +19,8 @@ fun loadLogo(context: Context, url: String, symbol: String, view: ImageView) {
     Glide.with(context).load(url)
         .diskCacheStrategy(DiskCacheStrategy.DATA)
         .skipMemoryCache(true)
-        .error(R.drawable.ic_warning)
-        .centerCrop()
+        .error(R.drawable.image_outline)
+        .fitCenter()
         .listener(object : RequestListener<Drawable> {
             override fun onLoadFailed(
                 e: GlideException?,
@@ -60,10 +58,9 @@ fun loadLogo(context: Context, url: String, symbol: String, view: ImageView) {
 fun loadNewsImage(context: Context, url: String, view: ImageView) {
     Glide.with(context)
         .load(url)
-        //.apply(RequestOptions.overrideOf(1200, 1000))
         .diskCacheStrategy(DiskCacheStrategy.DATA)
         .skipMemoryCache(true)
-        .error(R.drawable.ic_warning)
+        .error(R.drawable.ic_no_image_news)
         .listener(object : RequestListener<Drawable> {
             override fun onLoadFailed(
                 e: GlideException?,

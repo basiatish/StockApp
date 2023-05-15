@@ -1,20 +1,13 @@
 package com.example.stocks.ui.fragments
 
-import android.graphics.BlendMode
-import android.graphics.BlendModeColorFilter
-import android.graphics.Color
-import android.graphics.PorterDuff
 import android.graphics.drawable.AnimatedVectorDrawable
-import android.graphics.drawable.Drawable
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.res.ResourcesCompat
-import androidx.core.graphics.drawable.toBitmap
-import androidx.core.graphics.toColor
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -22,13 +15,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.target.Target
-import com.example.stocks.*
+import com.example.stocks.App
+import com.example.stocks.R
 import com.example.stocks.adapters.StockDividendsAdapter
 import com.example.stocks.databinding.FragmentStockOverviewBinding
 import com.example.stocks.models.remote.CompanyProfile
@@ -61,16 +49,20 @@ class StockOverViewFragment: Fragment() {
     private var isFavourite = false
     private var isExist = false
     private var isMoreButtonClicked = false
+    private var apiKey: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        apiKey = (activity?.applicationContext as App).getApiKey()
         compName = navArgs.name
         shortName = navArgs.shortName
         sharedViewModel.saveCompanyName(compName, shortName)
-        viewModel.getCompanyProfile(shortName)
-        viewModel.getCompanyQuote(shortName)
-        viewModel.getCompanyDividends(shortName)
-        viewModel.isStockFavourite(shortName)
+        if (viewModel.quoteStatus.value != StockStatus.DONE) {
+            viewModel.getCompanyProfile(shortName, apiKey ?: "")
+            viewModel.getCompanyQuote(shortName, apiKey ?: "")
+            viewModel.getCompanyDividends(shortName, apiKey ?: "")
+            viewModel.isStockFavourite(shortName)
+        }
     }
 
     override fun onCreateView(
@@ -79,7 +71,6 @@ class StockOverViewFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentStockOverviewBinding.inflate(inflater, container, false)
-
         return binding.root
     }
 
@@ -104,17 +95,26 @@ class StockOverViewFragment: Fragment() {
                 topBarBind()
                 aboutBind(viewModel.companyProfile)
                 binding.favoriteBtn.isClickable = true
+            } else if (it == StockStatus.ERROR) {
+                binding.refresh.isRefreshing = false
+                Toast.makeText(requireContext(), resources.getText(R.string.something_went_wrong), Toast.LENGTH_SHORT).show()
             }
         }
         viewModel.quoteStatus.observe(this.viewLifecycleOwner) {
             if (it == StockStatus.DONE) {
                 statBind(viewModel.companyQuote)
                 if (binding.refresh.isRefreshing) binding.refresh.isRefreshing = false
+            } else if (it == StockStatus.ERROR) {
+                binding.refresh.isRefreshing = false
+                Toast.makeText(requireContext(), resources.getText(R.string.something_went_wrong), Toast.LENGTH_SHORT).show()
             }
         }
         viewModel.dividendsStatus.observe(this.viewLifecycleOwner) {
-            if (it == StockStatus.DONE) {
+            if (it == StockStatus.DONE && viewModel.companyDividendsList.isEmpty()) {
                 viewModel.getDividendsList()
+            } else if (it == StockStatus.ERROR) {
+                binding.refresh.isRefreshing = false
+                Toast.makeText(requireContext(), resources.getText(R.string.something_went_wrong), Toast.LENGTH_SHORT).show()
             }
         }
         viewModel.divListStatus.observe(this.viewLifecycleOwner) {
@@ -139,8 +139,8 @@ class StockOverViewFragment: Fragment() {
 
         binding.refresh.setOnRefreshListener {
             viewModel.apply {
-                getCompanyProfile(shortName)
-                getCompanyQuote(shortName)
+                getCompanyProfile(shortName, apiKey ?: "")
+                getCompanyQuote(shortName, apiKey ?: "")
                 binding.favoriteBtn.isClickable = false
             }
         }

@@ -6,7 +6,7 @@
     android:id="@+id/alert_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/custom_item_list_background"
+    android:background="@drawable/item_list_background"
     android:layout_marginBottom="8dp">
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -17,6 +17,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         android:text="@string/price_is_higher"
         android:textSize="14sp"
+        android:textColor="@color/b4_100"
         android:layout_marginTop="16dp"
         android:layout_marginStart="16dp" />
 

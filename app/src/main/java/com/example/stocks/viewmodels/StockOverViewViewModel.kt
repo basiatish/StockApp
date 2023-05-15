@@ -2,10 +2,13 @@ package com.example.stocks.viewmodels
 
 import android.util.Log
 import androidx.lifecycle.*
-import com.example.stocks.*
 import com.example.stocks.database.stocksdatabase.Stock
 import com.example.stocks.database.stocksdatabase.StockDao
-import com.example.stocks.models.remote.*
+import com.example.stocks.models.remote.CompanyProfile
+import com.example.stocks.models.remote.CompanyQuote
+import com.example.stocks.models.remote.StockDividends
+import com.example.stocks.models.remote.StockDividendsHeader
+import com.example.stocks.network.StockApi
 import com.example.stocks.utils.formatters.Formatter
 import com.example.stocks.utils.network.StockStatus
 import kotlinx.coroutines.Dispatchers.Default
@@ -14,11 +17,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class StockOverViewViewModel(private val stockDao: StockDao): ViewModel() {
-
-    private val apiKey = BuildConfig.API_KEY
-
-    private val _status = MutableLiveData<StockStatus>()
-    val status: MutableLiveData<StockStatus> = _status
 
     private val _profileStatus = MutableLiveData<StockStatus>()
     val profileStatus: LiveData<StockStatus> = _profileStatus
@@ -105,7 +103,7 @@ class StockOverViewViewModel(private val stockDao: StockDao): ViewModel() {
         }
     }
 
-    fun getCompanyProfile(compName: String) {
+    fun getCompanyProfile(compName: String, apiKey: String) {
         _companyProfile = mutableListOf()
         viewModelScope.launch {
             _profileStatus.value = StockStatus.LOADING
@@ -122,7 +120,7 @@ class StockOverViewViewModel(private val stockDao: StockDao): ViewModel() {
         }
     }
 
-    fun getCompanyQuote(compName: String) {
+    fun getCompanyQuote(compName: String, apiKey: String) {
         _companyQuote = mutableListOf()
         viewModelScope.launch() {
             _quoteStatus.value = StockStatus.LOADING
@@ -140,7 +138,7 @@ class StockOverViewViewModel(private val stockDao: StockDao): ViewModel() {
         }
     }
 
-    fun getCompanyDividends(compName: String) {
+    fun getCompanyDividends(compName: String, apiKey: String) {
         _companyDividends = mutableListOf()
         viewModelScope.launch {
             _dividendsStatus.value = StockStatus.LOADING
@@ -185,9 +183,6 @@ class StockOverViewViewModel(private val stockDao: StockDao): ViewModel() {
                     _divListStatus.value = StockStatus.DONE
                 }
                 Log.e("Status", "DivListStatus ${_divListStatus.value}")
-                _companyDividendsList.forEach {
-                    Log.e("Status", "DivList ${it.dividend}")
-                }
             } catch (e: Exception) {
                 _divListStatus.value = StockStatus.ERROR
                 Log.e("Status", "DivListStatus ${_divListStatus.value}")

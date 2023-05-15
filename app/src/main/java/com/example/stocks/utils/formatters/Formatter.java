@@ -2,11 +2,8 @@ package com.example.stocks.utils.formatters;
 
 import android.text.Html;
 
-import java.sql.Date;
 import java.time.Instant;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.Month;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;

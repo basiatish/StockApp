@@ -9,12 +9,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.stocks.App
 import com.example.stocks.R
 import com.example.stocks.adapters.NewsListAdapter
-import androidx.navigation.fragment.findNavController
 import com.example.stocks.adapters.OnNewsClickListener
 import com.example.stocks.databinding.FragmentNewsListBinding
 import com.example.stocks.utils.network.StockStatus
@@ -32,6 +34,12 @@ class NewsListFragment : Fragment(), OnNewsClickListener {
 
     private var page = 1
     private var prevPage = 1
+    private var apiKey: String? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        apiKey = (activity?.applicationContext as App).getApiKey()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,14 +53,14 @@ class NewsListFragment : Fragment(), OnNewsClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.pageInput.text = Editable.Factory.getInstance().newEditable("$page Page")
+        binding.pageInput.text = Editable.Factory.getInstance().newEditable(resources.getString(R.string.page_text, page))
         hideKeyBoard()
         if (viewModel.newsList.isEmpty()) {
             binding.apply {
                 shimmer.visibility = View.VISIBLE
                 shimmer.startShimmer()
             }
-            viewModel.getNews(0)
+            viewModel.getNews(0, apiKey ?: "")
         }
 
         adapter = NewsListAdapter(this)
@@ -73,6 +81,13 @@ class NewsListFragment : Fragment(), OnNewsClickListener {
                     shimmer.visibility = View.GONE
                 }
                 adapter.submitList(viewModel.newsList[0].content)
+            } else if (status == StockStatus.ERROR) {
+                binding.apply {
+                    refresh.isRefreshing = false
+                    shimmer.stopShimmer()
+                    shimmer.visibility = View.GONE
+                }
+                Toast.makeText(requireContext(), resources.getText(R.string.something_went_wrong), Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -85,7 +100,7 @@ class NewsListFragment : Fragment(), OnNewsClickListener {
             prevPage = page
             binding.pageInput.text = Editable.Factory.getInstance().newEditable(resources.getString(
                 R.string.page_text, page))
-            viewModel.getNews(page - 1)
+            viewModel.getNews(page - 1, apiKey ?: "")
         }
 
         binding.btnPrev.setOnClickListener {
@@ -94,7 +109,7 @@ class NewsListFragment : Fragment(), OnNewsClickListener {
             prevPage = page
             binding.pageInput.text = Editable.Factory.getInstance().newEditable(resources.getString(
                 R.string.page_text, page))
-            viewModel.getNews(page - 1)
+            viewModel.getNews(page - 1, apiKey ?: "")
         }
 
         binding.pageInput.setOnFocusChangeListener { _, hasFocus ->
@@ -125,7 +140,7 @@ class NewsListFragment : Fragment(), OnNewsClickListener {
                 page = if (page > 0) binding.pageInput.text?.toString()?.toInt() ?: 0
                 else prevPage
 
-                if (prevPage != page) viewModel.getNews(page - 1)
+                if (prevPage != page) viewModel.getNews(page - 1, apiKey ?: "")
 
                 hideKeyBoard()
             }
@@ -133,7 +148,7 @@ class NewsListFragment : Fragment(), OnNewsClickListener {
         }
 
         binding.refresh.setOnRefreshListener {
-            viewModel.getNews(page - 1)
+            viewModel.getNews(page - 1, apiKey ?: "")
         }
 
     }

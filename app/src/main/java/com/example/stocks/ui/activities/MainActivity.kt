@@ -1,20 +1,16 @@
 package com.example.stocks.ui.activities
 
-import android.content.Context
-import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import com.example.stocks.R
-import com.example.stocks.databinding.ActivityMainBinding
-import com.example.stocks.ui.fragments.*
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.navigation.ui.setupWithNavController
 import com.example.stocks.App
+import com.example.stocks.R
+import com.example.stocks.databinding.ActivityMainBinding
+import com.example.stocks.ui.fragments.StockOverViewFragmentDirections
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
@@ -23,28 +19,16 @@ class MainActivity : AppCompatActivity() {
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var sharedPreferences: SharedPreferences
-    private var isThemeLight = true
+    private var isUserRegistered = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        isThemeLight = (applicationContext as App).getValue()
-        if (isThemeLight) AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-        else AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-
+        if ((applicationContext as App).getApiKey() != null) isUserRegistered = true
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setNavigationGraph()
 
-//        val navHostFragment = supportFragmentManager
-//            .findFragmentById(R.id.fragment_container) as NavHostFragment
-//
-////        val graph = navController.navInflater.inflate(R.navigation.nav_graph)
-//
-//        navController = navHostFragment.navController
         setContentView(binding.root)
-//        graph.setStartDestination(R.id.stockListFragment)
-//        navController.setGraph(graph.parent.id)
 
         nav = binding.nav
         nav.setupWithNavController(navController)
@@ -73,6 +57,7 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.stockListFragment -> {
+                    binding.btmBar.visibility = View.VISIBLE
                     binding.nav.visibility = View.VISIBLE
                     binding.fragmentNav.visibility = View.GONE
                     nav.menu.getItem(0).isChecked = true
@@ -98,6 +83,10 @@ class MainActivity : AppCompatActivity() {
                     binding.nav.visibility = View.VISIBLE
                     binding.btmBar.visibility = View.VISIBLE
                 }
+                R.id.viewPagerManagerFragment -> {
+                    binding.nav.visibility = View.GONE
+                    binding.btmBar.visibility = View.GONE
+                }
                 else -> {
                 }
             }
@@ -110,7 +99,12 @@ class MainActivity : AppCompatActivity() {
         navController = navHostFragment.navController
 
         val navGraph = navController.navInflater.inflate(R.navigation.nav_graph)
-        navGraph.setStartDestination(R.id.stockSearchFragment)
+
+        if (isUserRegistered) {
+            navGraph.setStartDestination(R.id.stockListFragment)
+        } else {
+            navGraph.setStartDestination(R.id.viewPagerManagerFragment)
+        }
 
         navController.graph = navGraph
     }

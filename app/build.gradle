@@ -11,7 +11,7 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "com.example.newnotes"
+        applicationId 'com.example.stockviewer'
         minSdkVersion 26
         targetSdkVersion 32
         versionCode 1
@@ -26,10 +26,6 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
-    }
-
-    buildTypes.each {
-            it.buildConfigField 'String', 'API_KEY', API_KEY
     }
 
     buildFeatures {
@@ -92,4 +88,7 @@ dependencies {
 
     //Work Manager
     implementation "androidx.work:work-runtime-ktx:2.7.1"
+
+    //Lottie
+    implementation 'com.airbnb.android:lottie:6.0.0'
 }

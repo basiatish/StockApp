@@ -34,6 +34,7 @@
                 android:imeOptions="actionSearch"
                 android:importantForAutofill="no"
                 android:inputType="text|textNoSuggestions"
+                android:textColor="@color/main_text_color"
                 android:lines="1"
                 android:maxLength="20"
                 android:minHeight="35dp"

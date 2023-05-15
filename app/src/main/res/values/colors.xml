@@ -1,33 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
 
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="orange">#FCA311</color>
     <color name="light_grey">#6C6C6C</color>
-    <color name="light_grey_3">#EFEFEF</color>
-    <color name="light_grey_2">#F2F2F2</color>
+    <color name="light_grey_200">#EFEFEF</color>
+    <color name="light_grey_300">#F2F2F2</color>
     <color name="text_color">#A7A7A7</color>
     <color name="change_price_color">#00BB61</color>
-    <color name="nav_button_inactive">#B4B4B4</color>
-
-    <color name="greenVol">#26a69a</color>
-    <color name="redVol">#ef5350</color>
+    <color name="b4_100">#B4B4B4</color>
 
     <color name="green">#00897b</color>
     <color name="grey">#D5D5D5</color>
     <color name="red">#CC2121</color>
-    <color name="greyL">#D1D0D0</color>
     <color name="grey_700">#B4B4B4</color>
-    <color name="news_text_placeholder">#66B4B4B4</color>
     <color name="pager_placeholder">#33B4B4B4</color>
 
-    <color name="overviewFragment">#D5D5D5</color>
     <color name="red_60">#99E10808</color>
     <color name="green_60">#9900BB61</color>
+
+
+    <color name="chart_color">#FCA311</color>
+    <color name="chart_grid_color">#66B4B4B4</color>
+    <color name="main_text_color">#000000</color>
+    <color name="news_text_placeholder">#66B4B4B4</color>
+    <color name="b4_40">#66B4B4B4</color>
+    <color name="orange_60">#99FCA311</color>
+    <color name="orange_40">#66FCA311</color>
+    <color name="tab_color">#B4B4B4</color>
+    <color name="white_2">#FFFFFF</color>
+    <color name="white_to_dd">#FFFFFF</color>
+    <color name="white_to_30">#FFFFFF</color>
+
 </resources>

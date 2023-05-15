@@ -6,14 +6,15 @@
     style="@style/BottomSheet"
     android:id="@+id/container"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     app:behavior_hideable="true"
     android:elevation="4dp"
+    android:paddingBottom="16dp"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
     <View
         android:background="@drawable/bottom_sheet_line"
-        android:backgroundTint="@color/nav_button_inactive"
+        android:backgroundTint="@color/b4_100"
         android:layout_width="30dp"
         android:layout_height="5dp"
         android:layout_marginTop="16dp"
@@ -129,34 +130,28 @@
         app:layout_constraintRight_toRightOf="parent">
 
         <androidx.appcompat.widget.AppCompatButton
+            style="@style/ChartButton"
             android:id="@+id/line_chart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/ChartButton"
-            android:textSize="14sp"
             android:enabled="false"
-            android:textAllCaps="false"
-            android:text="Line"
+            android:text="@string/line"
             android:drawableTop="@drawable/ic_line_active"/>
 
         <androidx.appcompat.widget.AppCompatButton
+            style="@style/ChartButton"
             android:id="@+id/candlestick_chart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/ChartButton"
-            android:textSize="14sp"
-            android:textAllCaps="false"
-            android:text="Candle Stick"
+            android:text="@string/candle_stick"
             android:drawableTop="@drawable/ic_candle_stick_active"/>
 
         <androidx.appcompat.widget.AppCompatButton
+            style="@style/ChartButton"
             android:id="@+id/bar_chart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/ChartButton"
-            android:textSize="14sp"
-            android:textAllCaps="false"
-            android:text="Bar"
+            android:text="@string/bar"
             android:drawableTop="@drawable/ic_chart_bar_active"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
@@ -169,33 +164,27 @@
         app:layout_constraintTop_toBottomOf="@id/chart_line_1">
 
         <androidx.appcompat.widget.AppCompatButton
+            style="@style/ChartButton"
             android:id="@+id/baseline_chart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/ChartButton"
-            android:textSize="14sp"
-            android:textAllCaps="false"
-            android:text="BaseLine"
+            android:text="@string/baseline"
             android:drawableTop="@drawable/ic_baseline_default"/>
 
         <androidx.appcompat.widget.AppCompatButton
+            style="@style/ChartButton"
             android:id="@+id/volume_chart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/ChartButton"
-            android:textSize="14sp"
-            android:textAllCaps="false"
-            android:text="Add Volume"
+            android:text="@string/add_volume"
             android:drawableTop="@drawable/ic_volume_active"/>
 
         <androidx.appcompat.widget.AppCompatButton
+            style="@style/ChartButton"
             android:id="@+id/area_chart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/ChartButton"
-            android:textSize="14sp"
-            android:textAllCaps="false"
-            android:text="Area"
+            android:text="@string/area"
             android:drawableTop="@drawable/ic_area_active"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>

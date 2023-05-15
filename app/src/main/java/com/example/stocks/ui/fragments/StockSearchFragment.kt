@@ -13,7 +13,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.stocks.*
+import com.example.stocks.App
+import com.example.stocks.R
 import com.example.stocks.adapters.OnItemClick
 import com.example.stocks.adapters.StockSearchAdapter
 import com.example.stocks.databinding.FragmentStockSearchBinding
@@ -33,6 +34,13 @@ class StockSearchFragment() : Fragment(), OnItemClick {
 
     private lateinit var adapter: StockSearchAdapter
     private lateinit var layoutManager: LinearLayoutManager
+
+    private var apiKey: String? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        apiKey = (activity?.applicationContext as App).getApiKey()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -110,7 +118,7 @@ class StockSearchFragment() : Fragment(), OnItemClick {
             if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
                 if (binding.searchBar.text.toString() != "") {
                     hideKeyBoard()
-                    viewModel.findCompany(binding.searchBar.text.toString())
+                    viewModel.findCompany(binding.searchBar.text.toString(), apiKey ?: "")
                     binding.searchBar.clearFocus()
                 }
                 return@OnKeyListener true

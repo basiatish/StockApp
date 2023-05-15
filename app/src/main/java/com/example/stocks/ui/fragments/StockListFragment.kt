@@ -9,10 +9,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.stocks.App
 import com.example.stocks.R
@@ -38,6 +38,21 @@ class StockListFragment() : Fragment(), OnClickListener {
 
     private var updated = false
 
+    private var apiKey: String? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        try {
+            val navArg: StockListFragmentArgs by navArgs()
+            if (!navArg.apiKey.isNullOrEmpty()) {
+                apiKey = navArg.apiKey
+                (activity?.applicationContext as App).saveApiKey(apiKey!!)
+            }
+        } catch (e: Exception) {
+            apiKey = (activity?.applicationContext as App).getApiKey()
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -47,7 +62,7 @@ class StockListFragment() : Fragment(), OnClickListener {
         binding.shimmer.apply {
             startShimmer()
         }
-        //viewModel.getStocks()
+        viewModel.getStocks()
         return binding.root
     }
 
@@ -70,7 +85,7 @@ class StockListFragment() : Fragment(), OnClickListener {
             if (status == StockStatus.DONE) {
                 if (viewModel.stockList.isNotEmpty() && !updated) {
                     Log.e("UPDATE", "Updated again")
-                    viewModel.getStockPrice()
+                    viewModel.getStockPrice(apiKey ?: "")
                     updated = true
                 } else {
                     binding.shimmer.stopShimmer()
@@ -98,7 +113,7 @@ class StockListFragment() : Fragment(), OnClickListener {
                 viewModel.updateStock()
             }
             if (status == StockStatus.ERROR) {
-                Toast.makeText(requireContext(), "Something went wrong!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), resources.getText(R.string.something_went_wrong), Toast.LENGTH_SHORT).show()
                 viewModel.getStocks()
             }
         }
@@ -113,7 +128,7 @@ class StockListFragment() : Fragment(), OnClickListener {
             adapter.submitList(listOf())
             binding.shimmer.visibility = View.VISIBLE
             binding.shimmer.startShimmer()
-            viewModel.getStockPrice()
+            viewModel.getStockPrice(apiKey ?: "")
         }
     }
 
@@ -123,8 +138,7 @@ class StockListFragment() : Fragment(), OnClickListener {
             textView.apply {
                 gravity = Gravity.CENTER_VERTICAL
                 textSize = 24F
-                setTextColor(resources.getColor(R.color.black, context?.theme))
-                typeface = ResourcesCompat.getFont(context, R.font.roboto)
+                setTextAppearance(R.style.DefaultTextApp)
             }
         }
     }

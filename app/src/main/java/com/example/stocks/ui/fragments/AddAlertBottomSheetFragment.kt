@@ -2,6 +2,7 @@ package com.example.stocks.ui.fragments
 
 import android.app.Dialog
 import android.content.res.ColorStateList
+import android.content.res.Configuration
 import android.graphics.drawable.AnimatedVectorDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
@@ -42,21 +43,24 @@ class AddAlertBottomSheetFragment : BottomSheetDialogFragment() {
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<*>
 
     private var arrowFlag = true
-
     private var updateAlert = false
+    private var isLandScape = false
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = super.onCreateDialog(savedInstanceState)
-
         val view = LayoutInflater.from(context).inflate(R.layout.add_alert_bottom_sheet, null)
-
         dialog.setContentView(view)
+
+        getScreenOrientation()
 
         val param = (view.parent as View).layoutParams as CoordinatorLayout.LayoutParams
         val behavior = param.behavior
 
         if (behavior is BottomSheetBehavior<*>) {
             bottomSheetBehavior = behavior
+            if (isLandScape) bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+            else bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+
 
             bottomSheetBehavior.addBottomSheetCallback(object :
                 BottomSheetBehavior.BottomSheetCallback() {
@@ -66,7 +70,9 @@ class AddAlertBottomSheetFragment : BottomSheetDialogFragment() {
                             dismiss()
                         }
                         BottomSheetBehavior.STATE_EXPANDED -> {
-                            bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+                            if (!isLandScape) {
+                                bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+                            }
                         }
                     }
                 }
@@ -179,6 +185,20 @@ class AddAlertBottomSheetFragment : BottomSheetDialogFragment() {
                 typeface = ResourcesCompat.getFont(context, R.font.roboto_bold)
                 setTextColor(resources.getColor(R.color.main_text_color, context?.theme))
             }
+        }
+    }
+
+    private fun getScreenOrientation() {
+        isLandScape = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            isLandScape = true
+            bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+        } else {
+            isLandScape = false
         }
     }
 }

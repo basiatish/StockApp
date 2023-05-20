@@ -117,6 +117,6 @@
         <action
             android:id="@+id/action_apiKeyDialog_to_stockListFragment"
             app:destination="@id/stockListFragment"
-            app:popUpTo="@id/nav_graph" />
+            app:popUpTo="@id/stockListFragment" />
     </dialog>
 </navigation>

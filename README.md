@@ -1,7 +1,7 @@
 <h1 align="center">Stocks Viewer</h1>
 
 <p align="left">
-  <a [![Kotlin Version](https://img.shields.io/badge/kotlin-1.5.21-blue.svg)](https://kotlinlang.org)/></a>
+  <a href="https://kotlinlang.org"><img alt="Kotlin Version" src="https://img.shields.io/badge/kotlin-1.5.21-blue.svg"/></a>
   <a href="https://developer.android.com/studio/releases/platforms#8.0"><img alt="API 26" src="https://img.shields.io/badge/API-26%2B-brightgreen"/></a>
 </p>
 

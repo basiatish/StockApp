@@ -1,6 +1,7 @@
 <h1 align="center">Stocks Viewer</h1>
 
 <p align="left">
+  <a [![Kotlin Version](https://img.shields.io/badge/kotlin-1.5.21-blue.svg)](https://kotlinlang.org)/></a>
   <a href="https://developer.android.com/studio/releases/platforms#8.0"><img alt="API 26" src="https://img.shields.io/badge/API-26%2B-brightgreen"/></a>
 </p>
 
@@ -24,14 +25,11 @@ Stocks Viewer is a sample Stocks app built for searching USA stocks.
 ### Architecture
   * MVVM (Model - View - ViewModel)
   * Single Activity
-  
-### Patterns
-* [Repository](https://developer.android.com/jetpack/docs/guide)
 
 ### Technology Stack
   * [Kotlin](https://kotlinlang.org/)
   * [Coroutines](https://github.com/Kotlin/kotlinx.coroutines)
-  * Android Jetpack
+  * [Android Jetpack](https://developer.android.com/jetpack)
     * [LiveData](https://developer.android.com/topic/libraries/architecture/livedata)
     * [Lifecycle](https://developer.android.com/topic/libraries/architecture/lifecycle)
     * [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel)

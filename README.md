@@ -10,17 +10,6 @@
 Stocks Viewer is a sample Stocks app built for searching USA stocks.
 </p>
 </br>
-
-<p align="center">
-<img src="readme_assets/1.jpg" width="200">
-<img src="readme_assets/2.jpg" width="200">
-<img src="readme_assets/3.jpg" width="200">
-<img src="readme_assets/4.jpg" width="200">
-<img src="readme_assets/5.jpg" width="200">
-<img src="readme_assets/6.jpg" width="200">
-<img src="readme_assets/7.jpg" width="200">
-<img src="readme_assets/8.jpg" width="200">
-</p>
   
 ### Architecture
   * MVVM (Model - View - ViewModel)
@@ -45,5 +34,17 @@ Stocks Viewer is a sample Stocks app built for searching USA stocks.
   * [Glide](https://bumptech.github.io/glide/)
   * [Shimmer](https://facebook.github.io/shimmer-android/)
   * [Lottie](https://airbnb.io/lottie/#/)
-  
+
+### Screenshots
+<p align="center">
+<img src="readme_assets/1.jpg" width="200">
+<img src="readme_assets/2.jpg" width="200">
+<img src="readme_assets/3.jpg" width="200">
+<img src="readme_assets/4.jpg" width="200">
+<img src="readme_assets/5.jpg" width="200">
+<img src="readme_assets/6.jpg" width="200">
+<img src="readme_assets/7.jpg" width="200">
+<img src="readme_assets/8.jpg" width="200">
+</p>
+
 ### App build with [Financial Modeling Prep API](https://site.financialmodelingprep.com/developer/docs/)

@@ -78,4 +78,6 @@
     <string name="invalid_price">Invalid price</string>
     <string name="something_went_wrong">Something went wrong!</string>
     <string name="deleted">Deleted</string>
+    <string name="stock_item_desc">%s…</string>
+    <string name="list_is_empty">List is empty!</string>
 </resources>

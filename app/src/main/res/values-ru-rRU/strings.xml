@@ -79,4 +79,6 @@
     <string name="invalid_price">Неверная цена</string>
     <string name="something_went_wrong">Ошибка загрузки!</string>
     <string name="deleted">Удалено</string>
+    <string name="stock_item_desc">%s…</string>
+    <string name="list_is_empty">Список пуст!</string>
 </resources>
